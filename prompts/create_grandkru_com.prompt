@@ -1,0 +1,100 @@
+Create a Vue 3 project for "Grandkru Technologies" with the following requirements:
+
+Use the attached logo (Grand-Kru-Technologies_grandkrusplash_9237.jpg) as the brand image and color inspiration.
+
+The color palette should include:
+
+Primary Blue: #3b5a7b (from the logo center)
+
+White: #fbfdfa
+
+Dark Gray: #464747
+
+Medium Gray: #818282
+
+Black: #060506
+
+Light Gray: #c3c4c4
+
+Site Structure:
+
+Responsive layout with a top navigation bar.
+
+Navigation titles: Home, About, Services, Portfolio, Contact.
+
+Pages:
+
+Home:
+
+Welcome section and brief intro.
+
+About:
+
+Hero image (technology themed, use a placeholder or /public/images/tech-hero.jpg).
+
+Paragraph with lorem ipsum.
+
+Services:
+
+List services based on the latest two jobs in the Experience section of Mark_Samuel_Nyon_Employee.pdf and the teaching section of Mark_Samuel_Nyon_Teacher.pdf.
+
+For each, include a title and a short description.
+
+Portfolio:
+
+Display portfolio items in a grid format.
+
+Each item should have an image and title.
+
+Clicking an image opens a modal with a larger image and a case study template (title, summary, technologies used, outcome).
+
+Contact:
+
+Form fields: Name, Email, Subject, Message.
+
+Client-side validation (all fields required, email format).
+
+On valid submit, send an email to info@grandkru.com (use mailto: or placeholder logic).
+
+Other Requirements:
+
+Use Vue Router for navigation.
+
+Place all color and development info in a file named DEVELOPMENT.md.
+
+Use the provided logo as src/assets/logo.png.
+
+Add placeholder images where needed.
+
+Make the site mobile-friendly and accessible.
+
+References:
+
+Logo image: [attach or reference the provided logo]
+
+Mark_Samuel_Nyon_Employee.pdf and Mark_Samuel_Nyon_Teacher.pdf for services content.
+
+Instructions for Cursor:
+Paste this prompt in Cursor, upload your logo and the two PDFs, and let the AI generate your Vue3 project.
+If you need the service descriptions, use the following summaries (from the PDFs):
+
+Latest Two Jobs (Employee PDF):
+
+E-commerce Implementation (WordPress, Gravity Forms, Stripe)
+
+Unified Travel Platform (requirements/discovery)
+
+Licensing Model Development (Rails API, NodeJS frontend)
+
+Database Optimization (Postgres, parallel processing)
+
+Teaching (Teacher PDF):
+
+Technical Training (HTML/JS/CSS, bootcamp)
+
+Curriculum Development (coding bootcamp, curriculum updates)
+
+Tip:
+If Cursor asks for clarification, specify you want a multi-page Vue 3 SPA with a modern, clean theme, and all branding to match the provided logo and color scheme.
+
+Let me know if you want the full content for each service or a sample case study template for the portfolio modal!
