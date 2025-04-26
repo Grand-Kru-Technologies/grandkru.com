@@ -4,7 +4,7 @@
       <div class="flex flex-col md:flex-row items-center justify-between">
         <div class="md:w-1/2 mb-8 md:mb-0">
           <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">
-            Welcome to Grandkru Technologies
+            Welcome to Grand Kru Technologies
           </h1>
           <p class="text-lg text-dark-gray mb-6">
             We specialize in delivering innovative technology solutions that drive business growth and digital transformation.

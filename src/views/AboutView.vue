@@ -8,7 +8,7 @@
         class="w-full h-full object-cover"
       />
       <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-        <h1 class="text-4xl md:text-5xl font-bold text-white">About Grandkru Technologies</h1>
+        <h1 class="text-4xl md:text-5xl font-bold text-white">About Grand Kru Technologies</h1>
       </div>
     </div>
 
@@ -23,7 +23,7 @@
           Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
         <p class="text-lg text-dark-gray">
-          At Grandkru Technologies, we believe in delivering excellence through innovation and expertise. Our team of skilled professionals is dedicated to providing cutting-edge solutions that help businesses thrive in the digital age.
+          At Grand Kru Technologies, we believe in delivering excellence through innovation and expertise. Our team of skilled professionals is dedicated to providing cutting-edge solutions that help businesses thrive in the digital age.
         </p>
       </div>
     </div>
