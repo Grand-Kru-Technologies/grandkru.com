@@ -27,7 +27,7 @@ describe('Navigation', () => {
 
   it('renders the logo', () => {
     expect(wrapper.find('img').exists()).toBe(true)
-    expect(wrapper.find('img').attributes('alt')).toBe('Grandkru Technologies Logo')
+    expect(wrapper.find('img').attributes('alt')).toBe('Grand Kru Technologies Logo')
   })
 
   it('renders all navigation items', () => {
