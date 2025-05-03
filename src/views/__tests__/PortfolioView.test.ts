@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/views/__tests__/PortfolioView.test.ts
 import { mount, VueWrapper } from '@vue/test-utils'
+=======
+import { mount } from '@vue/test-utils'
+>>>>>>> be2cc04 (feat: setup staging environment with homepage, about, and contact pages):src/views/__tests__/PortfolioView.test.js
 import PortfolioView from '../PortfolioView.vue'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 
@@ -6,6 +10,7 @@ import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 jest.mock('vue3-carousel', () => ({
   Carousel: {
     name: 'Carousel',
+<<<<<<< HEAD:src/views/__tests__/PortfolioView.test.ts
     template: '<div class="carousel"><slot /><slot name="addons" /></div>'
   },
   Slide: {
@@ -28,6 +33,24 @@ interface PortfolioItem {
   images: string[]
 }
 
+=======
+    template: '<div><slot /><slot name="addons" /></div>'
+  },
+  Slide: {
+    name: 'Slide',
+    template: '<div><slot /></div>'
+  },
+  Pagination: {
+    name: 'Pagination',
+    template: '<div />'
+  },
+  Navigation: {
+    name: 'Navigation',
+    template: '<div />'
+  }
+}))
+
+>>>>>>> be2cc04 (feat: setup staging environment with homepage, about, and contact pages):src/views/__tests__/PortfolioView.test.js
 describe('PortfolioView', () => {
   let wrapper: VueWrapper
 
@@ -78,7 +101,11 @@ describe('PortfolioView', () => {
     expect(modalTitle.text()).toBe('E-commerce Platform')
 
     const modalDetails = wrapper.findAll('.text-dark-gray')
+<<<<<<< HEAD:src/views/__tests__/PortfolioView.test.ts
     expect(modalDetails[1].text()).toContain('Developed a custom e-commerce platform')
+=======
+    expect(modalDetails[1].text()).toContain('e-commerce platform')
+>>>>>>> be2cc04 (feat: setup staging environment with homepage, about, and contact pages):src/views/__tests__/PortfolioView.test.js
   })
 
   it('displays correct portfolio item titles', () => {

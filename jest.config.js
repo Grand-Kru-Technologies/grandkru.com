@@ -1,4 +1,4 @@
-module.exports = {
+lemodule.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['js', 'ts', 'json', 'vue'],

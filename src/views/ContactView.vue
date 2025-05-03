@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-white py-16">
     <div class="container mx-auto px-4">
-      <h1 class="text-4xl font-bold text-primary text-center mb-12">Contact Us</h1>
+      g
 
       <!-- Success Message -->
       <div v-if="showSuccess" class="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
