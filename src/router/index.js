@@ -1,7 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+const isStaging = window.location.hostname === 'staging.grandkru.com'
+const base = isStaging ? '/staging' : '/'
+
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(base),
   routes: [
     {
       path: '/',
