@@ -81,7 +81,7 @@ const services = ref([
   {
     title: 'E-commerce Implementation',
     summary: 'Custom e-commerce solutions using WordPress, Gravity Forms, and Stripe integration for seamless online transactions.',
-    details: 'We specialize in creating robust e-commerce platforms that drive sales and enhance customer experience. Our solutions include custom payment processing, inventory management, and analytics integration.',
+    details: 'We specialize in creating comprehensive e-commerce platforms that drive sales and enhance customer experience. Our solutions include custom payment processing, multi-national fulfillment, and analytics integration.',
     features: [
       'Custom payment gateway integration',
       'Advanced inventory management',
@@ -89,72 +89,72 @@ const services = ref([
       'Mobile-responsive design',
       'Secure checkout process'
     ],
-    technologies: ['WordPress', 'Gravity Forms', 'Stripe', 'PHP', 'MySQL']
+    technologies: ['WordPress', 'Gravity Forms', 'Stripe', 'PHP', 'WooCommerce']
   },
   {
-    title: 'Unified Travel Platform',
-    summary: 'Comprehensive travel platform development with requirements analysis and discovery phase for optimal user experience.',
-    details: 'Our travel platform solutions streamline the booking process and provide a seamless experience for both travelers and administrators.',
+    title: 'Website Development',
+    summary: 'End-to-end website solutions from design to deployment, ensuring optimal user experience and performance.',
+    details: 'We provide complete website development services, creating custom solutions that align with your business goals. Our team handles everything from initial design to final deployment, ensuring your website is not only visually appealing but also functional, responsive, and optimized for search engines.',
     features: [
-      'Multi-destination booking system',
-      'Real-time availability checking',
-      'Automated confirmation process',
-      'User-friendly interface',
-      'Comprehensive admin dashboard'
+      'Custom website development',
+      'Ongoing maintenance and support',
+      'Content management system integration',
+      'Search engine optimization',
+      'Performance optimization'
     ],
-    technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'REST API']
+    technologies: ['HTML/CSS', 'JavaScript', 'WordPress', 'React', 'Vue.js']
   },
   {
-    title: 'Licensing Model Development',
-    summary: 'Custom licensing solutions with Rails API backend and NodeJS frontend for scalable software distribution.',
-    details: 'We develop secure and scalable licensing systems that protect your software while providing a seamless user experience.',
+    title: 'Financial Quality Assurance',
+    summary: 'AI-powered financial oversight and optimization for enhanced accuracy and compliance.',
+    details: 'Our Financial Quality Assurance service is designed to bring together expert financial oversight with cutting-edge technology. Beyond traditional bookkeeping, we use AI-assisted tools for auditing, planning, implementation, and continuous optimization. Our service identifies inconsistencies early, streamlines financial workflows, strengthens internal controls, and enhances regulatory compliance — all while delivering real-time insights through intelligent automation. By integrating predictive analytics, automated reporting, and proactive monitoring, we help businesses maintain financial accuracy, reduce risks, and unlock smarter decision-making.',
     features: [
-      'Multiple license types support',
-      'Automated activation process',
-      'Usage tracking and analytics',
-      'Anti-piracy measures',
-      'License key management'
+      'AI-assisted financial auditing',
+      'Real-time financial insights',
+      'Predictive analytics integration',
+      'Automated reporting systems',
+      'Proactive risk monitoring'
     ],
-    technologies: ['Ruby on Rails', 'Node.js', 'PostgreSQL', 'JWT']
+    technologies: ['AI/ML', 'Quickbooks','Financial Analytics', 'Zapier', 'Compliance Systems']
   },
   {
-    title: 'Database Optimization',
-    summary: 'Performance optimization for PostgreSQL databases with parallel processing capabilities.',
-    details: 'Our database optimization services ensure your applications run at peak performance with efficient data handling.',
+    title: 'Software Development',
+    summary: 'Custom software solutions using modern Rails and Node.js stacks for scalable applications.',
+    details: 'We develop powerful, scalable software applications using Ruby on Rails and Node.js. Our team specializes in creating custom solutions that meet your specific business needs, from API development to full-stack applications.',
     features: [
-      'Query optimization',
-      'Index tuning',
-      'Parallel processing setup',
-      'Performance monitoring',
-      'Data migration support'
+      'Full-stack application development',
+      'RESTful API design and implementation',
+      'Database architecture and optimization',
+      'Cloud deployment and scaling',
+      'Continuous integration and deployment'
     ],
-    technologies: ['PostgreSQL', 'SQL', 'Database Design', 'Performance Tuning']
+    technologies: ['Ruby on Rails', 'Node.js', 'PostgreSQL', 'AWS', 'Docker', 'Git']
   },
   {
-    title: 'Technical Training',
-    summary: 'Comprehensive training programs in HTML, JavaScript, and CSS for professional development.',
-    details: 'We provide hands-on technical training programs designed to enhance your team\'s development skills.',
+    title: 'Business Process Automation',
+    summary: 'Technology-driven workflow optimization and automation for enhanced operational efficiency.',
+    details: "We specialize in Business Process Automation by leveraging the latest technology tools to analyze, plan, and implement efficient, scalable solutions. Our approach starts with a deep analysis of existing workflows, identifying bottlenecks and opportunities for improvement. We use advanced planning tools to design automation strategies tailored to each organization's goals, ensuring seamless integration into daily operations. Our implementation process focuses not only on technical deployment but also on supporting broader organizational development—helping teams adapt, grow, and thrive with new systems in place. Through continuous monitoring and data-driven insights, we provide measurable results, demonstrating clear improvements in efficiency, cost savings, and overall performance.",
     features: [
-      'Customized curriculum',
-      'Hands-on projects',
-      'Real-world scenarios',
-      'Progress tracking',
-      'Certification preparation'
+      'Workflow analysis and optimization',
+      'Custom automation strategies',
+      'Seamless system integration',
+      'Organizational change management',
+      'Performance monitoring and analytics'
     ],
-    technologies: ['HTML', 'JavaScript', 'CSS', 'Web Development', 'Training']
+    technologies: ['Process Automation', 'Workflow Management', 'Data Analytics', 'Integration Tools']
   },
   {
-    title: 'Curriculum Development',
-    summary: 'Custom curriculum design and updates for coding bootcamps and technical education programs.',
-    details: 'We create comprehensive technical education programs that prepare students for real-world development challenges.',
+    title: 'Training',
+    summary: 'Specialized business tool training and process implementation for enhanced operational efficiency.',
+    details: 'We provide in-depth training programs that help businesses effectively implement and utilize modern tools and processes. Our training covers everything from basic tool usage to advanced process optimization, ensuring your team can maximize the value of your technology investments. Through hands-on workshops, video tutorials, and practical exercises, we help organizations streamline their operations and improve productivity.',
     features: [
-      'Industry-aligned content',
-      'Project-based learning',
-      'Assessment tools',
-      'Progress tracking',
-      'Regular updates'
+      'Business tool implementation training',
+      'Process documentation and standardization',
+      'Video tutorial creation and management',
+      'Workflow optimization guidance',
+      'Team adoption and change management'
     ],
-    technologies: ['Curriculum Design', 'Educational Technology', 'Assessment Tools']
+    technologies: ['Training Platforms', 'Video Production', 'Process Documentation', 'Change Management']
   }
 ])
 

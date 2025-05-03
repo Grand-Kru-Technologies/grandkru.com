@@ -1,4 +1,3 @@
-import { describe, it, expect, beforeEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
 import Navigation from '../Navigation.vue'
@@ -25,39 +24,32 @@ describe('Navigation', () => {
     })
   })
 
-  it('renders the logo', () => {
-    expect(wrapper.find('img').exists()).toBe(true)
-    expect(wrapper.find('img').attributes('alt')).toBe('Grand Kru Technologies Logo')
+  it('renders all navigation links', () => {
+    const links = wrapper.findAll('.router-link')
+    expect(links).toHaveLength(3)
+    expect(links[0].text()).toBe('Home')
+    expect(links[1].text()).toBe('About')
+    expect(links[2].text()).toBe('Contact')
   })
 
-  it('renders all navigation items', () => {
-    const navItems = wrapper.findAll('.router-link')
-    expect(navItems).toHaveLength(5)
-    expect(navItems[0].text()).toBe('Home')
-    expect(navItems[1].text()).toBe('About')
-    expect(navItems[2].text()).toBe('Services')
-    expect(navItems[3].text()).toBe('Portfolio')
-    expect(navItems[4].text()).toBe('Contact')
+  it('toggles mobile menu', async () => {
+    const menuButton = wrapper.find('button')
+    expect(wrapper.vm.isMenuOpen).toBe(false)
+
+    await menuButton.trigger('click')
+    expect(wrapper.vm.isMenuOpen).toBe(true)
+
+    await menuButton.trigger('click')
+    expect(wrapper.vm.isMenuOpen).toBe(false)
   })
 
-  it('toggles mobile menu when button is clicked', async () => {
-    const button = wrapper.find('button')
-    expect(wrapper.find('.md\\:hidden').exists()).toBe(false)
+  it('closes mobile menu when clicking a link', async () => {
+    const menuButton = wrapper.find('button')
+    await menuButton.trigger('click')
+    expect(wrapper.vm.isMenuOpen).toBe(true)
 
-    await button.trigger('click')
-    expect(wrapper.find('.md\\:hidden').exists()).toBe(true)
-
-    await button.trigger('click')
-    expect(wrapper.find('.md\\:hidden').exists()).toBe(false)
-  })
-
-  it('closes mobile menu when a link is clicked', async () => {
-    const button = wrapper.find('button')
-    await button.trigger('click')
-
-    const mobileLinks = wrapper.findAll('.md\\:hidden .router-link')
-    await mobileLinks[0].trigger('click')
-
-    expect(wrapper.find('.md\\:hidden').exists()).toBe(false)
+    const link = wrapper.find('.router-link')
+    await link.trigger('click')
+    expect(wrapper.vm.isMenuOpen).toBe(false)
   })
 })

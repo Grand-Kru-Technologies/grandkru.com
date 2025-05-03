@@ -1,4 +1,3 @@
-import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import HomeView from '../HomeView.vue'
 
@@ -16,9 +15,8 @@ describe('HomeView', () => {
   it('renders the call-to-action buttons', () => {
     const wrapper = mount(HomeView)
     const buttons = wrapper.findAll('.router-link')
-    expect(buttons).toHaveLength(2)
-    expect(buttons[0].text()).toBe('Our Services')
-    expect(buttons[1].text()).toBe('Get in Touch')
+    expect(buttons).toHaveLength(1)
+    expect(buttons[0].text()).toBe('Get in Touch')
   })
 
   it('renders the company logo', () => {

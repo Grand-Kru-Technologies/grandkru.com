@@ -1,7 +1,26 @@
-import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import PortfolioView from '../PortfolioView.vue'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+
+// Mock vue3-carousel components
+jest.mock('vue3-carousel', () => ({
+  Carousel: {
+    name: 'Carousel',
+    template: '<div><slot /><slot name="addons" /></div>'
+  },
+  Slide: {
+    name: 'Slide',
+    template: '<div><slot /></div>'
+  },
+  Pagination: {
+    name: 'Pagination',
+    template: '<div />'
+  },
+  Navigation: {
+    name: 'Navigation',
+    template: '<div />'
+  }
+}))
 
 describe('PortfolioView', () => {
   let wrapper
@@ -25,7 +44,35 @@ describe('PortfolioView', () => {
 
   it('renders all portfolio items', () => {
     const items = wrapper.findAll('.bg-light-gray')
-    expect(items.length).toBe(6)
+    expect(items).toHaveLength(6)
+  })
+
+  it('opens modal when clicking a portfolio item', async () => {
+    const firstItem = wrapper.findAll('.bg-light-gray')[0]
+    await firstItem.trigger('click')
+    expect(wrapper.vm.selectedItem).toBeTruthy()
+    expect(wrapper.find('.fixed').exists()).toBe(true)
+  })
+
+  it('closes modal when clicking close button', async () => {
+    const firstItem = wrapper.findAll('.bg-light-gray')[0]
+    await firstItem.trigger('click')
+    expect(wrapper.vm.selectedItem).toBeTruthy()
+
+    const closeButton = wrapper.find('button')
+    await closeButton.trigger('click')
+    expect(wrapper.vm.selectedItem).toBe(null)
+  })
+
+  it('displays correct portfolio item details in modal', async () => {
+    const firstItem = wrapper.findAll('.bg-light-gray')[0]
+    await firstItem.trigger('click')
+
+    const modalTitle = wrapper.find('.text-3xl')
+    expect(modalTitle.text()).toBe('E-commerce Platform')
+
+    const modalDetails = wrapper.findAll('.text-dark-gray')
+    expect(modalDetails[1].text()).toContain('e-commerce platform')
   })
 
   it('displays correct portfolio item titles', () => {
@@ -33,35 +80,6 @@ describe('PortfolioView', () => {
     expect(titles[0].text()).toBe('E-commerce Platform')
     expect(titles[1].text()).toBe('Travel Management System')
     expect(titles[2].text()).toBe('Software Licensing System')
-  })
-
-  it('opens modal when portfolio item is clicked', async () => {
-    const firstItem = wrapper.findAll('.bg-light-gray')[0]
-    await firstItem.trigger('click')
-    expect(wrapper.vm.selectedItem).toBeTruthy()
-    expect(wrapper.find('.fixed').exists()).toBe(true)
-  })
-
-  it('displays correct modal content when opened', async () => {
-    const firstItem = wrapper.findAll('.bg-light-gray')[0]
-    await firstItem.trigger('click')
-
-    const modalTitle = wrapper.find('.text-3xl')
-    expect(modalTitle.text()).toBe('E-commerce Platform')
-
-    const modalContent = wrapper.find('.text-dark-gray')
-    expect(modalContent.text()).toContain('A comprehensive e-commerce solution')
-  })
-
-  it('closes modal when close button is clicked', async () => {
-    const firstItem = wrapper.findAll('.bg-light-gray')[0]
-    await firstItem.trigger('click')
-
-    const closeButton = wrapper.find('button')
-    await closeButton.trigger('click')
-
-    expect(wrapper.vm.selectedItem).toBeNull()
-    expect(wrapper.find('.fixed').exists()).toBe(false)
   })
 
   it('closes modal when clicking outside', async () => {

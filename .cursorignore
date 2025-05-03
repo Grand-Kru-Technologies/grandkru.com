@@ -61,6 +61,5 @@ jspm_packages/
 *.vue.ts
 *.vue.d.ts
 vue.config.js
-vite.config.js
 tsconfig.json
 jsconfig.json
