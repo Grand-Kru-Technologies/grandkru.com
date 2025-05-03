@@ -7,18 +7,12 @@
             Welcome to Grand Kru Technologies
           </h1>
           <p class="text-lg text-dark-gray mb-6">
-            We specialize in delivering innovative technology solutions that drive business growth and digital transformation.
+            Designing Digital with Purpose. Your Tech Partner for What's Next.
           </p>
           <div class="flex gap-4">
             <router-link
-              to="/services"
-              class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors"
-            >
-              Our Services
-            </router-link>
-            <router-link
               to="/contact"
-              class="border-2 border-primary text-primary px-6 py-3 rounded-lg hover:bg-primary hover:text-white transition-colors"
+              class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-colors"
             >
               Get in Touch
             </router-link>
