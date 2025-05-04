@@ -105,10 +105,17 @@ const isSubmitting = ref(false)
 const showSuccess = ref(false)
 const showError = ref(false)
 
-// EmailJS configuration
-const serviceId = 'YOUR_SERVICE_ID' // Replace with your EmailJS service ID
-const templateId = 'YOUR_TEMPLATE_ID' // Replace with your EmailJS template ID
-const publicKey = 'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
+// EmailJS configuration from environment variables
+const serviceId = process.env.VITE_EMAILJS_SERVICE_ID
+const templateId = process.env.VITE_EMAILJS_TEMPLATE_ID
+const publicKey = process.env.VITE_EMAILJS_PUBLIC_KEY
+
+// Debug log to check environment variables
+console.log('EmailJS Config:', {
+  serviceId,
+  templateId,
+  publicKey: publicKey ? 'Set' : 'Not Set'
+})
 
 const validateForm = () => {
   errors.value = {}
@@ -147,21 +154,27 @@ const handleSubmit = async () => {
       from_name: form.value.name,
       from_email: form.value.email,
       subject: form.value.subject,
-      message: form.value.message
+      message: form.value.message,
+      to_name: 'Grand Kru Technologies', // Recipient name
+      reply_to: form.value.email // Set reply-to header
     }
 
-    await emailjs.send(serviceId, templateId, templateParams, publicKey)
+    const response = await emailjs.send(serviceId, templateId, templateParams, publicKey)
 
-    // Reset form
-    form.value = {
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
+    if (response.status === 200) {
+      // Reset form
+      form.value = {
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+      }
+
+      // Show success message
+      showSuccess.value = true
+    } else {
+      throw new Error('Email sending failed')
     }
-
-    // Show success message
-    showSuccess.value = true
   } catch (error) {
     console.error('Error sending email:', error)
     showError.value = true
