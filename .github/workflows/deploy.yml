@@ -2,9 +2,13 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-      - staging
+    branches: ['staging']
+
+  workflow_dispatch:
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -29,13 +33,14 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          VITE_BASE_URL: ${{ github.ref == 'refs/heads/main' && '/' || '/staging/' }}
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          destination_dir: ${{ github.ref == 'refs/heads/main' && '' || 'staging' }}
-          publish_branch: gh-pages
+          # Upload dist folder
+          path: './dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
