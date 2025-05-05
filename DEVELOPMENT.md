@@ -29,6 +29,137 @@
 - Configured proper base URL handling for staging
 - Added deployment URL output
 
+## Deployment Process
+
+### Deployment Flow Diagrams
+
+#### Staging Deployment Flow
+```mermaid
+graph TD
+    A[Create Feature Branch] --> B[Make Changes]
+    B --> C[Commit Changes]
+    C --> D[Push to Feature Branch]
+    D --> E[Create PR to Staging]
+    E --> F{Code Review}
+    F -->|Approved| G[Merge to Staging]
+    F -->|Changes Needed| B
+    G --> H[GitHub Actions Deploy]
+    H --> I[staging.grandkru.com]
+    I --> J[Verify Deployment]
+```
+
+#### Production Deployment Flow
+```mermaid
+graph TD
+    A[Create Release Branch] --> B[Merge Staging]
+    B --> C[Update Version]
+    C --> D[Push to Release Branch]
+    D --> E[Create PR to Main]
+    E --> F{Code Review}
+    F -->|Approved| G[Merge to Main]
+    F -->|Changes Needed| B
+    G --> H[GitHub Actions Deploy]
+    H --> I[grandkru.com]
+    I --> J[Verify Deployment]
+```
+
+#### Environment Configuration Flow
+```mermaid
+graph TD
+    A[Environment Variables] --> B[Local Development]
+    A --> C[Staging]
+    A --> D[Production]
+    B --> E[.env file]
+    C --> F[GitHub Secrets]
+    D --> F
+    E --> G[Vite Config]
+    F --> H[GitHub Actions]
+    G --> I[Build Process]
+    H --> I
+```
+
+### Staging Deployment (staging.grandkru.com)
+1. Create a new branch from staging:
+   ```bash
+   git checkout staging
+   git pull origin staging
+   git checkout -b feature/your-feature-name
+   ```
+
+2. Make your changes and commit them:
+   ```bash
+   git add .
+   git commit -m "feat: your feature description"
+   ```
+
+3. Push to staging:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+4. Create a Pull Request to staging branch
+   - Review changes
+   - Ensure all tests pass
+   - Get code review approval
+
+5. Merge to staging branch
+   - GitHub Actions will automatically deploy to staging.grandkru.com
+   - Verify deployment at https://staging.grandkru.com
+
+### Production Deployment (grandkru.com)
+1. Create a new branch from main:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b release/version-number
+   ```
+
+2. Merge staging changes:
+   ```bash
+   git merge staging
+   ```
+
+3. Update version number in package.json
+   ```bash
+   npm version patch|minor|major
+   ```
+
+4. Push to main:
+   ```bash
+   git push origin release/version-number
+   ```
+
+5. Create a Pull Request to main branch
+   - Review all changes from staging
+   - Ensure all tests pass
+   - Get code review approval
+
+6. Merge to main branch
+   - GitHub Actions will automatically deploy to grandkru.com
+   - Verify deployment at https://grandkru.com
+
+### Environment Variables
+- Staging: Set in GitHub repository secrets
+- Production: Set in GitHub repository secrets
+- Local: Use `.env` file (not committed to repository)
+
+### Deployment Verification
+After each deployment:
+1. Check deployment logs in GitHub Actions
+2. Verify site functionality:
+   - Navigation
+   - Contact form
+   - Portfolio carousel
+   - Responsive design
+3. Test in multiple browsers
+4. Check console for errors
+
+### Rollback Process
+If issues are detected:
+1. Revert the merge commit
+2. Push the revert
+3. GitHub Actions will automatically redeploy the previous version
+
 ## Color Palette
 
 - Primary Blue: `#3b5a7b` (from logo center)
