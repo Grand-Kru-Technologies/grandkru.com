@@ -1,5 +1,34 @@
 # Grandkru Technologies Development Guide
 
+## Recent Changes (2024-03-19)
+
+### EmailJS Integration
+- Added EmailJS configuration for contact form
+- Set up environment variables for EmailJS credentials
+- Configured GitHub Actions secrets for production deployment
+- Added local development environment support
+
+### Environment Configuration
+- Added `.env` file support for local development
+- Configured Vite to load environment variables
+- Set up GitHub Actions workflow with environment variables
+- Added EmailJS environment variables:
+  - `VITE_EMAILJS_SERVICE_ID`
+  - `VITE_EMAILJS_TEMPLATE_ID`
+  - `VITE_EMAILJS_PUBLIC_KEY`
+
+### Debug Configuration
+- Added debug logging for staging environment
+- Configured Vite for better debugging
+- Added environment information logging
+- Set up router navigation logging
+
+### Deployment
+- Updated GitHub Actions workflow for staging deployment
+- Added environment variable support in deployment
+- Configured proper base URL handling for staging
+- Added deployment URL output
+
 ## Color Palette
 
 - Primary Blue: `#3b5a7b` (from logo center)
