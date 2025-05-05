@@ -106,9 +106,9 @@ const showSuccess = ref(false)
 const showError = ref(false)
 
 // EmailJS configuration from environment variables
-const serviceId = process.env.VITE_EMAILJS_SERVICE_ID
-const templateId = process.env.VITE_EMAILJS_TEMPLATE_ID
-const publicKey = process.env.VITE_EMAILJS_PUBLIC_KEY
+const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
 // Debug log to check environment variables
 console.log('EmailJS Config:', {
