@@ -11,8 +11,8 @@ build/
 *.min.css
 
 # Environment files
-.env
-.env.*
+# .env
+# .env.*
 !.env.example
 
 # Logs
