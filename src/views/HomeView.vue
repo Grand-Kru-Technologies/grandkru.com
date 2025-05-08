@@ -7,7 +7,7 @@
             Welcome to Grand Kru Technologies
           </h1>
           <p class="text-lg text-dark-gray mb-6">
-            We specialize in delivering innovative technology solutions that drive business growth and digital transformation.
+            Your Tech Partner for What's Next. Designing Digital with Purpose.
           </p>
           <div class="flex gap-4">
             <router-link
