@@ -7,7 +7,7 @@
             Welcome to Grand Kru Technologies
           </h1>
           <p class="text-lg text-dark-gray mb-6">
-            Designing Digital with Purpose. Your Tech Partner for What's Next.
+            Your Tech Partner for What's Next. Designing Digital with Purpose.
           </p>
           <div class="flex gap-4">
             <router-link
