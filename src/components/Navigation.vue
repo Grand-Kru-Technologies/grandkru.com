@@ -5,7 +5,7 @@
         <!-- Logo -->
         <router-link to="/" class="flex items-center">
           <img
-            src="../assets/grandkru_logo.png"
+            src="../assets/images/grandkru_logo.png"
             alt="Grandkru Technologies Logo"
             class="h-12 w-auto"
           />

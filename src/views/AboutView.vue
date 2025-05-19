@@ -1,14 +1,14 @@
 <template>
   <div class="min-h-screen bg-white">
     <!-- Hero Section -->
-    <div class="relative h-96">
+    <div class="relative h-96 overflow-hidden rounded-md">
       <img
-        src="../assets/tech-hero.jpg"
+	src="../assets/images/about_hero.jpg"
         alt="Technology Hero Image"
-        class="w-full h-full object-cover"
+        class="w-full h-full rounded-md"
       />
       <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-        <h1 class="text-4xl md:text-5xl font-bold text-white">About Grand Kru Technologies</h1>
+
       </div>
     </div>
 
@@ -31,5 +31,5 @@
 </template>
 
 <script setup>
-// Component logic can be added here
+
 </script>
