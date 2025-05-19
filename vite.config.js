@@ -21,10 +21,7 @@ export default defineConfig(({ mode }) => {
       minify: isProduction,
       rollupOptions: {
         output: {
-          manualChunks: {
-            'vendor': ['vue', 'vue-router'],
-            'ui': ['@headlessui/vue', '@heroicons/vue']
-          }
+          manualChunks: undefined
         }
       },
       chunkSizeWarningLimit: 1000,
