@@ -20,7 +20,7 @@
         </div>
         <div class="md:w-1/2">
           <img
-            src="../assets/Grand-Kru-Technologies_grandkrusplash_9237.png"
+            src="../assets/images/Grand-Kru-Technologies_grandkrusplash_9237.png"
             alt="Grandkru Technologies Logo"
             class="w-full max-w-md mx-auto"
           />
