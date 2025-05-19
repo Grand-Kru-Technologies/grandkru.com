@@ -7,6 +7,7 @@ export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '')
+  const isProduction = mode === 'production'
 
   return {
     plugins: [vue(), vueDevTools()],
@@ -16,13 +17,19 @@ export default defineConfig(({ mode }) => {
       host: true
     },
     build: {
-      sourcemap: true,
-      minify: false,
+      sourcemap: !isProduction,
+      minify: isProduction,
       rollupOptions: {
         output: {
-          manualChunks: undefined
+          manualChunks: {
+            'vendor': ['vue', 'vue-router'],
+            'ui': ['@headlessui/vue', '@heroicons/vue']
+          }
         }
-      }
+      },
+      chunkSizeWarningLimit: 1000,
+      assetsDir: 'assets',
+      emptyOutDir: true
     },
     logLevel: 'debug',
     // Expose env variables to the client
