@@ -13,17 +13,17 @@
     </div>
 
     <!-- Content Section -->
-    <div class="container mx-auto px-4 py-16">
-      <div class="max-w-3xl mx-auto">
-        <h2 class="text-3xl font-bold text-primary mb-6">Our Story</h2>
-        <p class="text-lg text-dark-gray mb-6">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+    <div class="container mx-auto px-0 py-16">
+      <div class="max-w-7xl mx-0">
+        <h2 class="text-7xl font-bold text-primary mb-6">Our Story</h2>
+        <p class="text-lg text-dark-gray mb-6 px-2">
+          Grand Kru Technologies is a forward-thinking technology solutions provider, founded with a vision to bridge the gap between traditional business practices and modern digital innovation. Our journey began with a simple yet powerful mission: to empower businesses with cutting-edge technology solutions that drive growth, efficiency, and competitive advantage in an increasingly digital world.
         </p>
-        <p class="text-lg text-dark-gray mb-6">
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        <p class="text-lg text-dark-gray mb-6 px-2">
+          Our company has passionate technologists, strategists, and innovators who bring together decades of combined experience in software development, digital transformation, and business consulting. We pride ourselves on our ability to understand complex business challenges and translate them into elegant, scalable solutions that deliver measurable results. Our expertise spans across web and mobile development, cloud architecture, artificial intelligence, and enterprise software solutions.
         </p>
-        <p class="text-lg text-dark-gray">
-          At Grand Kru Technologies, we believe in delivering excellence through innovation and expertise. Our team of skilled professionals is dedicated to providing cutting-edge solutions that help businesses thrive in the digital age.
+        <p class="text-lg text-dark-gray mb-6 px-2">
+          What sets Grand Kru Technologies apart is our commitment to building lasting partnerships with our clients. We don't just deliver projects; we become an extension of your team, working collaboratively to ensure your success. Our approach combines technical excellence with deep business acumen, allowing us to create solutions that not only meet today's needs but also anticipate tomorrow's challenges. Whether you're a startup looking to establish your digital presence or an enterprise seeking to modernize your operations, we're here to help you navigate the digital landscape with confidence and clarity.
         </p>
       </div>
     </div>
