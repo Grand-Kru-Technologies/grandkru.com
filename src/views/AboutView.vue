@@ -5,7 +5,7 @@
       <img
 	src="../assets/images/geometric-1732847.jpg"
         alt="Technology Hero Image"
-        class="w-full h-full rounded-md"
+        class="w-full h-full object-cover rounded-md"
       />
       <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
 
@@ -20,7 +20,7 @@
           Grand Kru Technologies bridges traditional business with digital innovation, empowering organizations through modern technology. Our experienced team delivers scalable solutions in web, mobile, cloud, and AI to drive growth and efficiency.
         </p>
         <p class="text-lg text-dark-gray mb-6">
-          We build lasting partnerships by working closely with clients, combining technical expertise and business insight. Whether you’re a startup or an enterprise, we help you navigate digital transformation with confidence.
+          We build lasting partnerships by working closely with clients, combining technical expertise and business insight. Whether you're a startup or an enterprise, we help you navigate digital transformation with confidence.
         </p>
       </div>
     </div>
