@@ -20,13 +20,22 @@ const router = createRouter({
       path: '/contact',
       name: 'contact',
       component: () => import('../views/ContactView.vue')
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/'
     }
   ]
 })
 
-// Add navigation logging
+// Handle route parameter from HTML redirects
 router.beforeEach((to, from, next) => {
-  next()
+  const route = to.query.route
+  if (route) {
+    next(route)
+  } else {
+    next()
+  }
 })
 
 router.afterEach((to, from) => {
