@@ -10,7 +10,10 @@ export default defineConfig(({ mode }) => {
   const isProduction = mode === 'production'
 
   return {
-    plugins: [vue(), vueDevTools()],
+    plugins: [
+      vue(),
+      !isProduction && vueDevTools()
+    ].filter(Boolean),
     base: '/',
     server: {
       port: 5173,
@@ -28,7 +31,7 @@ export default defineConfig(({ mode }) => {
       assetsDir: 'assets',
       emptyOutDir: true
     },
-    logLevel: 'debug',
+    logLevel: isProduction ? 'error' : 'debug',
     // Expose env variables to the client
     define: {
       'process.env': env
