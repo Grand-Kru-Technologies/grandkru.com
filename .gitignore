@@ -30,3 +30,6 @@ yarn-debug.log*
 # Yarn Integrity file
 .yarn-integrity
 node_modules
+
+# Distribution output
+dist/
