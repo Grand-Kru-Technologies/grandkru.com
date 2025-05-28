@@ -1,11 +1,11 @@
-name: Deploy to GitHub Pages
+name: Deploy
 
 on:
   push:
     branches:
       - main
       - staging
-
+      - production
   workflow_dispatch:
 
 concurrency:
@@ -21,10 +21,10 @@ env:
   VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
   VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
   VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
-  VITE_BASE_URL: ${{ github.ref == 'refs/heads/main' && '/' || '/staging/' }}
 
 jobs:
-  build-and-deploy:
+  deploy-staging:
+    if: github.ref == 'refs/heads/staging'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -41,14 +41,35 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_BASE_URL: '/staging/'
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          static_site_generator: vite
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload dist folder
           path: './dist'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  deploy-production:
+    if: github.ref == 'refs/heads/production'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy to Fly.io
+        run: flyctl deploy --config fly.toml --app grandkru
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          VITE_BASE_URL: '/'
