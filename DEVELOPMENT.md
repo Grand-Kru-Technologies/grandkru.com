@@ -1,33 +1,88 @@
-# Grandkru Technologies Development Guide
+# Grandkru Technologies Website Development Guide
 
-## Recent Changes (2024-03-19)
+For a detailed history of changes, see [CHANGELOG.md](CHANGELOG.md).
 
-### EmailJS Integration
-- Added EmailJS configuration for contact form
-- Set up environment variables for EmailJS credentials
-- Configured GitHub Actions secrets for production deployment
-- Added local development environment support
+## Deployment Architecture
 
-### Environment Configuration
-- Added `.env` file support for local development
-- Configured Vite to load environment variables
-- Set up GitHub Actions workflow with environment variables
-- Added EmailJS environment variables:
-  - `VITE_EMAILJS_SERVICE_ID`
-  - `VITE_EMAILJS_TEMPLATE_ID`
-  - `VITE_EMAILJS_PUBLIC_KEY`
+```mermaid
+graph TD
+    A[Developer] -->|Push to staging| B[GitHub Actions]
+    A -->|Push to production| B
+    B -->|Staging Branch| C[GitHub Pages]
+    B -->|Production Branch| D[Fly.io]
+    C -->|Deploy| E[staging.grandkru.com]
+    D -->|Deploy| F[grandkru.com]
 
-### Debug Configuration
-- Added debug logging for staging environment
-- Configured Vite for better debugging
-- Added environment information logging
-- Set up router navigation logging
+    subgraph "Staging Environment"
+        C
+        E
+    end
 
-### Deployment
-- Updated GitHub Actions workflow for staging deployment
-- Added environment variable support in deployment
-- Configured proper base URL handling for staging
-- Added deployment URL output
+    subgraph "Production Environment"
+        D
+        F
+    end
+```
+
+## Deployment Configuration
+- **Staging (GitHub Pages)**
+  - Branch: `staging`
+  - Domain: `staging.grandkru.com`
+  - Base URL: `/staging/`
+  - Build Command: `npm run build`
+  - Deploy Command: GitHub Pages deployment
+
+- **Production (Fly.io)**
+  - Branch: `production`
+  - Domain: `grandkru.com`
+  - Base URL: `/`
+  - Build Command: `npm run build`
+  - Deploy Command: `flyctl deploy`
+
+## Required Files
+```
+├── .github/workflows/deploy.yml  # GitHub Actions workflow
+├── Dockerfile                    # Production container config
+├── nginx.conf                    # Nginx server config
+├── fly.toml                      # Fly.io config
+└── vite.config.js               # Vite build config
+```
+
+## Environment Variables
+- `VITE_EMAILJS_SERVICE_ID`
+- `VITE_EMAILJS_TEMPLATE_ID`
+- `VITE_EMAILJS_PUBLIC_KEY`
+- `VITE_BASE_URL` (automatically set based on environment)
+
+## Deployment Steps
+1. **Staging Deployment**
+   ```bash
+   git checkout staging
+   git push origin staging
+   ```
+
+2. **Production Deployment**
+   ```bash
+   git checkout production
+   git push origin production
+   ```
+
+3. **Manual Deployment (if needed)**
+   ```bash
+   # Staging
+   npm run build
+   # Deploy to GitHub Pages
+
+   # Production
+   flyctl deploy --app grandkru
+   ```
+
+## Troubleshooting
+- Check GitHub Actions workflow logs
+- Verify Fly.io app status: `flyctl status --app grandkru`
+- Check Fly.io logs: `flyctl logs --app grandkru`
+- Verify environment variables in GitHub Secrets
+- Check DNS configuration for both domains
 
 ## Deployment Process
 

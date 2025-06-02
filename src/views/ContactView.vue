@@ -105,7 +105,6 @@ const isSubmitting = ref(false)
 const showSuccess = ref(false)
 const showError = ref(false)
 
-<<<<<<< HEAD
 // EmailJS configuration from environment variables
 const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
 const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
@@ -117,12 +116,6 @@ console.log('EmailJS Config:', {
   templateId,
   publicKey: publicKey ? 'Set' : 'Not Set'
 })
-=======
-// EmailJS configuration
-const serviceId = 'YOUR_SERVICE_ID' // Replace with your EmailJS service ID
-const templateId = 'YOUR_TEMPLATE_ID' // Replace with your EmailJS template ID
-const publicKey = 'YOUR_PUBLIC_KEY' // Replace with your EmailJS public key
->>>>>>> 253f602 (feat: setup staging environment with homepage, about, and contact pages)
 
 const validateForm = () => {
   errors.value = {}

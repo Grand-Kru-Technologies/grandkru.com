@@ -1,38 +1,41 @@
-import * as Vue from 'vue'
 import { config } from '@vue/test-utils'
-
-// Make Vue available globally
-global.Vue = Vue
-
-// Mock crypto for Node.js environment
-if (typeof global.crypto === 'undefined') {
-  global.crypto = {
-    getRandomValues: (buffer) => {
-      for (let i = 0; i < buffer.length; i++) {
-        buffer[i] = Math.floor(Math.random() * 256)
-      }
-      return buffer
-    }
-  }
-}
-
-// Mock window for Node.js environment
-if (typeof window === 'undefined') {
-  global.window = {
-    location: {
-      href: '',
-      pathname: '',
-      search: '',
-      hash: ''
-    },
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn()
-  }
-}
 
 // Configure Vue Test Utils
 config.global.stubs = {
   transition: false,
   'router-link': true,
   'router-view': true
+}
+
+// Mock import.meta.env
+global.import = {
+  meta: {
+    env: {
+      VITE_EMAILJS_SERVICE_ID: 'test-service-id',
+      VITE_EMAILJS_TEMPLATE_ID: 'test-template-id',
+      VITE_EMAILJS_PUBLIC_KEY: 'test-public-key'
+    }
+  }
+}
+
+// Mock window.matchMedia
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: jest.fn().mockImplementation(query => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn(),
+    dispatchEvent: jest.fn(),
+  })),
+})
+
+// Mock IntersectionObserver
+global.IntersectionObserver = class IntersectionObserver {
+  observe() { return null }
+  unobserve() { return null }
+  disconnect() { return null }
 }
