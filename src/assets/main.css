@@ -10,10 +10,99 @@
   body {
     @apply text-dark-gray;
   }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent;
+  }
 }
 
 @layer components {
   .container {
     @apply max-w-7xl mx-auto;
+  }
+
+  .glass {
+    @apply bg-white/30 backdrop-blur-md border border-white/40 shadow-lg;
+  }
+
+  .glass-dark {
+    @apply bg-black/10 backdrop-blur-lg border border-white/10 shadow-lg;
+  }
+
+  .glass-card {
+    @apply glass rounded-xl p-6 transition-all duration-300 hover:shadow-xl hover:scale-[1.02];
+  }
+
+  .glass-input {
+    @apply glass rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300;
+  }
+
+  .glass-button {
+    @apply bg-primary text-white rounded-lg px-6 py-2 font-medium
+           transition-all duration-300 hover:bg-primary/90 hover:scale-[1.02]
+           active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .nav-link {
+    @apply relative text-dark-gray hover:text-primary transition-all duration-300
+           px-3 py-1 rounded-md hover:scale-105;
+  }
+
+  .nav-link::before,
+  .nav-link::after,
+  .nav-link span::before,
+  .nav-link span::after {
+    content: '';
+    @apply absolute bg-primary/80 transition-all duration-300;
+  }
+
+  .nav-link::before,
+  .nav-link::after {
+    @apply h-[2px] w-0;
+  }
+
+  .nav-link span::before,
+  .nav-link span::after {
+    @apply w-[2px] h-0;
+  }
+
+  .nav-link::before {
+    @apply bottom-0 right-0;
+  }
+
+  .nav-link::after {
+    @apply top-0 left-0;
+  }
+
+  .nav-link span::before {
+    @apply bottom-0 left-0;
+  }
+
+  .nav-link span::after {
+    @apply top-0 right-0 rounded-tr-md;
+  }
+
+  .nav-link:hover::before,
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+
+  .nav-link:hover span::before,
+  .nav-link:hover span::after {
+    @apply h-full;
+  }
+
+  .nav-link-active {
+    @apply text-primary;
+  }
+
+  .nav-link-active::before,
+  .nav-link-active::after {
+    @apply w-full;
+  }
+
+  .nav-link-active span::before,
+  .nav-link-active span::after {
+    @apply h-full;
   }
 }

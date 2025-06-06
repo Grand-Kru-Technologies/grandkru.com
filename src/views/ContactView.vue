@@ -1,28 +1,40 @@
 <template>
-  <div class="min-h-screen bg-white py-16">
+  <div class="min-h-screen bg-gradient-to-br from-primary/5 to-primary/10 py-16">
     <div class="container mx-auto px-4">
       g
 
       <!-- Success Message -->
-      <div v-if="showSuccess" class="fixed top-4 right-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">Success!</strong>
-        <span class="block sm:inline"> Your message has been sent successfully.</span>
-        <span class="absolute top-0 bottom-0 right-0 px-4 py-3" @click="showSuccess = false">
-          <svg class="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-        </span>
+      <div v-if="showSuccess"
+           class="fixed top-4 right-4 glass-card bg-green-100/80 text-green-700 flex items-center gap-2"
+           role="alert">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        <span>Your message has been sent successfully!</span>
+        <button @click="showSuccess = false" class="ml-2 hover:scale-110 transition-transform">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
       <!-- Error Message -->
-      <div v-if="showError" class="fixed top-4 right-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">Error!</strong>
-        <span class="block sm:inline"> An error occurred. Please try again.</span>
-        <span class="absolute top-0 bottom-0 right-0 px-4 py-3" @click="showError = false">
-          <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-        </span>
+      <div v-if="showError"
+           class="fixed top-4 right-4 glass-card bg-red-100/80 text-red-700 flex items-center gap-2"
+           role="alert">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>An error occurred. Please try again.</span>
+        <button @click="showError = false" class="ml-2 hover:scale-110 transition-transform">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
       <div class="max-w-2xl mx-auto">
-        <form @submit.prevent="handleSubmit" class="space-y-6">
+        <form @submit.prevent="handleSubmit" class="glass-card space-y-6">
           <!-- Name Field -->
           <div>
             <label for="name" class="block text-dark-gray font-medium mb-2">Name</label>
@@ -30,7 +42,7 @@
               type="text"
               id="name"
               v-model="form.name"
-              class="w-full px-4 py-2 border border-medium-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              class="glass-input w-full"
               :class="{ 'border-red-500': errors.name }"
             />
             <p v-if="errors.name" class="text-red-500 text-sm mt-1">{{ errors.name }}</p>
@@ -43,7 +55,7 @@
               type="email"
               id="email"
               v-model="form.email"
-              class="w-full px-4 py-2 border border-medium-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              class="glass-input w-full"
               :class="{ 'border-red-500': errors.email }"
             />
             <p v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</p>
@@ -56,7 +68,7 @@
               type="text"
               id="subject"
               v-model="form.subject"
-              class="w-full px-4 py-2 border border-medium-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              class="glass-input w-full"
               :class="{ 'border-red-500': errors.subject }"
             />
             <p v-if="errors.subject" class="text-red-500 text-sm mt-1">{{ errors.subject }}</p>
@@ -69,7 +81,7 @@
               id="message"
               v-model="form.message"
               rows="4"
-              class="w-full px-4 py-2 border border-medium-gray rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              class="glass-input w-full resize-none"
               :class="{ 'border-red-500': errors.message }"
             ></textarea>
             <p v-if="errors.message" class="text-red-500 text-sm mt-1">{{ errors.message }}</p>
@@ -78,10 +90,17 @@
           <!-- Submit Button -->
           <button
             type="submit"
-            class="w-full bg-primary text-white py-3 rounded-lg hover:bg-opacity-90 transition-colors"
+            class="glass-button w-full bg-primary"
             :disabled="isSubmitting"
           >
-            {{ isSubmitting ? 'Sending...' : 'Send Message' }}
+            <span v-if="isSubmitting" class="flex items-center justify-center gap-2">
+              <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" />
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+              Sending...
+            </span>
+            <span v-else>Send Message</span>
           </button>
         </form>
       </div>

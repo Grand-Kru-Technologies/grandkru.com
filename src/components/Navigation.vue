@@ -1,31 +1,32 @@
 <template>
-  <nav class="bg-white shadow-md">
+  <nav class="glass fixed w-full z-50">
     <div class="container mx-auto px-4">
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->
-        <router-link to="/" class="flex items-center">
+        <router-link to="/" class="flex items-center transition-transform duration-300 hover:scale-105 relative z-10">
           <img
             src="../assets/images/cropped_grandkru_logo.png"
             alt="Grandkru Technologies Logo"
             class="h-12 w-auto"
           />
         </router-link>
+
         <!-- Desktop Navigation -->
         <div class="hidden md:flex space-x-8">
           <router-link
             v-for="item in navigationItems"
             :key="item.path"
             :to="item.path"
-            class="text-dark-gray hover:text-primary transition-colors"
-            :class="{ 'text-primary': $route.path === item.path }"
+            class="nav-link"
+            :class="{ 'nav-link-active': $route.path === item.path }"
           >
-            {{ item.name }}
+            <span>{{ item.name }}</span>
           </router-link>
         </div>
 
         <!-- Mobile Menu Button -->
         <button
-          class="md:hidden p-2"
+          class="md:hidden p-2 glass rounded-lg transition-all duration-300 hover:scale-110"
           @click="isMenuOpen = !isMenuOpen"
         >
           <svg
@@ -53,21 +54,32 @@
       </div>
 
       <!-- Mobile Navigation -->
-      <div
-        v-if="isMenuOpen"
-        class="md:hidden py-4 space-y-2"
+      <transition
+        enter-active-class="transition duration-300 ease-out"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
+        leave-active-class="transition duration-200 ease-in"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
       >
-        <router-link
-          v-for="item in navigationItems"
-          :key="item.path"
-          :to="item.path"
-          class="block text-dark-gray hover:text-primary transition-colors"
-          :class="{ 'text-primary': $route.path === item.path }"
-          @click="isMenuOpen = false"
+        <div
+          v-if="isMenuOpen"
+          class="md:hidden glass rounded-lg mt-2 p-4"
         >
-          {{ item.name }}
-        </router-link>
-      </div>
+          <div class="flex justify-center space-x-8">
+            <router-link
+              v-for="item in navigationItems"
+              :key="item.path"
+              :to="item.path"
+              class="nav-link w-fit"
+              :class="{ 'nav-link-active': $route.path === item.path }"
+              @click="isMenuOpen = false"
+            >
+              <span>{{ item.name }}</span>
+            </router-link>
+          </div>
+        </div>
+      </transition>
     </div>
   </nav>
 </template>
