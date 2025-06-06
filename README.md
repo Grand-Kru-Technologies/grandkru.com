@@ -1,4 +1,6 @@
-# grandkru.com
+# Grand Kru Technologies Website
+
+Last updated: 2024-03-19 15:45 UTC
 
 Grandkru Technologies is a modern, responsive single-page application (SPA) built with Vue 3 and Tailwind CSS. The website showcases the company's services, portfolio, and contact information with a clean, professional design inspired by the company logo and color palette.
 
