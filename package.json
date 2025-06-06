@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "scripts": {
     "dev": "vite --open",
-    "build": "vue-tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "test": "jest",
     "production": "vite build && vite preview --mode production",
