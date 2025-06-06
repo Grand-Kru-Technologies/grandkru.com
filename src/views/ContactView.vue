@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-primary/5 to-primary/10 py-16">
+  <div class="min-h-screen from-primary/5 to-primary/10 py-16">
     <div class="container mx-auto px-4">
-      g
+
 
       <!-- Success Message -->
       <div v-if="showSuccess"
