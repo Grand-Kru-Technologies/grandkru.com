@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen from-primary/5 to-primary/10 py-16">
     <div class="container mx-auto px-4">
-
+      <h1 class="text-4xl font-bold text-primary text-center mb-12">Contact Us</h1>
 
       <!-- Success Message -->
       <div v-if="showSuccess"
