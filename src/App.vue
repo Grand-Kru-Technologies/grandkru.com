@@ -1,5 +1,5 @@
 <template>
-  <PasswordProtection>
+  <!-- <PasswordProtection> -->
     <div class="min-h-screen bg-white">
       <Navigation />
       <main class="container mx-auto px-4 py-8">
@@ -10,7 +10,7 @@
         </router-view>
       </main>
     </div>
-  </PasswordProtection>
+  <!-- </PasswordProtection> -->
 </template>
 
 <script setup>

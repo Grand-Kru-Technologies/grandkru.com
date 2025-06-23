@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-white py-16">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-16">
     <div class="container mx-auto px-4">
       <h1 class="text-4xl font-bold text-primary text-center mb-12">Our Services</h1>
 
@@ -7,13 +7,34 @@
         <div
           v-for="(service, index) in services"
           :key="index"
-          class="bg-light-gray p-6 rounded-lg shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
+          class="relative overflow-hidden rounded-xl shadow-lg cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-105 group"
           @click="openModal(service)"
         >
-          <h3 class="text-2xl font-bold text-primary mb-4">{{ service.title }}</h3>
-          <p class="text-dark-gray mb-4">
-            {{ service.summary }}
-          </p>
+          <!-- Background Image with Overlay -->
+          <div
+            class="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-300"
+            :style="{ backgroundImage: `url(${service.backgroundImage})` }"
+          ></div>
+
+          <!-- Gradient Overlay -->
+          <div
+            class="absolute inset-0 opacity-80"
+            :class="service.gradient"
+          ></div>
+
+          <!-- Content -->
+          <div class="relative p-6 text-white">
+            <h3 class="text-2xl font-bold mb-4">{{ service.title }}</h3>
+            <p class="text-white/90 mb-4">
+              {{ service.summary }}
+            </p>
+            <div class="flex items-center text-white/80 text-sm">
+              <span>Learn more</span>
+              <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -24,47 +45,57 @@
         @click="closeModal"
       >
         <div
-          class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 ease-in-out relative"
+          class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 ease-in-out relative"
           @click.stop
         >
-          <div class="p-8">
-            <div class="flex justify-between items-start mb-6">
-              <h2 class="text-3xl font-bold text-primary">{{ selectedService.title }}</h2>
+          <!-- Modal Header with Background -->
+          <div
+            class="relative h-32 rounded-t-xl overflow-hidden"
+            :style="{ backgroundImage: `url(${selectedService.backgroundImage})` }"
+          >
+            <div
+              class="absolute inset-0 opacity-60"
+              :class="selectedService.gradient"
+            ></div>
+            <div class="relative p-6 flex justify-between items-start">
+              <h2 class="text-3xl font-bold text-white">{{ selectedService.title }}</h2>
               <button
                 @click="closeModal"
-                class="text-dark-gray hover:text-primary text-2xl"
+                class="text-white hover:text-gray-200 text-2xl bg-black/20 rounded-full w-8 h-8 flex items-center justify-center hover:bg-black/30 transition-colors duration-300"
               >
                 ✕
               </button>
             </div>
-            <div class="space-y-6">
-              <div>
-                <h3 class="text-xl font-bold text-primary mb-3">Service Overview</h3>
-                <p class="text-dark-gray text-lg">{{ selectedService.summary }}</p>
-              </div>
-              <div>
-                <h3 class="text-xl font-bold text-primary mb-3">Detailed Description</h3>
-                <p class="text-dark-gray">{{ selectedService.details }}</p>
-              </div>
-              <div>
-                <h3 class="text-xl font-bold text-primary mb-3">Key Features</h3>
-                <ul class="list-disc list-inside text-dark-gray space-y-2">
-                  <li v-for="(feature, index) in selectedService.features" :key="index">
-                    {{ feature }}
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 class="text-xl font-bold text-primary mb-3">Technologies Used</h3>
-                <div class="flex flex-wrap gap-2">
-                  <span
-                    v-for="(tech, index) in selectedService.technologies"
-                    :key="index"
-                    class="bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-full text-sm font-medium"
-                  >
-                    {{ tech }}
-                  </span>
-                </div>
+          </div>
+
+          <!-- Modal Content -->
+          <div class="p-6 space-y-6">
+            <div>
+              <h3 class="text-xl font-bold text-primary mb-3">Service Overview</h3>
+              <p class="text-dark-gray text-lg">{{ selectedService.summary }}</p>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-primary mb-3">Detailed Description</h3>
+              <p class="text-dark-gray">{{ selectedService.details }}</p>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-primary mb-3">Key Features</h3>
+              <ul class="list-disc list-inside text-dark-gray space-y-2">
+                <li v-for="(feature, index) in selectedService.features" :key="index">
+                  {{ feature }}
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold text-primary mb-3">Technologies Used</h3>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  v-for="(tech, index) in selectedService.technologies"
+                  :key="index"
+                  class="bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-full text-sm font-medium"
+                >
+                  {{ tech }}
+                </span>
               </div>
             </div>
           </div>
@@ -74,14 +105,69 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 
-const services = ref([
+interface Service {
+  title: string;
+  summary: string;
+  details: string;
+  features: string[];
+  technologies: string[];
+  gradient: string;
+  backgroundImage: string;
+}
+
+const services = ref<Service[]>([
   {
-    title: 'E-commerce Implementation',
-    summary: 'Custom e-commerce solutions using WordPress, Gravity Forms, and Stripe integration for seamless online transactions.',
-    details: 'We specialize in creating comprehensive e-commerce platforms that drive sales and enhance customer experience. Our solutions include custom payment processing, multi-national fulfillment, and analytics integration.',
+    title: 'Web Development',
+    summary: 'Custom web applications and websites built with modern technologies for optimal performance and user experience.',
+    details: 'We specialize in creating cutting-edge web applications and websites that drive business growth. Our development process combines modern frameworks with best practices to deliver scalable, maintainable, and high-performing solutions. From single-page applications to complex enterprise systems, we ensure your web presence is not only visually stunning but also technically robust and future-ready.',
+    features: [
+      'Custom web application development',
+      'Responsive design implementation',
+      'Performance optimization',
+      'SEO-friendly architecture',
+      'Cross-browser compatibility'
+    ],
+    technologies: ['Vue.js', 'React', 'Node.js', 'TypeScript', 'Tailwind CSS', 'Vite'],
+    gradient: 'bg-gradient-to-br from-blue-600 to-purple-700',
+    backgroundImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
+  },
+  {
+    title: 'AI Automation',
+    summary: 'Intelligent automation solutions powered by artificial intelligence to streamline operations and boost productivity.',
+    details: 'Our AI Automation services leverage cutting-edge machine learning and artificial intelligence to transform your business processes. We develop intelligent systems that can learn, adapt, and optimize workflows automatically. From data processing and analysis to customer service automation, our AI solutions help businesses reduce manual work, minimize errors, and focus on strategic initiatives.',
+    features: [
+      'Machine learning model development',
+      'Natural language processing',
+      'Predictive analytics',
+      'Automated decision-making systems',
+      'Intelligent workflow optimization'
+    ],
+    technologies: ['Python', 'TensorFlow', 'OpenAI API', 'Machine Learning', 'Data Analytics', 'Cloud AI'],
+    gradient: 'bg-gradient-to-br from-emerald-600 to-teal-700',
+    backgroundImage: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
+  },
+  {
+    title: 'Financial Quality Assurance',
+    summary: 'AI-powered financial oversight and optimization for enhanced accuracy, compliance, and strategic decision-making.',
+    details: 'Our Financial Quality Assurance service is designed to bring together expert financial oversight with cutting-edge technology. Beyond traditional bookkeeping, we use AI-assisted tools for auditing, planning, implementation, and continuous optimization. Our service identifies inconsistencies early, streamlines financial workflows, strengthens internal controls, and enhances regulatory compliance — all while delivering real-time insights through intelligent automation. By integrating predictive analytics, automated reporting, and proactive monitoring, we help businesses maintain financial accuracy, reduce risks, and unlock smarter decision-making.',
+    features: [
+      'AI-assisted financial auditing',
+      'Real-time financial insights',
+      'Predictive analytics integration',
+      'Automated compliance monitoring',
+      'Risk assessment and mitigation'
+    ],
+    technologies: ['AI/ML', 'QuickBooks', 'Financial Analytics', 'Zapier', 'Compliance Systems', 'Data Visualization'],
+    gradient: 'bg-gradient-to-br from-green-600 to-emerald-700',
+    backgroundImage: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
+  },
+  {
+    title: 'E-Commerce',
+    summary: 'Complete e-commerce solutions with custom payment processing, inventory management, and seamless user experiences.',
+    details: 'We build comprehensive e-commerce platforms that drive sales and enhance customer experience. Our solutions include custom payment gateway integration, advanced inventory management, and real-time analytics. From small online stores to enterprise-level marketplaces, we create scalable e-commerce systems that grow with your business and provide exceptional shopping experiences across all devices.',
     features: [
       'Custom payment gateway integration',
       'Advanced inventory management',
@@ -89,51 +175,14 @@ const services = ref([
       'Mobile-responsive design',
       'Secure checkout process'
     ],
-    technologies: ['WordPress', 'Gravity Forms', 'Stripe', 'PHP', 'WooCommerce']
-  },
-  {
-    title: 'Website Development',
-    summary: 'End-to-end website solutions from design to deployment, ensuring optimal user experience and performance.',
-    details: 'We provide complete website development services, creating custom solutions that align with your business goals. Our team handles everything from initial design to final deployment, ensuring your website is not only visually appealing but also functional, responsive, and optimized for search engines.',
-    features: [
-      'Custom website development',
-      'Ongoing maintenance and support',
-      'Content management system integration',
-      'Search engine optimization',
-      'Performance optimization'
-    ],
-    technologies: ['HTML/CSS', 'JavaScript', 'WordPress', 'React', 'Vue.js']
-  },
-  {
-    title: 'Financial Quality Assurance',
-    summary: 'AI-powered financial oversight and optimization for enhanced accuracy and compliance.',
-    details: 'Our Financial Quality Assurance service is designed to bring together expert financial oversight with cutting-edge technology. Beyond traditional bookkeeping, we use AI-assisted tools for auditing, planning, implementation, and continuous optimization. Our service identifies inconsistencies early, streamlines financial workflows, strengthens internal controls, and enhances regulatory compliance — all while delivering real-time insights through intelligent automation. By integrating predictive analytics, automated reporting, and proactive monitoring, we help businesses maintain financial accuracy, reduce risks, and unlock smarter decision-making.',
-    features: [
-      'AI-assisted financial auditing',
-      'Real-time financial insights',
-      'Predictive analytics integration',
-      'Automated reporting systems',
-      'Proactive risk monitoring'
-    ],
-    technologies: ['AI/ML', 'Quickbooks','Financial Analytics', 'Zapier', 'Compliance Systems']
-  },
-  {
-    title: 'Software Development',
-    summary: 'Custom software solutions using modern Rails and Node.js stacks for scalable applications.',
-    details: 'We develop powerful, scalable software applications using Ruby on Rails and Node.js. Our team specializes in creating custom solutions that meet your specific business needs, from API development to full-stack applications.',
-    features: [
-      'Full-stack application development',
-      'RESTful API design and implementation',
-      'Database architecture and optimization',
-      'Cloud deployment and scaling',
-      'Continuous integration and deployment'
-    ],
-    technologies: ['Ruby on Rails', 'Node.js', 'PostgreSQL', 'AWS', 'Docker', 'Git']
+    technologies: ['WordPress', 'WooCommerce', 'Stripe', 'Gravity Forms', 'PHP', 'Payment APIs'],
+    gradient: 'bg-gradient-to-br from-orange-600 to-red-600',
+    backgroundImage: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
   },
   {
     title: 'Business Process Automation',
-    summary: 'Technology-driven workflow optimization and automation for enhanced operational efficiency.',
-    details: "We specialize in Business Process Automation by leveraging the latest technology tools to analyze, plan, and implement efficient, scalable solutions. Our approach starts with a deep analysis of existing workflows, identifying bottlenecks and opportunities for improvement. We use advanced planning tools to design automation strategies tailored to each organization's goals, ensuring seamless integration into daily operations. Our implementation process focuses not only on technical deployment but also on supporting broader organizational development—helping teams adapt, grow, and thrive with new systems in place. Through continuous monitoring and data-driven insights, we provide measurable results, demonstrating clear improvements in efficiency, cost savings, and overall performance.",
+    summary: 'Technology-driven workflow optimization and automation for enhanced operational efficiency and cost savings.',
+    details: 'We specialize in Business Process Automation by leveraging the latest technology tools to analyze, plan, and implement efficient, scalable solutions. Our approach starts with a deep analysis of existing workflows, identifying bottlenecks and opportunities for improvement. We design automation strategies tailored to each organization\'s goals, ensuring seamless integration into daily operations while supporting broader organizational development.',
     features: [
       'Workflow analysis and optimization',
       'Custom automation strategies',
@@ -141,26 +190,15 @@ const services = ref([
       'Organizational change management',
       'Performance monitoring and analytics'
     ],
-    technologies: ['Process Automation', 'Workflow Management', 'Data Analytics', 'Integration Tools']
-  },
-  {
-    title: 'Training',
-    summary: 'Specialized business tool training and process implementation for enhanced operational efficiency.',
-    details: 'We provide in-depth training programs that help businesses effectively implement and utilize modern tools and processes. Our training covers everything from basic tool usage to advanced process optimization, ensuring your team can maximize the value of your technology investments. Through hands-on workshops, video tutorials, and practical exercises, we help organizations streamline their operations and improve productivity.',
-    features: [
-      'Business tool implementation training',
-      'Process documentation and standardization',
-      'Video tutorial creation and management',
-      'Workflow optimization guidance',
-      'Team adoption and change management'
-    ],
-    technologies: ['Training Platforms', 'Video Production', 'Process Documentation', 'Change Management']
+    technologies: ['Process Automation', 'Workflow Management', 'Data Analytics', 'Integration Tools', 'RPA', 'API Development'],
+    gradient: 'bg-gradient-to-br from-indigo-600 to-purple-700',
+    backgroundImage: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
   }
 ])
 
-const selectedService = ref(null)
+const selectedService = ref<Service | null>(null)
 
-const openModal = (service) => {
+const openModal = (service: Service) => {
   selectedService.value = service
 }
 
