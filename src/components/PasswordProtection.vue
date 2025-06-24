@@ -1,14 +1,15 @@
 <template>
-  <div v-if="!isAuthenticated" class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div v-if="isStaging && !isAuthenticated" class="min-h-screen flex items-center justify-center bg-gray-100">
     <div class="bg-white p-8 rounded-lg shadow-md w-96">
-      <h2 class="text-2xl font-bold mb-6 text-center">Enter Password</h2>
+      <h2 class="text-2xl font-bold mb-6 text-center">Staging Environment</h2>
+      <p class="text-sm text-gray-600 mb-4 text-center">This is a protected staging environment. Please enter the password to continue.</p>
       <form @submit.prevent="checkPassword" class="space-y-4">
         <div>
           <input
             v-model="password"
             type="password"
             class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter password"
+            placeholder="Enter staging password"
             required
             :disabled="isLocked"
           />
@@ -43,6 +44,13 @@ const attempts = ref(0)
 const isLocked = ref(false)
 const lockoutTime = ref(0)
 const lastAttemptTime = ref(0)
+
+// Check if we're on staging environment
+const isStaging = computed(() => {
+  return window.location.hostname === 'staging.grandkru.com' ||
+         window.location.hostname.includes('staging') ||
+         import.meta.env.VITE_ENVIRONMENT === 'staging'
+})
 
 // Security settings
 const maxAttempts = 5
@@ -103,18 +111,35 @@ const checkPassword = async () => {
 }
 
 onMounted(() => {
+  // Debug logging
+  console.log('PasswordProtection mounted')
+  console.log('Hostname:', window.location.hostname)
+  console.log('VITE_ENVIRONMENT:', import.meta.env.VITE_ENVIRONMENT)
+  console.log('isStaging:', isStaging.value)
+
+  // If not on staging, skip authentication
+  if (!isStaging.value) {
+    console.log('Not on staging, bypassing authentication')
+    isAuthenticated.value = true
+    return
+  }
+
+  console.log('On staging, checking authentication')
   // Check for existing authentication
   const storedAuthToken = localStorage.getItem('authToken')
   if (storedAuthToken) {
     try {
       const decryptedToken = CryptoJS.AES.decrypt(storedAuthToken, encryptionKey).toString(CryptoJS.enc.Utf8)
       if (decryptedToken === 'authenticated') {
+        console.log('Found valid auth token')
         isAuthenticated.value = true
       }
     } catch (error) {
       console.error('Token decryption error:', error)
       localStorage.removeItem('authToken')
     }
+  } else {
+    console.log('No auth token found, showing password screen')
   }
 })
 </script>
