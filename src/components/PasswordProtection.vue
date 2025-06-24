@@ -111,24 +111,35 @@ const checkPassword = async () => {
 }
 
 onMounted(() => {
+  // Debug logging
+  console.log('PasswordProtection mounted')
+  console.log('Hostname:', window.location.hostname)
+  console.log('VITE_ENVIRONMENT:', import.meta.env.VITE_ENVIRONMENT)
+  console.log('isStaging:', isStaging.value)
+
   // If not on staging, skip authentication
   if (!isStaging.value) {
+    console.log('Not on staging, bypassing authentication')
     isAuthenticated.value = true
     return
   }
 
+  console.log('On staging, checking authentication')
   // Check for existing authentication
   const storedAuthToken = localStorage.getItem('authToken')
   if (storedAuthToken) {
     try {
       const decryptedToken = CryptoJS.AES.decrypt(storedAuthToken, encryptionKey).toString(CryptoJS.enc.Utf8)
       if (decryptedToken === 'authenticated') {
+        console.log('Found valid auth token')
         isAuthenticated.value = true
       }
     } catch (error) {
       console.error('Token decryption error:', error)
       localStorage.removeItem('authToken')
     }
+  } else {
+    console.log('No auth token found, showing password screen')
   }
 })
 </script>

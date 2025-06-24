@@ -12,7 +12,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply bg-gradient-to-r from-primary via-primary/80 to-primary bg-clip-text text-transparent;
+    @apply text-primary;
   }
 }
 
@@ -104,5 +104,11 @@
   .nav-link-active span::before,
   .nav-link-active span::after {
     @apply h-full;
+  }
+
+  /* Ensure navigation has no gradients */
+  nav.glass {
+    @apply bg-white shadow-lg;
+    background: white !important;
   }
 }
