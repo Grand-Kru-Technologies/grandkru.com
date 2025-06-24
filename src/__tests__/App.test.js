@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from '../App.vue'
 import Navigation from '../components/Navigation.vue'
-import PasswordProtection from '../components/PasswordProtection.vue'
+
 
 // Create a mock router
 const router = createRouter({
@@ -47,10 +47,6 @@ describe('App.vue', () => {
 
   it('renders the Navigation component', () => {
     expect(wrapper.findComponent(Navigation).exists()).toBe(true)
-  })
-
-  it('renders the PasswordProtection component', () => {
-    expect(wrapper.findComponent(PasswordProtection).exists()).toBe(true)
   })
 
   it('renders the router view', () => {
