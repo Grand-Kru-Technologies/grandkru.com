@@ -84,3 +84,56 @@ globs: **/*.vue, **/*.ts, components/**/*
 - Implement proper code splitting
 - Use proper asset handling
 - Configure proper optimization
+
+# Grand Kru Technologies - Project Guidelines
+
+## Technology Stack
+- **TypeScript**: Use TypeScript for all new files (.ts, .tsx, .vue with <script lang="ts">)
+- **Vue 3**: Use Composition API with TypeScript
+- **Vite**: Build tool and dev server
+- **Vitest**: Testing framework (not Jest)
+- **Vue Router**: For routing with TypeScript
+- **Vuetify**: UI component library
+
+## Code Style & Patterns
+- Always use TypeScript over JavaScript
+- Use Vue 3 Composition API with `<script setup lang="ts">` in .vue files
+- Use proper TypeScript types and interfaces
+- Use Vitest for testing (not Jest)
+- Use Vite for building and development
+- Follow Vue.js best practices and style guide
+
+## File Extensions
+- Use `.ts` for TypeScript files
+- Use `.vue` with `<script lang="ts">` for Vue components
+- Use `.spec.ts` for test files
+- Use `.d.ts` for type declaration files
+
+## Testing
+- Use Vitest, not Jest
+- Test files should be `.spec.ts`
+- Use Vue Test Utils for component testing
+- Mock external dependencies properly
+
+## Build & Development
+- Use `npm run dev` for development
+- Use `npm run build` for production builds
+- Use `npm run test` for running tests
+- Use `npm run preview` for previewing builds
+
+## Project Structure
+- Keep components in `src/components/`
+- Keep views in `src/views/`
+- Keep tests in `src/__tests__/` or alongside files
+- Use proper TypeScript imports and exports
+
+## Router & Navigation
+- Use Vue Router with TypeScript
+- Use `createWebHistory` for routing
+- Handle SPA fallback for GitHub Pages deployment
+- Use proper route typing
+
+## Environment
+- Use environment variables with `VITE_` prefix
+- Handle staging vs production environments
+- Use proper base URL configuration for deployments

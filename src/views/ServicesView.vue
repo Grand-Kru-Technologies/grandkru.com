@@ -107,6 +107,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import techImage1 from '../assets/images/technology-8576308.jpg'
+import techImage2 from '../assets/images/technology-8576321.jpg'
+import keyboardImage from '../assets/images/keyboard.jpg'
+import desktopImage from '../assets/images/desktop.jpg'
+import geometricImage from '../assets/images/geometric-1732847.jpg'
 
 interface Service {
   title: string;
@@ -132,7 +137,7 @@ const services = ref<Service[]>([
     ],
     technologies: ['Vue.js', 'React', 'Node.js', 'TypeScript', 'Tailwind CSS', 'Vite'],
     gradient: 'bg-gradient-to-br from-blue-600 to-purple-700',
-    backgroundImage: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
+    backgroundImage: techImage1
   },
   {
     title: 'AI Automation',
@@ -147,7 +152,7 @@ const services = ref<Service[]>([
     ],
     technologies: ['Python', 'TensorFlow', 'OpenAI API', 'Machine Learning', 'Data Analytics', 'Cloud AI'],
     gradient: 'bg-gradient-to-br from-emerald-600 to-teal-700',
-    backgroundImage: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
+    backgroundImage: techImage2
   },
   {
     title: 'Financial Quality Assurance',
@@ -162,7 +167,7 @@ const services = ref<Service[]>([
     ],
     technologies: ['AI/ML', 'QuickBooks', 'Financial Analytics', 'Zapier', 'Compliance Systems', 'Data Visualization'],
     gradient: 'bg-gradient-to-br from-green-600 to-emerald-700',
-    backgroundImage: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
+    backgroundImage: geometricImage
   },
   {
     title: 'E-Commerce',
@@ -177,7 +182,7 @@ const services = ref<Service[]>([
     ],
     technologies: ['WordPress', 'WooCommerce', 'Stripe', 'Gravity Forms', 'PHP', 'Payment APIs'],
     gradient: 'bg-gradient-to-br from-orange-600 to-red-600',
-    backgroundImage: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
+    backgroundImage: keyboardImage
   },
   {
     title: 'Business Process Automation',
@@ -192,7 +197,7 @@ const services = ref<Service[]>([
     ],
     technologies: ['Process Automation', 'Workflow Management', 'Data Analytics', 'Integration Tools', 'RPA', 'API Development'],
     gradient: 'bg-gradient-to-br from-indigo-600 to-purple-700',
-    backgroundImage: 'https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80'
+    backgroundImage: desktopImage
   }
 ])
 
