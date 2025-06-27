@@ -1,5 +1,55 @@
 # Grandkru Technologies Website Development Guide
 
+## Development & Deployment Workflow
+
+This project follows a **GitHub Flow with Staging** approach, combining the simplicity of GitHub Flow with the safety of a staging environment.
+
+### Branch Strategy
+
+- **`main`** - Always contains production-ready code, automatically deploys to production
+- **`staging`** - Integration branch for testing, automatically deploys to staging environment
+- **`feature/*`** - Individual feature branches created from `staging`
+
+### Workflow Steps
+
+1. **Feature Development:**
+   ```bash
+   git checkout staging
+   git pull origin staging
+   git checkout -b feature/your-feature-name
+   # Make changes, commit, push
+   git push origin feature/your-feature-name
+   ```
+
+2. **Staging Review:**
+   - Create PR from `feature/*` → `staging`
+   - Code review and testing
+   - Merge to `staging` → auto-deploys to [staging.grandkru.com](https://staging.grandkru.com)
+
+3. **Production Release:**
+   - Create PR from `staging` → `main`
+   - Final review and approval
+   - Merge to `main` → auto-deploys to [grandkru.com](https://grandkru.com)
+
+### Key Principles
+
+- **`main` is always deployable** - Only production-ready code goes here
+- **Staging for integration** - All features are tested together before production
+- **Feature branches are short-lived** - Merge quickly after review
+- **Automated deployments** - No manual deployment steps needed
+
+### Comparison to Standard Workflows
+
+| Aspect | Git Flow | GitHub Flow | Our Workflow |
+|--------|----------|-------------|--------------|
+| Branches | main, develop, feature, release, hotfix | main, feature | main, staging, feature |
+| Staging | develop branch | main (production) | dedicated staging branch |
+| Releases | release branches | direct to main | staging → main |
+| Complexity | High | Low | Medium |
+| Safety | High | Medium | High |
+
+---
+
 For a detailed history of changes, see [CHANGELOG.md](CHANGELOG.md).
 
 ## Deployment Architecture
@@ -364,3 +414,176 @@ The carousel can be customized by:
 - Modifying the `items-to-show` for different layouts
 - Updating the CSS variables for different colors and styles
 - Adding or removing navigation controls
+
+## Rollback Strategy
+
+### Overview
+This project implements a multi-layered rollback strategy to ensure quick recovery from deployment issues across both staging and production environments.
+
+### Rollback Scenarios
+
+#### 1. Staging Environment Rollback
+**When:** Issues detected in staging environment
+**Method:** Git revert or branch reset
+
+```bash
+# Option A: Revert the problematic commit
+git checkout staging
+git revert <commit-hash>
+git push origin staging
+
+# Option B: Reset to previous working state
+git checkout staging
+git reset --hard <previous-commit-hash>
+git push --force-with-lease origin staging
+```
+
+**Recovery Time:** 2-5 minutes (GitHub Pages deployment)
+
+#### 2. Production Environment Rollback
+**When:** Issues detected in production after 24-hour promotion
+**Method:** Revert to previous production state
+
+```bash
+# Revert the production deployment
+git checkout main
+git revert <production-commit-hash>
+git push origin main
+
+# Alternative: Emergency rollback to specific version
+git checkout main
+git reset --hard <known-good-commit>
+git push --force-with-lease origin main
+```
+
+**Recovery Time:** 5-10 minutes (Fly.io deployment)
+
+#### 3. Emergency Hotfix Rollback
+**When:** Critical production issues requiring immediate fix
+**Method:** Direct hotfix branch
+
+```bash
+# Create emergency hotfix
+git checkout main
+git checkout -b hotfix/emergency-fix
+# Make minimal fix
+git commit -m "hotfix: emergency production fix"
+git push origin hotfix/emergency-fix
+
+# Create PR directly to main (bypass staging)
+# After approval and merge, auto-deploy to production
+```
+
+**Recovery Time:** 10-15 minutes (including review)
+
+### Rollback Triggers
+
+#### Automatic Rollback Conditions
+- **Build failures** - Deployment automatically cancelled
+- **Health check failures** - Automatic rollback to previous version
+- **Performance degradation** - Manual trigger based on monitoring
+
+#### Manual Rollback Triggers
+- **User-reported issues** - Customer support escalations
+- **Monitoring alerts** - Error rate spikes, response time increases
+- **Security concerns** - Vulnerability discoveries
+- **Business impact** - Revenue or user experience issues
+
+### Rollback Verification
+
+#### Pre-Rollback Checklist
+- [ ] Identify the problematic commit/feature
+- [ ] Confirm the issue is deployment-related
+- [ ] Check if the issue exists in staging
+- [ ] Verify rollback target (previous working version)
+- [ ] Notify stakeholders of rollback plan
+
+#### Post-Rollback Verification
+- [ ] Verify deployment completed successfully
+- [ ] Check application health and functionality
+- [ ] Monitor error rates and performance metrics
+- [ ] Confirm issue is resolved
+- [ ] Update incident documentation
+
+### Rollback Communication
+
+#### Internal Communication
+```markdown
+**Rollback Alert**
+- Environment: [Staging/Production]
+- Issue: [Brief description]
+- Rollback Target: [Commit hash/version]
+- Expected Recovery Time: [X minutes]
+- Status: [In Progress/Completed]
+```
+
+#### External Communication (if needed)
+- Update status page
+- Notify key stakeholders
+- Prepare customer communication if necessary
+
+### Rollback Prevention
+
+#### Pre-Deployment Safeguards
+- **Automated testing** - All tests must pass before deployment
+- **Staging validation** - 24-hour staging period for testing
+- **Code review** - All changes reviewed before merge
+- **Performance monitoring** - Baseline performance tracking
+
+#### Deployment Safeguards
+- **Health checks** - Automated health verification post-deployment
+- **Gradual rollout** - Feature flags for controlled releases
+- **Monitoring alerts** - Real-time issue detection
+- **Backup strategies** - Database and configuration backups
+
+### Rollback Tools and Commands
+
+#### GitHub Actions Rollback
+```bash
+# Trigger manual rollback workflow
+gh workflow run rollback.yml --field environment=production --field commit=<commit-hash>
+```
+
+#### Fly.io Rollback
+```bash
+# Rollback to previous deployment
+flyctl deploy --image-label <previous-version>
+
+# Check deployment history
+flyctl releases list --app grandkru
+
+# Rollback to specific release
+flyctl deploy --release-id <release-id>
+```
+
+#### Database Rollback (if applicable)
+```bash
+# Restore from backup (if database changes were made)
+# This would depend on your database setup
+```
+
+### Rollback Documentation
+
+#### Incident Report Template
+```markdown
+## Rollback Incident Report
+
+**Date:** [Date/Time]
+**Environment:** [Staging/Production]
+**Issue Description:** [What went wrong]
+**Root Cause:** [Why it happened]
+**Rollback Action:** [What was done]
+**Recovery Time:** [How long it took]
+**Prevention Measures:** [How to prevent recurrence]
+**Lessons Learned:** [Key takeaways]
+```
+
+### Rollback Metrics
+
+Track the following metrics to improve rollback processes:
+- **Mean Time to Detection (MTTD)** - How quickly issues are identified
+- **Mean Time to Recovery (MTTR)** - How quickly rollbacks complete
+- **Rollback Frequency** - How often rollbacks occur
+- **Rollback Success Rate** - Percentage of successful rollbacks
+
+---
