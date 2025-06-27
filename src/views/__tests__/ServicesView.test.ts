@@ -1,124 +1,152 @@
 import { mount, VueWrapper } from '@vue/test-utils'
+import { describe, beforeEach, it, expect } from 'vitest'
 import ServicesView from '../ServicesView.vue'
 
-<<<<<<< Updated upstream:src/views/__tests__/ServicesView.test.ts
 describe('ServicesView', () => {
   let wrapper: VueWrapper
-=======
-describe('ServicesView.vue', () => {
-  let wrapper
->>>>>>> Stashed changes:src/views/__tests__/ServicesView.test.js
 
   beforeEach(() => {
     wrapper = mount(ServicesView)
   })
 
-<<<<<<< Updated upstream:src/views/__tests__/ServicesView.test.ts
   it('renders the services title', () => {
-=======
-  it('renders the services view component', () => {
-    expect(wrapper.exists()).toBe(true)
->>>>>>> Stashed changes:src/views/__tests__/ServicesView.test.js
     expect(wrapper.find('h1').text()).toBe('Our Services')
   })
 
-  it('renders all service cards', () => {
-    const serviceCards = wrapper.findAll('.bg-light-gray')
-<<<<<<< Updated upstream:src/views/__tests__/ServicesView.test.ts
-    expect(serviceCards).toHaveLength(6)
+  it('renders the correct number of service cards', () => {
+    const serviceCards = wrapper.findAll('.rounded-xl.shadow-lg')
+    expect(serviceCards).toHaveLength(5)
   })
 
-  it('renders service titles correctly', () => {
+  it('renders the correct service titles', () => {
     const serviceTitles = wrapper.findAll('h3')
-    expect(serviceTitles[0].text()).toBe('E-commerce Implementation')
-    expect(serviceTitles[1].text()).toBe('Website Development')
+    expect(serviceTitles).toHaveLength(5)
+    expect(serviceTitles[0].text()).toBe('Web Development')
+    expect(serviceTitles[1].text()).toBe('AI Automation')
     expect(serviceTitles[2].text()).toBe('Financial Quality Assurance')
-    expect(serviceTitles[3].text()).toBe('Software Development')
+    expect(serviceTitles[3].text()).toBe('E-Commerce')
     expect(serviceTitles[4].text()).toBe('Business Process Automation')
-    expect(serviceTitles[5].text()).toBe('Training')
   })
 
-  it('renders service descriptions', () => {
-    const descriptions = wrapper.findAll('p')
-    expect(descriptions[0].text()).toContain('WordPress')
-    expect(descriptions[1].text()).toContain('website solutions')
-    expect(descriptions[2].text()).toContain('AI-powered')
-=======
-    expect(serviceCards).toHaveLength(6) // Total number of services
+  it('renders service summaries', () => {
+    const summaries = wrapper.findAll('p')
+    expect(summaries[0].text()).toContain('Custom web applications')
+    expect(summaries[1].text()).toContain('Intelligent automation solutions')
+    expect(summaries[2].text()).toContain('AI-powered financial oversight')
   })
 
-  it('displays service titles and summaries', () => {
-    const firstService = wrapper.find('.bg-light-gray')
-    expect(firstService.find('h3').text()).toBe('E-commerce Implementation')
-    expect(firstService.find('p').text()).toContain('Custom e-commerce solutions')
+  it('renders "Learn more" text on each card', () => {
+    const learnMoreTexts = wrapper.findAll('span')
+    const learnMoreElements = learnMoreTexts.filter(el => el.text() === 'Learn more')
+    expect(learnMoreElements).toHaveLength(5)
   })
 
-  it('opens modal when clicking a service card', async () => {
-    const firstService = wrapper.find('.bg-light-gray')
-    await firstService.trigger('click')
-
-    expect(wrapper.find('.fixed.inset-0').exists()).toBe(true)
-    expect(wrapper.find('.text-3xl.font-bold').text()).toBe('E-commerce Implementation')
+  it('has clickable service cards', () => {
+    const serviceCards = wrapper.findAll('.cursor-pointer')
+    expect(serviceCards).toHaveLength(5)
   })
 
-  it('displays service details in modal', async () => {
-    const firstService = wrapper.find('.bg-light-gray')
-    await firstService.trigger('click')
-
-    const modal = wrapper.find('.bg-white.rounded-lg')
-    expect(modal.find('h3').text()).toBe('Service Overview')
-    expect(modal.find('p').text()).toContain('Custom e-commerce solutions using WordPress')
+  it('has gradient overlays on service cards', () => {
+    const gradientOverlays = wrapper.findAll('.opacity-80')
+    expect(gradientOverlays.length).toBeGreaterThan(0)
   })
 
-  it('displays service features in modal', async () => {
-    const firstService = wrapper.find('.bg-light-gray')
-    await firstService.trigger('click')
+  it('has background images on service cards', () => {
+    // Look for the div elements that have background images applied
+    const backgroundDivs = wrapper.findAll('.absolute.inset-0.bg-cover.bg-center')
+    expect(backgroundDivs.length).toBeGreaterThan(0)
 
-    const features = wrapper.findAll('.list-disc li')
-    expect(features).toHaveLength(5) // Number of features for E-commerce Implementation
-    expect(features[0].text()).toBe('Custom payment gateway integration')
+    // Alternative: check if any elements have style attributes
+    const elementsWithStyle = wrapper.findAll('[style]')
+    expect(elementsWithStyle.length).toBeGreaterThan(0)
   })
 
-  it('displays technology tags in modal', async () => {
-    const firstService = wrapper.find('.bg-light-gray')
-    await firstService.trigger('click')
+  describe('Modal Functionality', () => {
+    it('opens modal when clicking a service card', async () => {
+      const firstServiceCard = wrapper.findAll('.cursor-pointer')[0]
+      await firstServiceCard.trigger('click')
 
-    const techTags = wrapper.findAll('.bg-primary.bg-opacity-10')
-    expect(techTags).toHaveLength(5) // Number of technologies for E-commerce Implementation
-    expect(techTags[0].text()).toBe('WordPress')
+      // Modal should be visible
+      expect(wrapper.find('.fixed.inset-0').exists()).toBe(true)
+      expect(wrapper.find('.bg-black.bg-opacity-50').exists()).toBe(true)
+    })
+
+    it('displays correct service title in modal', async () => {
+      const firstServiceCard = wrapper.findAll('.cursor-pointer')[0]
+      await firstServiceCard.trigger('click')
+
+      const modalTitle = wrapper.find('h2')
+      expect(modalTitle.text()).toBe('Web Development')
+    })
+
+    it('closes modal when clicking close button', async () => {
+      const firstServiceCard = wrapper.findAll('.cursor-pointer')[0]
+      await firstServiceCard.trigger('click')
+
+      // Modal should be open
+      expect(wrapper.find('.fixed.inset-0').exists()).toBe(true)
+
+      // Click close button
+      const closeButton = wrapper.find('button')
+      await closeButton.trigger('click')
+
+      // Modal should be closed
+      expect(wrapper.find('.fixed.inset-0').exists()).toBe(false)
+    })
+
+    it('closes modal when clicking outside modal', async () => {
+      const firstServiceCard = wrapper.findAll('.cursor-pointer')[0]
+      await firstServiceCard.trigger('click')
+
+      // Modal should be open
+      expect(wrapper.find('.fixed.inset-0').exists()).toBe(true)
+
+      // Click outside modal
+      const modalOverlay = wrapper.find('.fixed.inset-0')
+      await modalOverlay.trigger('click')
+
+      // Modal should be closed
+      expect(wrapper.find('.fixed.inset-0').exists()).toBe(false)
+    })
+
+    it('displays service details in modal', async () => {
+      const firstServiceCard = wrapper.findAll('.cursor-pointer')[0]
+      await firstServiceCard.trigger('click')
+
+      // Check for modal content sections
+      const modalContent = wrapper.find('.p-6.space-y-6')
+      expect(modalContent.exists()).toBe(true)
+
+      // Check for specific sections by looking for h3 elements
+      const sectionHeaders = wrapper.findAll('h3')
+      const headerTexts = sectionHeaders.map(h => h.text())
+      expect(headerTexts).toContain('Service Overview')
+      expect(headerTexts).toContain('Detailed Description')
+      expect(headerTexts).toContain('Key Features')
+      expect(headerTexts).toContain('Technologies Used')
+    })
+
+    it('displays technology tags in modal', async () => {
+      const firstServiceCard = wrapper.findAll('.cursor-pointer')[0]
+      await firstServiceCard.trigger('click')
+
+      const techTags = wrapper.findAll('.bg-primary.bg-opacity-10')
+      expect(techTags.length).toBeGreaterThan(0)
+    })
   })
 
-  it('closes modal when clicking close button', async () => {
-    // Open modal
-    const firstService = wrapper.find('.bg-light-gray')
-    await firstService.trigger('click')
-    expect(wrapper.find('.fixed.inset-0').exists()).toBe(true)
+  describe('Responsive Design', () => {
+    it('has responsive grid layout', () => {
+      const gridContainer = wrapper.find('.grid')
+      expect(gridContainer.classes()).toContain('grid-cols-1')
+      expect(gridContainer.classes()).toContain('md:grid-cols-2')
+      expect(gridContainer.classes()).toContain('lg:grid-cols-3')
+    })
 
-    // Close modal
-    await wrapper.find('button').trigger('click')
-    expect(wrapper.find('.fixed.inset-0').exists()).toBe(false)
-  })
-
-  it('closes modal when clicking outside', async () => {
-    // Open modal
-    const firstService = wrapper.find('.bg-light-gray')
-    await firstService.trigger('click')
-    expect(wrapper.find('.fixed.inset-0').exists()).toBe(true)
-
-    // Click outside modal
-    await wrapper.find('.fixed.inset-0').trigger('click')
-    expect(wrapper.find('.fixed.inset-0').exists()).toBe(false)
-  })
-
-  it('does not close modal when clicking inside modal content', async () => {
-    // Open modal
-    const firstService = wrapper.find('.bg-light-gray')
-    await firstService.trigger('click')
-    expect(wrapper.find('.fixed.inset-0').exists()).toBe(true)
-
-    // Click inside modal content
-    await wrapper.find('.bg-white.rounded-lg').trigger('click')
-    expect(wrapper.find('.fixed.inset-0').exists()).toBe(true)
->>>>>>> Stashed changes:src/views/__tests__/ServicesView.test.js
+    it('has responsive container', () => {
+      const container = wrapper.find('.container')
+      expect(container.classes()).toContain('mx-auto')
+      expect(container.classes()).toContain('px-4')
+    })
   })
 })

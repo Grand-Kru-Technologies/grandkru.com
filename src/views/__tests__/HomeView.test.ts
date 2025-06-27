@@ -22,11 +22,11 @@ describe('HomeView', () => {
   })
 
   it('renders the welcome message', () => {
-    expect(wrapper.find('h1').text()).toContain('Welcome to Grand Kru Technologies')
+    expect(wrapper.find('h1').text()).toContain('Grand Kru Technologies')
   })
 
   it('renders the company description', () => {
-    expect(wrapper.find('p').text()).toContain('Designing Digital with Purpose')
+    expect(wrapper.find('p').text()).toContain('We specialize in delivering innovative technology')
   })
 
   it('renders the call-to-action buttons', () => {
