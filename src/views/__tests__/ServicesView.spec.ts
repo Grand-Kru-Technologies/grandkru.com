@@ -130,8 +130,39 @@ describe('ServicesView', () => {
       const firstServiceCard = wrapper.findAll('.cursor-pointer')[0]
       await firstServiceCard.trigger('click')
 
-      const techTags = wrapper.findAll('.bg-primary.bg-opacity-10')
+      const techTags = wrapper.findAll('.bg-\\[\\#3b5a7b\\]')
       expect(techTags.length).toBeGreaterThan(0)
+    })
+
+    it('displays updated Web Development technologies list', async () => {
+      const firstServiceCard = wrapper.findAll('.cursor-pointer')[0]
+      await firstServiceCard.trigger('click')
+
+      const techTags = wrapper.findAll('.bg-\\[\\#3b5a7b\\]')
+      const expectedTechnologies = ['WordPress', 'Rails', 'Node.JS', 'APIs', 'Cloud', 'Frontend']
+
+      // Verify all expected technologies are present
+      expectedTechnologies.forEach(tech => {
+        const tagWithTech = techTags.find(tag => tag.text().includes(tech))
+        expect(tagWithTech).toBeTruthy()
+      })
+    })
+
+    it('verifies technology tags use explicit color values instead of primary variable', async () => {
+      const firstServiceCard = wrapper.findAll('.cursor-pointer')[0]
+      await firstServiceCard.trigger('click')
+
+      const techTags = wrapper.findAll('.bg-\\[\\#3b5a7b\\]')
+      expect(techTags.length).toBeGreaterThan(0)
+
+      // Verify tags use explicit color values, not primary variable
+      techTags.forEach(tag => {
+        expect(tag.classes()).toContain('bg-[#3b5a7b]')
+        expect(tag.classes()).toContain('text-[#3b5a7b]')
+        // Should NOT contain bg-primary or text-primary
+        expect(tag.classes()).not.toContain('bg-primary')
+        expect(tag.classes()).not.toContain('text-primary')
+      })
     })
   })
 

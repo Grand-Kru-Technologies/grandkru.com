@@ -135,7 +135,7 @@ const services = ref<Service[]>([
       'SEO-friendly architecture',
       'Cross-browser compatibility'
     ],
-    technologies: ['Vue.js', 'React', 'Node.js', 'TypeScript', 'Tailwind CSS', 'Vite'],
+    technologies: ['WordPress', 'Rails', 'Node.JS', 'APIs', 'Cloud', 'Frontend'],
     gradient: 'bg-gradient-to-br from-blue-600 to-purple-700',
     backgroundImage: techImage1
   },

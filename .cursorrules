@@ -140,3 +140,8 @@ globs: **/*.vue, **/*.ts, components/**/*
 
 ## Shell Command Timeout Policy
 - All shell commands should be prefixed with `timeout 10s` to prevent hanging processes during development and automation.
+
+## Testing File Naming Convention
+- Use `.spec.ts` files for all test files, not `.test.ts` or `.test.js`
+- All test files should follow the pattern: `ComponentName.spec.ts` or `filename.spec.ts`
+- Use Vitest as the testing framework (not Jest)
