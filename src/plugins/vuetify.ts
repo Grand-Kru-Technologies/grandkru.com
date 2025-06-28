@@ -8,7 +8,7 @@ import 'vuetify/styles'
 const glassmorphismTheme = {
   dark: true,
   colors: {
-    primary: '#4A90E2',
+    primary: '#3b5a7b',
     secondary: '#6C63FF',
     accent: '#FF4081',
     error: '#FF5252',

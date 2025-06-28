@@ -137,3 +137,6 @@ globs: **/*.vue, **/*.ts, components/**/*
 - Use environment variables with `VITE_` prefix
 - Handle staging vs production environments
 - Use proper base URL configuration for deployments
+
+## Shell Command Timeout Policy
+- All shell commands should be prefixed with `timeout 10s` to prevent hanging processes during development and automation.

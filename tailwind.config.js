@@ -25,5 +25,7 @@ export default {
     'from-green-600', 'to-emerald-700',
     'from-orange-600', 'to-red-600',
     'from-indigo-600',
+    // Tag styling classes
+    'bg-primary', 'text-primary', 'bg-opacity-10',
   ],
 }

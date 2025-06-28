@@ -92,7 +92,7 @@
                 <span
                   v-for="(tech, index) in selectedService.technologies"
                   :key="index"
-                  class="bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-full text-sm font-medium"
+                  class="bg-[#3b5a7b] bg-opacity-10 text-[#3b5a7b] px-4 py-2 rounded-full text-sm font-medium"
                 >
                   {{ tech }}
                 </span>
