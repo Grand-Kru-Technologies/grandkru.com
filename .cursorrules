@@ -154,3 +154,9 @@ globs: **/*.vue, **/*.ts, components/**/*
   4. Run `npm run test` to ensure no regression errors
   5. Push to a remote branch
   6. Create a PR based off staging with gktreviewer as a reviewer
+
+## Pull Request Guidelines
+- All PR bodies should have a maximum of 750 characters
+- Keep PR descriptions concise and focused on the key changes
+- Include issue number reference (e.g., "fixes #42")
+- Always include "@gktreviewer" as reviewer
