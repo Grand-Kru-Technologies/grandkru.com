@@ -149,11 +149,12 @@ globs: **/*.vue, **/*.ts, components/**/*
 ## Development Process Workflow
 - **For every change, follow this process:**
   1. Create a new GitHub issue
-  2. Create a new branch with the issue number in it (e.g., `fix/40-description`)
-  3. Create a test to verify the change functionality
-  4. Run `npm run test` to ensure no regression errors
-  5. Push to a remote branch
-  6. Create a PR based off staging with gktreviewer as a reviewer
+  2. Fetch staging and use it as the base for development: `git fetch origin staging && git checkout staging && git pull origin staging`
+  3. Create a new branch with the issue number in it (e.g., `fix/40-description`)
+  4. Create a test to verify the change functionality
+  5. Run `npm run test` to ensure no regression errors
+  6. Push to a remote branch
+  7. Create a PR based off staging with gktreviewer as a reviewer
 
 ## Pull Request Guidelines
 - All PR bodies should have a maximum of 750 characters
