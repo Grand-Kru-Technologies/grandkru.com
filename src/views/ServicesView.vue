@@ -150,7 +150,7 @@ const services = ref<Service[]>([
       'Automated decision-making systems',
       'Intelligent workflow optimization'
     ],
-    technologies: ['Python', 'TensorFlow', 'OpenAI API', 'Machine Learning', 'Data Analytics', 'Cloud AI'],
+    technologies: ['Zapier', 'Make', 'OpenAI API', 'Machine Learning', 'Data Analytics'],
     gradient: 'bg-gradient-to-br from-emerald-600 to-teal-700',
     backgroundImage: techImage2
   },
@@ -165,7 +165,7 @@ const services = ref<Service[]>([
       'Automated compliance monitoring',
       'Risk assessment and mitigation'
     ],
-    technologies: ['AI/ML', 'QuickBooks', 'Financial Analytics', 'Zapier', 'Compliance Systems', 'Data Visualization'],
+    technologies: ['AI/ML', 'QuickBooks', 'Financial Analytics', 'Reconciliation', 'Compliance Systems', 'Data Visualization'],
     gradient: 'bg-gradient-to-br from-green-600 to-emerald-700',
     backgroundImage: geometricImage
   },
@@ -180,7 +180,7 @@ const services = ref<Service[]>([
       'Mobile-responsive design',
       'Secure checkout process'
     ],
-    technologies: ['WordPress', 'WooCommerce', 'Stripe', 'Gravity Forms', 'PHP', 'Payment APIs'],
+    technologies: ['WordPress', 'WooCommerce', 'Stripe', 'PayPal', 'PHP', 'Payment APIs'],
     gradient: 'bg-gradient-to-br from-orange-600 to-red-600',
     backgroundImage: keyboardImage
   },
