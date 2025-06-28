@@ -145,3 +145,12 @@ globs: **/*.vue, **/*.ts, components/**/*
 - Use `.spec.ts` files for all test files, not `.test.ts` or `.test.js`
 - All test files should follow the pattern: `ComponentName.spec.ts` or `filename.spec.ts`
 - Use Vitest as the testing framework (not Jest)
+
+## Development Process Workflow
+- **For every change, follow this process:**
+  1. Create a new GitHub issue
+  2. Create a new branch with the issue number in it (e.g., `fix/40-description`)
+  3. Create a test to verify the change functionality
+  4. Run `npm run test` to ensure no regression errors
+  5. Push to a remote branch
+  6. Create a PR based off staging with gktreviewer as a reviewer

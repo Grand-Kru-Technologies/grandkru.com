@@ -31,6 +31,45 @@ This project follows a **GitHub Flow with Staging** approach, combining the simp
    - Final review and approval
    - Merge to `main` → auto-deploys to [grandkru.com](https://grandkru.com)
 
+### Development Process Workflow
+
+**For every change, follow this process:**
+
+1. **Create a new GitHub issue**
+   - Describe the problem or feature request
+   - Include acceptance criteria if applicable
+
+2. **Create a new branch with the issue number**
+   ```bash
+   git checkout -b fix/40-description
+   # or
+   git checkout -b feature/40-description
+   ```
+
+3. **Create a test to verify the change functionality**
+   - Write tests that confirm the change works as expected
+   - For UI changes, test the visual/functional aspects
+   - For bug fixes, test that the issue is resolved
+
+4. **Run `npm run test` to ensure no regression errors**
+   ```bash
+   npm run test
+   ```
+   - All existing tests should pass
+   - New tests should verify the changes
+
+5. **Push to a remote branch**
+   ```bash
+   git add .
+   git commit -m "feat: description (fixes #40)"
+   git push --set-upstream origin fix/40-description
+   ```
+
+6. **Create a PR based off staging with gktreviewer as reviewer**
+   ```bash
+   gh pr create --base staging --head fix/40-description --title "feat: description (fixes #40)" --body "Description of changes\n\nFixes #40\n\nReviewer: @gktreviewer"
+   ```
+
 ### Key Principles
 
 - **`main` is always deployable** - Only production-ready code goes here
