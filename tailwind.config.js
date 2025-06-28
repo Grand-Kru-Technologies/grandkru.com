@@ -17,4 +17,13 @@ export default {
     },
   },
   plugins: [],
+  safelist: [
+    // Gradients for service cards and modals
+    'bg-gradient-to-br',
+    'from-blue-600', 'to-purple-700',
+    'from-emerald-600', 'to-teal-700',
+    'from-green-600', 'to-emerald-700',
+    'from-orange-600', 'to-red-600',
+    'from-indigo-600',
+  ],
 }
