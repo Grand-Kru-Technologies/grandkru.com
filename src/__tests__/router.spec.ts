@@ -25,6 +25,11 @@ const routes = [
     path: '/services',
     name: 'services',
     component: { template: '<div>Services</div>' }
+  },
+  {
+    path: '/portfolio',
+    name: 'portfolio',
+    component: { template: '<div>Portfolio</div>' }
   }
 ]
 

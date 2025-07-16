@@ -21,6 +21,7 @@ describe('Navigation', () => {
         { path: '/', component: { template: '<div>Home</div>' } },
         { path: '/about', component: { template: '<div>About</div>' } },
         { path: '/services', component: { template: '<div>Services</div>' } },
+        { path: '/portfolio', component: { template: '<div>Portfolio</div>' } },
         { path: '/contact', component: { template: '<div>Contact</div>' } }
       ]
     })
@@ -44,11 +45,12 @@ describe('Navigation', () => {
 
   it('renders all navigation links', () => {
     const links = wrapper.findAllComponents(RouterLinkStub)
-    expect(links).toHaveLength(5) // 4 nav links + 1 logo link
+    expect(links).toHaveLength(6) // 5 nav links + 1 logo link
     expect(links[1].text()).toBe('Home')
     expect(links[2].text()).toBe('About')
     expect(links[3].text()).toBe('Services')
-    expect(links[4].text()).toBe('Contact')
+    expect(links[4].text()).toBe('Portfolio')
+    expect(links[5].text()).toBe('Contact')
   })
 
   it('toggles mobile menu when clicking the menu button', async () => {

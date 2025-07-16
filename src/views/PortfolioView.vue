@@ -3,24 +3,67 @@
     <div class="container mx-auto px-4">
       <h1 class="text-4xl font-bold text-primary text-center mb-12">Our Portfolio</h1>
 
+      <!-- Category Tabs -->
+      <div class="flex justify-center mb-12">
+        <div class="bg-light-gray rounded-lg p-2 flex space-x-2">
+          <button
+            v-for="category in categories"
+            :key="category.id"
+            class="px-6 py-3 rounded-md font-medium transition-all duration-300"
+            :class="selectedCategory === category.id
+              ? 'bg-primary text-white shadow-lg'
+              : 'text-dark-gray hover:text-primary hover:bg-white'"
+            @click="selectedCategory = category.id"
+          >
+            {{ category.name }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Portfolio Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Portfolio Item 1 -->
         <div
-          v-for="(item, index) in portfolioItems"
+          v-for="(item, index) in filteredPortfolioItems"
           :key="index"
-          class="bg-light-gray rounded-lg overflow-hidden shadow-lg cursor-pointer"
+          class="bg-light-gray rounded-lg overflow-hidden shadow-lg cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
           @click="openModal(item)"
         >
-          <img
-            :src="item.images[0]"
-            :alt="item.title"
-            class="w-full h-48 object-cover"
-          />
+          <div class="relative">
+            <img
+              :src="item.images[0]"
+              :alt="item.title"
+              class="w-full h-48 object-cover"
+            />
+            <div class="absolute top-4 right-4">
+              <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium">
+                {{ item.category }}
+              </span>
+            </div>
+          </div>
           <div class="p-6">
             <h3 class="text-xl font-bold text-primary mb-2">{{ item.title }}</h3>
-            <p class="text-dark-gray">{{ item.summary }}</p>
+            <p class="text-dark-gray mb-4">{{ item.summary }}</p>
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="(tech, techIndex) in item.technologies.slice(0, 3)"
+                :key="techIndex"
+                class="bg-primary bg-opacity-10 text-white px-2 py-1 rounded text-xs font-medium"
+              >
+                {{ tech }}
+              </span>
+              <span v-if="item.technologies.length > 3" class="text-dark-gray text-xs">
+                +{{ item.technologies.length - 3 }} more
+              </span>
+            </div>
           </div>
         </div>
+      </div>
+
+      <!-- Empty State -->
+      <div v-if="filteredPortfolioItems.length === 0" class="text-center py-12">
+        <div class="text-6xl mb-4">📁</div>
+        <h3 class="text-xl font-bold text-primary mb-2">No projects found</h3>
+        <p class="text-dark-gray">We're working on adding more projects to this category.</p>
       </div>
 
       <!-- Modal -->
@@ -35,10 +78,15 @@
         >
           <div class="p-8">
             <div class="flex justify-between items-start mb-6">
-              <h2 class="text-3xl font-bold text-primary">{{ selectedItem.title }}</h2>
+              <div>
+                <h2 class="text-3xl font-bold text-primary">{{ selectedItem.title }}</h2>
+                <span class="bg-primary text-white px-3 py-1 rounded-full text-sm font-medium mt-2 inline-block">
+                  {{ selectedItem.category }}
+                </span>
+              </div>
               <button
+                class="text-dark-gray hover:text-primary text-2xl transition-colors duration-300"
                 @click="closeModal"
-                class="text-dark-gray hover:text-primary text-2xl"
               >
                 ✕
               </button>
@@ -82,7 +130,7 @@
                   <span
                     v-for="(tech, index) in selectedItem.technologies"
                     :key="index"
-                    class="bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-full text-sm font-medium"
+                    class="bg-primary bg-opacity-10 text-white-4 py-2 rounded-full text-sm font-medium"
                   >
                     {{ tech }}
                   </span>
@@ -100,14 +148,33 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import { ref, computed } from 'vue'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
-const portfolioItems = ref([
+interface PortfolioItem {
+  title: string
+  category: string
+  images: string[]
+  summary: string
+  technologies: string[]
+  outcome: string
+  details: string
+}
+
+const selectedCategory = ref('all')
+
+const categories = [
+  { id: 'all', name: 'All Projects' },
+  { id: 'websites', name: 'Websites' },
+  { id: 'business-processes', name: 'Business Processes' }
+]
+
+const portfolioItems = ref<PortfolioItem[]>([
   {
     title: 'E-commerce Platform',
+    category: 'websites',
     images: [
       '../assets/portfolio/ecommerce-1.jpg',
       '../assets/portfolio/ecommerce-2.jpg',
@@ -120,6 +187,7 @@ const portfolioItems = ref([
   },
   {
     title: 'Travel Management System',
+    category: 'business-processes',
     images: [
       '../assets/portfolio/travel-1.jpg',
       '../assets/portfolio/travel-2.jpg',
@@ -132,6 +200,7 @@ const portfolioItems = ref([
   },
   {
     title: 'Software Licensing System',
+    category: 'business-processes',
     images: [
       '../assets/portfolio/licensing-1.jpg',
       '../assets/portfolio/licensing-2.jpg',
@@ -144,6 +213,7 @@ const portfolioItems = ref([
   },
   {
     title: 'Healthcare Management Platform',
+    category: 'websites',
     images: [
       '../assets/portfolio/healthcare-1.jpg',
       '../assets/portfolio/healthcare-2.jpg',
@@ -156,6 +226,7 @@ const portfolioItems = ref([
   },
   {
     title: 'Educational Learning Platform',
+    category: 'websites',
     images: [
       '../assets/portfolio/education-1.jpg',
       '../assets/portfolio/education-2.jpg',
@@ -168,6 +239,7 @@ const portfolioItems = ref([
   },
   {
     title: 'Financial Analytics Dashboard',
+    category: 'business-processes',
     images: [
       '../assets/portfolio/finance-1.jpg',
       '../assets/portfolio/finance-2.jpg',
@@ -177,12 +249,45 @@ const portfolioItems = ref([
     technologies: ['Angular', 'Python', 'TensorFlow', 'D3.js'],
     outcome: 'Enabled data-driven decision making and reduced reporting time by 60%',
     details: 'Built an advanced financial analytics dashboard that provides real-time insights into market trends, portfolio performance, and risk assessment. The system includes predictive analytics and customizable reporting features.'
+  },
+  {
+    title: 'Website Redesign',
+    category: 'websites',
+    images: [
+      '../assets/portfolio/corporate-1.jpg',
+      '../assets/portfolio/corporate-2.jpg',
+      '../assets/portfolio/corporate-3.jpg'
+    ],
+    summary: 'Modern, responsive corporate website with enhanced user experience',
+    technologies: ['Vue.js', 'Tailwind CSS', 'Vite', 'TypeScript'],
+    outcome: 'Improved user engagement by 45% and reduced bounce rate by 30%',
+    details: 'Redesigned a corporate website with modern design principles, improved navigation, and enhanced mobile responsiveness. The new site features faster loading times, better SEO optimization, and improved accessibility standards.'
+  },
+  {
+    title: 'Inventory Management System',
+    category: 'business-processes',
+    images: [
+      '../assets/portfolio/inventory-1.jpg',
+      '../assets/portfolio/inventory-2.jpg',
+      '../assets/portfolio/inventory-3.jpg'
+    ],
+    summary: 'Automated inventory tracking and management solution',
+    technologies: ['Python', 'Django', 'PostgreSQL', 'Redis'],
+    outcome: 'Reduced inventory discrepancies by 80% and improved order fulfillment by 50%',
+    details: 'Developed a comprehensive inventory management system that automates stock tracking, provides real-time alerts for low inventory, and integrates with existing ERP systems. The solution includes barcode scanning, automated reordering, and detailed reporting capabilities.'
   }
 ])
 
-const selectedItem = ref(null)
+const filteredPortfolioItems = computed(() => {
+  if (selectedCategory.value === 'all') {
+    return portfolioItems.value
+  }
+  return portfolioItems.value.filter(item => item.category === selectedCategory.value)
+})
 
-const openModal = (item) => {
+const selectedItem = ref<PortfolioItem | null>(null)
+
+const openModal = (item: PortfolioItem) => {
   selectedItem.value = item
 }
 

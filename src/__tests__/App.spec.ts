@@ -8,6 +8,7 @@ const HomeView = { template: '<div>Home</div>' }
 const AboutView = { template: '<div>About</div>' }
 const ContactView = { template: '<div>Contact</div>' }
 const ServicesView = { template: '<div>Services</div>' }
+const PortfolioView = { template: '<div>Portfolio</div>' }
 
 describe('App', () => {
   let router: ReturnType<typeof createRouter>
@@ -19,7 +20,8 @@ describe('App', () => {
         { path: '/', component: HomeView },
         { path: '/about', component: AboutView },
         { path: '/contact', component: ContactView },
-        { path: '/services', component: ServicesView }
+        { path: '/services', component: ServicesView },
+        { path: '/portfolio', component: PortfolioView }
       ]
     })
 
