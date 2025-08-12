@@ -8,11 +8,11 @@
   }
 
   body {
-    @apply text-dark-gray;
+    @apply text-dark-gray dark:text-dark-text transition-colors duration-300;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply text-primary;
+    @apply text-primary dark:text-primary transition-colors duration-300;
   }
 }
 
@@ -22,30 +22,36 @@
   }
 
   .glass {
-    @apply bg-white/30 backdrop-blur-md border border-white/40 shadow-lg;
+    @apply bg-white/30 backdrop-blur-md border border-white/40 shadow-lg
+           dark:bg-dark-surface/30 dark:border-dark-border/40 dark:shadow-lg;
   }
 
   .glass-dark {
-    @apply bg-black/10 backdrop-blur-lg border border-white/10 shadow-lg;
+    @apply bg-black/10 backdrop-blur-lg border border-white/10 shadow-lg
+           dark:bg-white/5 dark:border-white/20;
   }
 
   .glass-card {
-    @apply glass rounded-xl p-6 transition-all duration-300 hover:shadow-xl hover:scale-[1.02];
+    @apply glass rounded-xl p-6 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]
+           dark:hover:shadow-2xl;
   }
 
   .glass-input {
-    @apply glass rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300;
+    @apply glass rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300
+           dark:bg-dark-card dark:border-dark-border dark:text-dark-text dark:placeholder-dark-text-secondary;
   }
 
   .glass-button {
     @apply bg-primary text-white rounded-lg px-6 py-2 font-medium
            transition-all duration-300 hover:bg-primary/90 hover:scale-[1.02]
-           active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed;
+           active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed
+           dark:bg-primary-dark dark:hover:bg-primary;
   }
 
   .nav-link {
     @apply relative text-dark-gray hover:text-primary transition-all duration-300
-           px-3 py-1 rounded-md hover:scale-105;
+           px-3 py-1 rounded-md hover:scale-105
+           dark:text-dark-text-secondary dark:hover:text-primary;
   }
 
   .nav-link::before,
@@ -53,7 +59,8 @@
   .nav-link span::before,
   .nav-link span::after {
     content: '';
-    @apply absolute bg-primary/80 transition-all duration-300;
+    @apply absolute bg-primary/80 transition-all duration-300
+           dark:bg-primary;
   }
 
   .nav-link::before,
@@ -93,7 +100,7 @@
   }
 
   .nav-link-active {
-    @apply text-primary;
+    @apply text-primary dark:text-primary;
   }
 
   .nav-link-active::before,
@@ -106,9 +113,44 @@
     @apply h-full;
   }
 
-  /* Ensure navigation has no gradients */
+  /* Navigation dark mode */
   nav.glass {
-    @apply bg-white shadow-lg;
+    @apply bg-white shadow-lg dark:bg-dark-surface dark:shadow-lg
+           dark:border-b dark:border-dark-border;
     background: white !important;
+  }
+
+  .dark nav.glass {
+    background: #2d2d2d !important;
+  }
+
+  /* Portfolio card dark mode */
+  .portfolio-card {
+    @apply bg-light-gray dark:bg-dark-card border border-transparent dark:border-dark-border;
+  }
+
+  /* Modal dark mode */
+  .modal-content {
+    @apply bg-white dark:bg-dark-surface border border-gray-200 dark:border-dark-border;
+  }
+
+  /* Form elements dark mode */
+  .form-input {
+    @apply bg-white dark:bg-dark-card border border-gray-300 dark:border-dark-border
+           text-dark-gray dark:text-dark-text placeholder-dark-text-secondary;
+  }
+
+  .form-label {
+    @apply text-dark-gray dark:text-dark-text;
+  }
+
+  /* Technology tags dark mode */
+  .tech-tag {
+    @apply bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary;
+  }
+
+  /* Category badge dark mode */
+  .category-badge {
+    @apply bg-primary text-white dark:bg-primary-dark;
   }
 }

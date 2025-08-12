@@ -7,7 +7,7 @@
       <div>Is Staging: {{ isStaging }}</div>
     </div>
 
-    <div class="min-h-screen bg-white">
+    <div class="min-h-screen bg-white dark:bg-dark-bg transition-colors duration-300">
       <Navigation />
       <main class="container mx-auto px-4 py-8">
         <router-view v-slot="{ Component }">
@@ -24,6 +24,10 @@
 import Navigation from './components/Navigation.vue'
 import PasswordProtection from './components/PasswordProtection.vue'
 import { computed, ref, onMounted } from 'vue'
+import { useDarkMode } from './composables/useDarkMode'
+
+// Initialize dark mode
+useDarkMode()
 
 const currentHostname = ref('')
 const viteEnvironment = ref('')

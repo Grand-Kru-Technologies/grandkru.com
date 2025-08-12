@@ -12,7 +12,7 @@
         </router-link>
 
         <!-- Desktop Navigation -->
-        <div class="hidden md:flex space-x-8">
+        <div class="hidden md:flex space-x-8 items-center">
           <router-link
             v-for="item in navigationItems"
             :key="item.path"
@@ -22,35 +22,41 @@
           >
             <span>{{ item.name }}</span>
           </router-link>
+          
+          <!-- Dark Mode Toggle -->
+          <DarkModeToggle />
         </div>
 
         <!-- Mobile Menu Button -->
-        <button
-          class="md:hidden p-2 glass rounded-lg transition-all duration-300 hover:scale-110"
-          @click="isMenuOpen = !isMenuOpen"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        <div class="md:hidden flex items-center space-x-2">
+          <DarkModeToggle />
+          <button
+            class="p-2 glass rounded-lg transition-all duration-300 hover:scale-110"
+            @click="isMenuOpen = !isMenuOpen"
           >
-            <path
-              v-if="!isMenuOpen"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-            <path
-              v-else
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </button>
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                v-if="!isMenuOpen"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+              <path
+                v-else
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <!-- Mobile Navigation -->
@@ -84,8 +90,9 @@
   </nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
+import DarkModeToggle from './DarkModeToggle.vue'
 
 const isMenuOpen = ref(false)
 
