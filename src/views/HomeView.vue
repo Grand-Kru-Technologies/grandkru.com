@@ -8,8 +8,8 @@
               Grand Kru Technologies
             </h1>
             <p class="text-lg text-dark-gray mb-6 text-center md:text-left">
-              We specialize in delivering innovative technology solutions that <br>
-              drive business growth and digital transformation.
+              We deliver cutting-edge technology solutions that transform businesses 
+              and accelerate digital innovation for forward-thinking organizations.
             </p>
             <div class="flex gap-4 justify-center md:justify-start">
               <router-link
