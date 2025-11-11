@@ -7,7 +7,7 @@
       <div>Is Staging: {{ isStaging }}</div>
     </div>
 
-    <div class="min-h-screen bg-white">
+    <div class="min-h-screen bg-white dark:bg-dark-bg transition-colors duration-300">
       <Navigation />
       <main class="container mx-auto px-4 py-8">
         <router-view v-slot="{ Component }">
@@ -16,6 +16,9 @@
           </transition>
         </router-view>
       </main>
+
+      <!-- Chat Widget - only show on non-admin pages -->
+      <ChatWidget v-if="!isAdminPage" />
     </div>
   </PasswordProtection>
 </template>
@@ -23,8 +26,15 @@
 <script setup lang="ts">
 import Navigation from './components/Navigation.vue'
 import PasswordProtection from './components/PasswordProtection.vue'
+import ChatWidget from './components/chat/ChatWidget.vue'
 import { computed, ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { useDarkMode } from './composables/useDarkMode'
 
+// Initialize dark mode
+useDarkMode()
+
+const route = useRoute()
 const currentHostname = ref('')
 const viteEnvironment = ref('')
 const isDev = ref(false)
@@ -33,6 +43,10 @@ const isStaging = computed(() => {
   return currentHostname.value === 'staging.grandkru.com' ||
          currentHostname.value.includes('staging') ||
          viteEnvironment.value === 'staging'
+})
+
+const isAdminPage = computed(() => {
+  return route.path.startsWith('/admin')
 })
 
 onMounted(() => {
