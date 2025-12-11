@@ -1,0 +1,217 @@
+#nickl-overlay {
+  opacity: 1;
+  background: #265CED;
+  width: 100%;
+  height: 100%;
+  z-index: 999999999999999;
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Helvetica, Arial, sans-serif;
+  color: white
+}
+
+#nickl-overlay #nickl-overlay-icon {
+  position: relative;
+  margin: 0
+}
+
+#nickl-overlay .corner-block {
+  width: 12px;
+  height: 12px;
+  background-color: #265CED;
+  position: absolute;
+  -webkit-animation-name: overlayAni;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  animation-name: overlayAni;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear
+}
+
+#nickl-overlay .nickl-login-messaging {
+  max-width: 373px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 50px
+}
+
+#nickl-overlay .nickl-login-messaging .copy-icon {
+  width: 18px;
+  height: 24px;
+  cursor: pointer
+}
+
+#nickl-overlay .nickl-login-subheading {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 24px
+}
+
+#nickl-overlay .nickl-login-heading {
+  font-family: "Aleo", serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px
+}
+
+#nickl-overlay .nickl-copy {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px
+}
+
+#nickl-overlay .nickl-cancel-btn {
+  font-family: "Aleo", serif;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 12px 22px 10px 22px;
+  color: white;
+  border: 1px solid white;
+  text-decoration: none;
+  border-radius: 10px;
+  text-transform: none
+}
+
+#nickl-overlay .nickl-contact-support {
+  font-size: 15px;
+  margin-top: 100px;
+  color: white;
+  padding-bottom: 3px;
+  border-bottom: 1px solid white;
+  text-decoration: none;
+  text-transform: none
+}
+
+#nickl-overlay .mt-30px {
+  margin-top: 30px
+}
+
+#nickl-overlay .ml-25px {
+  margin-left: 25px
+}
+
+#nickl-overlay .text-center {
+  text-align: center
+}
+
+#nickl-overlay .credentials-info {
+  max-width: 300px;
+  margin: auto;
+  margin-bottom: 20px
+}
+
+#nickl-overlay .credentials-border {
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 10px
+}
+
+#nickl-overlay .copied-text {
+  font-size: 12px
+}
+
+@-webkit-keyframes overlayAni {
+  0% {
+    background-color: #265CED;
+    left: 51px;
+    top: 34px
+  }
+
+  25% {
+    background-color: #265CED;
+    left: 51px;
+    top: 21px
+  }
+
+  50% {
+    background-color: #265CED;
+    left: 65px;
+    top: 21px
+  }
+
+  75% {
+    background-color: #265CED;
+    left: 65px;
+    top: 34px
+  }
+
+  100% {
+    background-color: #265CED;
+    left: 51px;
+    top: 34px
+  }
+}
+
+@keyframes overlayAni {
+  0% {
+    background-color: #265CED;
+    left: 51px;
+    top: 34px
+  }
+
+  25% {
+    background-color: #265CED;
+    left: 51px;
+    top: 21px
+  }
+
+  50% {
+    background-color: #265CED;
+    left: 65px;
+    top: 21px
+  }
+
+  75% {
+    background-color: #265CED;
+    left: 65px;
+    top: 34px
+  }
+
+  100% {
+    background-color: #265CED;
+    left: 51px;
+    top: 34px
+  }
+}
+
+.overlay-action-widget {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px
+}
+
+.spam-msg {
+  margin-top: 50px;
+  text-align: center
+}
+
+.close-link {
+  color: white
+}
+
+.d-flex {
+  display: flex !important
+}
+
+.align-items-center {
+  align-items: center !important
+}
+
+.ms-1 {
+  margin-left: 0.25rem !important
+}
+
+.error_url {
+  color: #fff !important;
+  text-decoration: underline
+}
