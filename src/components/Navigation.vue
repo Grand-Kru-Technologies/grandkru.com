@@ -22,16 +22,14 @@
           >
             <span class="inline-block transition-transform duration-300 group-hover:scale-110">{{ item.name }}</span>
           </router-link>
-          <DarkModeToggle />
         </div>
 
         <!-- Mobile Menu Button -->
         <div class="md:hidden flex items-center gap-3">
-          <DarkModeToggle />
           <button
             class="p-2.5 glass-strong rounded-xl transition-all duration-300 hover:scale-110 hover:bg-white/25 dark:hover:bg-gray-800/50 text-dark-gray dark:text-gray-100"
-            @click="isMenuOpen = !isMenuOpen"
             aria-label="Toggle menu"
+            @click="isMenuOpen = !isMenuOpen"
           >
           <svg
             class="w-6 h-6 transition-transform duration-300"
@@ -92,7 +90,6 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import DarkModeToggle from './DarkModeToggle.vue'
 
 interface NavigationItem {
   name: string
