@@ -7,9 +7,9 @@
       <div>Is Staging: {{ isStaging }}</div>
     </div>
 
-    <div class="min-h-screen bg-white">
+    <div class="min-h-screen">
       <Navigation />
-      <main class="container mx-auto px-4 py-8">
+      <main class="container mx-auto py-8">
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
             <component :is="Component" />
@@ -43,13 +43,21 @@ onMounted(() => {
 </script>
 
 <style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
+.fade-enter-active {
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
-.fade-enter-from,
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
 .fade-leave-to {
   opacity: 0;
+  transform: translateY(-10px);
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <nav class="glass fixed w-full z-50">
+  <nav class="glass w-full z-50 relative">
     <div class="container mx-auto px-4">
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->
@@ -12,25 +12,30 @@
         </router-link>
 
         <!-- Desktop Navigation -->
-        <div class="hidden md:flex space-x-8">
+        <div class="hidden md:flex items-center space-x-8">
           <router-link
             v-for="item in navigationItems"
             :key="item.path"
             :to="item.path"
-            class="nav-link"
+            class="nav-link group"
             :class="{ 'nav-link-active': $route.path === item.path }"
           >
-            <span>{{ item.name }}</span>
+            <span class="inline-block transition-transform duration-300 group-hover:scale-110">{{ item.name }}</span>
           </router-link>
+          <DarkModeToggle />
         </div>
 
         <!-- Mobile Menu Button -->
-        <button
-          class="md:hidden p-2 glass rounded-lg transition-all duration-300 hover:scale-110"
-          @click="isMenuOpen = !isMenuOpen"
-        >
+        <div class="md:hidden flex items-center gap-3">
+          <DarkModeToggle />
+          <button
+            class="p-2.5 glass-strong rounded-xl transition-all duration-300 hover:scale-110 hover:bg-white/25 dark:hover:bg-gray-800/50 text-dark-gray dark:text-gray-100"
+            @click="isMenuOpen = !isMenuOpen"
+            aria-label="Toggle menu"
+          >
           <svg
-            class="w-6 h-6"
+            class="w-6 h-6 transition-transform duration-300"
+            :class="{ 'rotate-90': isMenuOpen }"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -39,18 +44,19 @@
               v-if="!isMenuOpen"
               stroke-linecap="round"
               stroke-linejoin="round"
-              stroke-width="2"
+              stroke-width="2.5"
               d="M4 6h16M4 12h16M4 18h16"
             />
             <path
               v-else
               stroke-linecap="round"
               stroke-linejoin="round"
-              stroke-width="2"
+              stroke-width="2.5"
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>
         </button>
+        </div>
       </div>
 
       <!-- Mobile Navigation -->
@@ -64,18 +70,18 @@
       >
         <div
           v-if="isMenuOpen"
-          class="md:hidden glass rounded-lg mt-2 p-4"
+          class="md:hidden glass-strong rounded-2xl mt-4 p-6 animate-slide-up"
         >
-          <div class="flex justify-center space-x-8">
+          <div class="flex flex-col space-y-4">
             <router-link
               v-for="item in navigationItems"
               :key="item.path"
               :to="item.path"
-              class="nav-link w-fit"
-              :class="{ 'nav-link-active': $route.path === item.path }"
+              class="nav-link text-center py-3 rounded-xl hover:bg-white/10 dark:hover:bg-gray-800/50 transition-all duration-300 hover:scale-105 hover:translate-x-2"
+              :class="{ 'nav-link-active bg-white/10 dark:bg-gray-800/50': $route.path === item.path }"
               @click="isMenuOpen = false"
             >
-              <span>{{ item.name }}</span>
+              <span class="inline-block transition-transform duration-300">{{ item.name }}</span>
             </router-link>
           </div>
         </div>
@@ -84,12 +90,18 @@
   </nav>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
+import DarkModeToggle from './DarkModeToggle.vue'
+
+interface NavigationItem {
+  name: string
+  path: string
+}
 
 const isMenuOpen = ref(false)
 
-const navigationItems = [
+const navigationItems: NavigationItem[] = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
   { name: 'Services', path: '/services' },

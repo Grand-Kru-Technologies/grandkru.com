@@ -1,7 +1,9 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-16">
-    <div class="container mx-auto px-4">
-      <h1 class="text-4xl font-bold text-primary text-center mb-12">Our Services</h1>
+  <div class="min-h-screen py-12">
+    <div class="container mx-auto">
+      <h1 class="text-4xl md:text-5xl font-bold text-center mb-12">
+        <span class="gradient-text dark:text-primary-400">Our Services</span>
+      </h1>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div
@@ -41,27 +43,29 @@
       <!-- Modal -->
       <div
         v-if="selectedService"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in"
         @click="closeModal"
       >
         <div
-          class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 ease-in-out relative"
+          class="rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-500 ease-out relative shadow-glass-lg"
+          :class="{ 'bg-white': !isDark, 'bg-gray-900': isDark }"
           @click.stop
         >
           <!-- Modal Header with Background -->
           <div
-            class="relative h-32 rounded-t-xl overflow-hidden"
+            class="relative h-40 rounded-t-3xl overflow-hidden"
             :style="{ backgroundImage: `url(${selectedService.backgroundImage})` }"
           >
             <div
-              class="absolute inset-0 opacity-60"
+              class="absolute inset-0 opacity-70"
               :class="selectedService.gradient"
             ></div>
-            <div class="relative p-6 flex justify-between items-start">
-              <h2 class="text-3xl font-bold text-white">{{ selectedService.title }}</h2>
+            <div class="relative p-8 flex justify-between items-start">
+              <h2 class="text-3xl md:text-4xl font-bold text-white">{{ selectedService.title }}</h2>
               <button
                 @click="closeModal"
-                class="text-white hover:text-gray-200 text-2xl bg-black/20 rounded-full w-8 h-8 flex items-center justify-center hover:bg-black/30 transition-colors duration-300"
+                class="text-white hover:text-gray-200 text-2xl bg-black/30 backdrop-blur-sm rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/40 hover:scale-110 transition-all duration-300"
+                aria-label="Close modal"
               >
                 ✕
               </button>
@@ -69,30 +73,58 @@
           </div>
 
           <!-- Modal Content -->
-          <div class="p-6 space-y-6">
+          <div
+            class="p-8 space-y-8"
+            :class="{ 'bg-white': !isDark, 'bg-gray-900': isDark }"
+          >
             <div>
-              <h3 class="text-xl font-bold text-primary mb-3">Service Overview</h3>
-              <p class="text-dark-gray text-lg">{{ selectedService.summary }}</p>
+              <h3
+                class="text-2xl font-bold mb-4"
+                :class="{ 'text-gray-900': !isDark, 'text-white': isDark }"
+              >Service Overview</h3>
+              <p
+                class="text-lg leading-relaxed"
+                :class="{ 'text-gray-800': !isDark, 'text-gray-100': isDark }"
+              >{{ selectedService.summary }}</p>
             </div>
             <div>
-              <h3 class="text-xl font-bold text-primary mb-3">Detailed Description</h3>
-              <p class="text-dark-gray">{{ selectedService.details }}</p>
+              <h3
+                class="text-2xl font-bold mb-4"
+                :class="{ 'text-gray-900': !isDark, 'text-white': isDark }"
+              >Detailed Description</h3>
+              <p
+                class="leading-relaxed"
+                :class="{ 'text-gray-800': !isDark, 'text-gray-100': isDark }"
+              >{{ selectedService.details }}</p>
             </div>
             <div>
-              <h3 class="text-xl font-bold text-primary mb-3">Key Features</h3>
-              <ul class="list-disc list-inside text-dark-gray space-y-2">
+              <h3
+                class="text-2xl font-bold mb-4"
+                :class="{ 'text-gray-900': !isDark, 'text-white': isDark }"
+              >Key Features</h3>
+              <ul
+                class="list-disc list-inside space-y-3 text-lg"
+                :class="{ 'text-gray-800': !isDark, 'text-gray-100': isDark }"
+              >
                 <li v-for="(feature, index) in selectedService.features" :key="index">
                   {{ feature }}
                 </li>
               </ul>
             </div>
             <div>
-              <h3 class="text-xl font-bold text-primary mb-3">Technologies Used</h3>
-              <div class="flex flex-wrap gap-2">
+              <h3
+                class="text-2xl font-bold mb-4"
+                :class="{ 'text-gray-900': !isDark, 'text-white': isDark }"
+              >Technologies Used</h3>
+              <div class="flex flex-wrap gap-3">
                 <span
                   v-for="(tech, index) in selectedService.technologies"
                   :key="index"
-                  class="bg-[#3b5a7b] bg-opacity-10 text-[#3b5a7b] px-4 py-2 rounded-full text-sm font-medium"
+                  class="px-5 py-2.5 rounded-full text-sm font-semibold border hover:scale-105 transition-transform duration-300"
+                  :class="{
+                    'bg-primary-100 text-primary-800 border-primary-300': !isDark,
+                    'bg-primary-900/50 text-primary-200 border-primary-700': isDark
+                  }"
                 >
                   {{ tech }}
                 </span>
@@ -106,12 +138,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import techImage1 from '../assets/images/technology-8576308.jpg'
 import techImage2 from '../assets/images/technology-8576321.jpg'
 import keyboardImage from '../assets/images/keyboard.jpg'
 import desktopImage from '../assets/images/desktop.jpg'
 import geometricImage from '../assets/images/geometric-1732847.jpg'
+
+const isDark = ref(false)
+
+const checkDarkMode = () => {
+  isDark.value = document.documentElement.classList.contains('dark')
+}
+
+onMounted(() => {
+  checkDarkMode()
+  const observer = new MutationObserver(checkDarkMode)
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['class']
+  })
+  onUnmounted(() => observer.disconnect())
+})
 
 interface Service {
   title: string;
@@ -136,7 +184,7 @@ const services = ref<Service[]>([
       'Cross-browser compatibility'
     ],
     technologies: ['WordPress', 'Rails', 'Node.JS', 'APIs', 'Cloud', 'Frontend'],
-    gradient: 'bg-gradient-to-br from-blue-600 to-purple-700',
+    gradient: 'bg-gradient-to-br from-blue-600 to-blue-700',
     backgroundImage: techImage1
   },
   {
@@ -196,7 +244,7 @@ const services = ref<Service[]>([
       'Performance monitoring and analytics'
     ],
     technologies: ['Process Automation', 'Workflow Management', 'Data Analytics', 'Integration Tools', 'RPA', 'API Development'],
-    gradient: 'bg-gradient-to-br from-indigo-600 to-purple-700',
+    gradient: 'bg-gradient-to-br from-indigo-600 to-blue-700',
     backgroundImage: desktopImage
   }
 ])

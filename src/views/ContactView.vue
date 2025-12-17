@@ -1,34 +1,36 @@
 <template>
-  <div class="min-h-screen from-primary/5 to-primary/10 py-16">
-    <div class="container mx-auto px-4">
-      <h1 class="text-4xl font-bold text-primary text-center mb-12">Contact Us</h1>
+  <div class="min-h-screen py-12">
+    <div class="container mx-auto">
+      <h1 class="text-4xl md:text-5xl font-bold text-center mb-12">
+        <span class="gradient-text dark:text-primary-400">Contact Us</span>
+      </h1>
 
       <!-- Success Message -->
       <div v-if="showSuccess"
-           class="fixed top-4 right-4 glass-card bg-green-100/80 text-green-700 flex items-center gap-2"
+           class="fixed top-6 right-6 glass-strong bg-green-500/20 border-green-500/30 text-green-700 flex items-center gap-3 px-6 py-4 rounded-2xl shadow-glass-lg z-50 animate-slide-up"
            role="alert">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
         </svg>
-        <span>Your message has been sent successfully!</span>
-        <button @click="showSuccess = false" class="ml-2 hover:scale-110 transition-transform">
+        <span class="font-semibold">Your message has been sent successfully!</span>
+        <button @click="showSuccess = false" class="ml-4 hover:scale-110 transition-transform p-1 rounded-lg hover:bg-green-500/10">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
 
       <!-- Error Message -->
       <div v-if="showError"
-           class="fixed top-4 right-4 glass-card bg-red-100/80 text-red-700 flex items-center gap-2"
+           class="fixed top-6 right-6 glass-strong bg-red-500/20 border-red-500/30 text-red-700 flex items-center gap-3 px-6 py-4 rounded-2xl shadow-glass-lg z-50 animate-slide-up"
            role="alert">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
-        <span>An error occurred. Please try again.</span>
-        <button @click="showError = false" class="ml-2 hover:scale-110 transition-transform">
+        <span class="font-semibold">An error occurred. Please try again.</span>
+        <button @click="showError = false" class="ml-4 hover:scale-110 transition-transform p-1 rounded-lg hover:bg-red-500/10">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
       </div>
@@ -37,70 +39,79 @@
         <form @submit.prevent="handleSubmit" class="glass-card space-y-6">
           <!-- Name Field -->
           <div>
-            <label for="name" class="block text-dark-gray font-medium mb-2">Name</label>
+            <label for="name" class="block text-dark-gray dark:text-gray-200 font-semibold mb-3 text-lg">Name</label>
             <input
               type="text"
               id="name"
               v-model="form.name"
               class="glass-input w-full"
-              :class="{ 'border-red-500': errors.name }"
+              :class="{ 'ring-2 ring-red-500 border-red-500': errors.name }"
+              placeholder="Your name"
             />
-            <p v-if="errors.name" class="text-red-500 text-sm mt-1">{{ errors.name }}</p>
+            <p v-if="errors.name" class="text-red-600 text-sm mt-2 font-medium">{{ errors.name }}</p>
           </div>
 
           <!-- Email Field -->
           <div>
-            <label for="email" class="block text-dark-gray font-medium mb-2">Email</label>
+            <label for="email" class="block text-dark-gray dark:text-gray-200 font-semibold mb-3 text-lg">Email</label>
             <input
               type="email"
               id="email"
               v-model="form.email"
               class="glass-input w-full"
-              :class="{ 'border-red-500': errors.email }"
+              :class="{ 'ring-2 ring-red-500 border-red-500': errors.email }"
+              placeholder="your.email@example.com"
             />
-            <p v-if="errors.email" class="text-red-500 text-sm mt-1">{{ errors.email }}</p>
+            <p v-if="errors.email" class="text-red-600 text-sm mt-2 font-medium">{{ errors.email }}</p>
           </div>
 
           <!-- Subject Field -->
           <div>
-            <label for="subject" class="block text-dark-gray font-medium mb-2">Subject</label>
+            <label for="subject" class="block text-dark-gray dark:text-gray-200 font-semibold mb-3 text-lg">Subject</label>
             <input
               type="text"
               id="subject"
               v-model="form.subject"
               class="glass-input w-full"
-              :class="{ 'border-red-500': errors.subject }"
+              :class="{ 'ring-2 ring-red-500 border-red-500': errors.subject }"
+              placeholder="What's this about?"
             />
-            <p v-if="errors.subject" class="text-red-500 text-sm mt-1">{{ errors.subject }}</p>
+            <p v-if="errors.subject" class="text-red-600 text-sm mt-2 font-medium">{{ errors.subject }}</p>
           </div>
 
           <!-- Message Field -->
           <div>
-            <label for="message" class="block text-dark-gray font-medium mb-2">Message</label>
+            <label for="message" class="block text-dark-gray dark:text-gray-200 font-semibold mb-3 text-lg">Message</label>
             <textarea
               id="message"
               v-model="form.message"
-              rows="4"
+              rows="6"
               class="glass-input w-full resize-none"
-              :class="{ 'border-red-500': errors.message }"
+              :class="{ 'ring-2 ring-red-500 border-red-500': errors.message }"
+              placeholder="Tell us about your project or inquiry..."
             ></textarea>
-            <p v-if="errors.message" class="text-red-500 text-sm mt-1">{{ errors.message }}</p>
+            <p v-if="errors.message" class="text-red-600 text-sm mt-2 font-medium">{{ errors.message }}</p>
           </div>
 
           <!-- Submit Button -->
           <button
             type="submit"
-            class="glass-button w-full bg-primary"
+            class="glass-button w-full"
             :disabled="isSubmitting"
           >
-            <span v-if="isSubmitting" class="flex items-center justify-center gap-2">
+            <span v-if="isSubmitting" class="flex items-center justify-center gap-3">
               <svg class="animate-spin h-5 w-5" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" />
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
               Sending...
             </span>
-            <span v-else>Send Message</span>
+            <span v-else class="flex items-center justify-center gap-2">
+              Send Message
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+              </svg>
+            </span>
           </button>
         </form>
       </div>
@@ -108,18 +119,32 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import emailjs from '@emailjs/browser'
 
-const form = ref({
+interface FormData {
+  name: string
+  email: string
+  subject: string
+  message: string
+}
+
+interface FormErrors {
+  name?: string
+  email?: string
+  subject?: string
+  message?: string
+}
+
+const form = ref<FormData>({
   name: '',
   email: '',
   subject: '',
   message: ''
 })
 
-const errors = ref({})
+const errors = ref<FormErrors>({})
 const isSubmitting = ref(false)
 const showSuccess = ref(false)
 const showError = ref(false)
