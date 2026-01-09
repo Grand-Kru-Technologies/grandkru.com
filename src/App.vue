@@ -17,8 +17,6 @@
         </router-view>
       </main>
 
-      <!-- Chat Widget - only show on non-admin pages -->
-      <ChatWidget v-if="!isAdminPage" />
     </div>
   </PasswordProtection>
 </template>
