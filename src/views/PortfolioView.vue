@@ -1,97 +1,106 @@
 <template>
-  <div class="min-h-screen bg-white py-16">
-    <div class="container mx-auto px-4">
-      <h1 class="text-4xl font-bold text-primary text-center mb-12">Our Portfolio</h1>
+  <div class="min-h-screen bg-builder-dark-primary">
+    <!-- Hero Section -->
+    <section class="bg-builder-dark-primary py-20 border-b border-builder-border-card">
+      <div class="container mx-auto px-6">
+        <div class="max-w-content mx-auto text-center">
+          <h1 class="mb-4 text-builder-foreground-primary">Our Portfolio</h1>
+          <p class="text-lg leading-normal text-builder-foreground-secondary max-w-2xl mx-auto">
+            Explore our successful technology implementations and client projects
+          </p>
+        </div>
+      </div>
+    </section>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Portfolio Item 1 -->
-        <div
-          v-for="(item, index) in portfolioItems"
-          :key="index"
-          class="bg-light-gray rounded-lg overflow-hidden shadow-lg cursor-pointer"
-          @click="openModal(item)"
-        >
-          <img
-            :src="item.images[0]"
-            :alt="item.title"
-            class="w-full h-48 object-cover"
-          />
-          <div class="p-6">
-            <h3 class="text-xl font-bold text-primary mb-2">{{ item.title }}</h3>
-            <p class="text-dark-gray">{{ item.summary }}</p>
+    <!-- Portfolio Grid -->
+    <section class="py-20 bg-builder-dark-primary">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div
+            v-for="(item, index) in portfolioItems"
+            :key="index"
+            class="bg-builder-card border border-builder-border-card rounded-xl overflow-hidden hover:shadow-card hover:bg-builder-cardHover transition-all duration-200 cursor-pointer group"
+            @click="openModal(item)"
+          >
+            <div class="aspect-video bg-builder-dark-tertiary"></div>
+            <div class="p-6">
+              <h3 class="text-h5 mb-2 text-builder-foreground-onCard group-hover:text-builder-accent-primaryHover transition-colors duration-200">
+                {{ item.title }}
+              </h3>
+              <p class="text-sm leading-normal text-builder-foreground-onCard opacity-80">
+                {{ item.summary }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Modal -->
+    <!-- Modal -->
+    <div
+      v-if="selectedItem"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+      @click="closeModal"
+    >
       <div
-        v-if="selectedItem"
-        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-        @click="closeModal"
+        class="bg-builder-dark-primary rounded-sm max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-lg transform transition-all duration-150 relative"
+        @click.stop
       >
-        <div
-          class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 ease-in-out relative"
-          @click.stop
-        >
-          <div class="p-8">
-            <div class="flex justify-between items-start mb-6">
-              <h2 class="text-3xl font-bold text-primary">{{ selectedItem.title }}</h2>
-              <button
-                @click="closeModal"
-                class="text-dark-gray hover:text-primary text-2xl"
-              >
-                ✕
-              </button>
-            </div>
-
-            <!-- Carousel -->
-            <Carousel
-              :items-to-show="1"
-              :wrap-around="true"
-              :autoplay="3000"
-              class="mb-8"
+        <div class="p-8">
+          <div class="flex justify-between items-start mb-6">
+            <h2 class="text-h2 text-builder-foreground-primary">{{ selectedItem.title }}</h2>
+            <button
+              @click="closeModal"
+              class="text-builder-foreground-secondary hover:text-builder-accent-primaryHover text-2xl transition-colors duration-150"
+              aria-label="Close modal"
             >
-              <Slide v-for="(image, index) in selectedItem.images" :key="index">
-                <div class="carousel__item">
-                  <img
-                    :src="image"
-                    :alt="selectedItem.title"
-                    class="w-full h-80 object-cover rounded-lg shadow-lg"
-                  />
-                </div>
-              </Slide>
+              ✕
+            </button>
+          </div>
 
-              <template #addons>
-                <Navigation />
-                <Pagination />
-              </template>
-            </Carousel>
+          <!-- Carousel -->
+          <Carousel
+            :items-to-show="1"
+            :wrap-around="true"
+            :autoplay="3000"
+            class="mb-8"
+          >
+            <Slide v-for="(image, index) in selectedItem.images" :key="index">
+              <div class="carousel__item">
+                <div class="w-full h-80 bg-builder-dark-tertiary rounded-sm"></div>
+              </div>
+            </Slide>
 
-            <div class="space-y-6">
-              <div>
-                <h3 class="text-xl font-bold text-primary mb-3">Project Overview</h3>
-                <p class="text-dark-gray text-lg">{{ selectedItem.summary }}</p>
+            <template #addons>
+              <Navigation />
+              <Pagination />
+            </template>
+          </Carousel>
+
+          <div class="space-y-8">
+            <div>
+              <h3 class="text-h4 text-builder-foreground-primary mb-4">Project Overview</h3>
+              <p class="text-base leading-normal text-builder-foreground-primary">{{ selectedItem.summary }}</p>
+            </div>
+            <div>
+              <h3 class="text-h4 text-builder-foreground-primary mb-4">Detailed Description</h3>
+              <p class="text-base leading-normal text-builder-foreground-primary">{{ selectedItem.details }}</p>
+            </div>
+            <div>
+              <h3 class="text-h4 text-builder-foreground-primary mb-4">Technologies Used</h3>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  v-for="(tech, index) in selectedItem.technologies"
+                  :key="index"
+                  class="tech-tag"
+                >
+                  {{ tech }}
+                </span>
               </div>
-              <div>
-                <h3 class="text-xl font-bold text-primary mb-3">Detailed Description</h3>
-                <p class="text-dark-gray">{{ selectedItem.details }}</p>
-              </div>
-              <div>
-                <h3 class="text-xl font-bold text-primary mb-3">Technologies Used</h3>
-                <div class="flex flex-wrap gap-2">
-                  <span
-                    v-for="(tech, index) in selectedItem.technologies"
-                    :key="index"
-                    class="bg-primary bg-opacity-10 text-primary px-4 py-2 rounded-full text-sm font-medium"
-                  >
-                    {{ tech }}
-                  </span>
-                </div>
-              </div>
-              <div>
-                <h3 class="text-xl font-bold text-primary mb-3">Key Outcomes</h3>
-                <p class="text-dark-gray">{{ selectedItem.outcome }}</p>
-              </div>
+            </div>
+            <div>
+              <h3 class="text-h4 text-builder-foreground-primary mb-4">Key Outcomes</h3>
+              <p class="text-base leading-normal text-builder-foreground-primary">{{ selectedItem.outcome }}</p>
             </div>
           </div>
         </div>
@@ -100,7 +109,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
@@ -180,9 +189,9 @@ const portfolioItems = ref([
   }
 ])
 
-const selectedItem = ref(null)
+const selectedItem = ref<any>(null)
 
-const openModal = (item) => {
+const openModal = (item: any) => {
   selectedItem.value = item
 }
 
@@ -195,9 +204,6 @@ const closeModal = () => {
 .carousel__item {
   min-height: 200px;
   width: 100%;
-  color: var(--vc-clr-white);
-  font-size: 20px;
-  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -210,14 +216,22 @@ const closeModal = () => {
 .carousel__prev,
 .carousel__next {
   box-sizing: content-box;
-  border: 5px solid white;
+  border: 5px solid #3858e9;
 }
 
 .carousel__pagination-button {
-  background-color: var(--primary);
+  background-color: #171717;
 }
 
 .carousel__pagination-button--active {
-  background-color: var(--primary);
+  background-color: #171717;
+}
+
+.dark .carousel__pagination-button {
+  background-color: #ededed;
+}
+
+.dark .carousel__pagination-button--active {
+  background-color: #ededed;
 }
 </style>

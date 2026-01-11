@@ -7,24 +7,29 @@
       <div>Is Staging: {{ isStaging }}</div>
     </div>
 
-    <div class="min-h-screen">
+    <div class="min-h-screen bg-builder-dark-primary transition-colors duration-200 flex flex-col">
       <Navigation />
-      <main class="container mx-auto py-8">
+      <main class="flex-1">
         <router-view v-slot="{ Component }">
           <transition name="fade" mode="out-in">
             <component :is="Component" />
           </transition>
         </router-view>
       </main>
+      <Footer />
     </div>
   </PasswordProtection>
 </template>
 
 <script setup lang="ts">
 import Navigation from './components/Navigation.vue'
+import Footer from './components/Footer.vue'
 import PasswordProtection from './components/PasswordProtection.vue'
 import { computed, ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+// Dark mode only - no toggle needed
 
+const route = useRoute()
 const currentHostname = ref('')
 const viteEnvironment = ref('')
 const isDev = ref(false)
@@ -35,6 +40,10 @@ const isStaging = computed(() => {
          viteEnvironment.value === 'staging'
 })
 
+const isAdminPage = computed(() => {
+  return route.path.startsWith('/admin')
+})
+
 onMounted(() => {
   currentHostname.value = window.location.hostname
   viteEnvironment.value = import.meta.env.VITE_ENVIRONMENT || ''
@@ -43,21 +52,13 @@ onMounted(() => {
 </script>
 
 <style>
-.fade-enter-active {
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
+.fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
-.fade-enter-from {
-  opacity: 0;
-  transform: translateY(10px);
-}
-
+.fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-  transform: translateY(-10px);
 }
 </style>

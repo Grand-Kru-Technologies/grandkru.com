@@ -1,135 +1,108 @@
 <template>
-  <div class="min-h-screen py-12">
-    <div class="container mx-auto">
-      <h1 class="text-4xl md:text-5xl font-bold text-center mb-12">
-        <span class="gradient-text dark:text-primary-400">Our Services</span>
-      </h1>
+  <div class="min-h-screen bg-builder-dark-primary">
+    <!-- Hero Section -->
+    <section class="bg-builder-dark-primary py-20 border-b border-builder-border-card">
+      <div class="container mx-auto px-6">
+        <div class="max-w-content mx-auto text-center">
+          <h1 class="mb-4 text-builder-foreground-primary">Our Services</h1>
+          <p class="text-lg leading-normal text-builder-foreground-secondary max-w-2xl mx-auto">
+            Comprehensive technology solutions designed to drive your business forward
+          </p>
+        </div>
+      </div>
+    </section>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div
-          v-for="(service, index) in services"
-          :key="index"
-          class="relative overflow-hidden rounded-xl shadow-lg cursor-pointer hover:shadow-2xl transition-all duration-300 hover:scale-105 group"
-          @click="openModal(service)"
-        >
-          <!-- Background Image with Overlay -->
+    <!-- Services Grid -->
+    <section class="py-20 bg-builder-dark-primary">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div
-            class="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-300"
-            :style="{ backgroundImage: `url(${service.backgroundImage})` }"
-          ></div>
-
-          <!-- Gradient Overlay -->
-          <div
-            class="absolute inset-0 opacity-80"
-            :class="service.gradient"
-          ></div>
-
-          <!-- Content -->
-          <div class="relative p-6 text-white">
-            <h3 class="text-2xl font-bold mb-4">{{ service.title }}</h3>
-            <p class="text-white/90 mb-4">
+            v-for="(service, index) in services"
+            :key="index"
+            class="bg-builder-dark-primary border border-builder-border-card rounded-sm p-8 hover:shadow-default transition-all duration-150 cursor-pointer group"
+            @click="openModal(service)"
+          >
+            <div class="w-16 h-16 rounded-lg mb-6 flex items-center justify-center bg-builder-dark-tertiary">
+              <svg class="w-8 h-8 text-builder-accent-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-h4 mb-4 group-hover:text-gray-600 group-hover:text-builder-accent-primaryHover transition-colors duration-150">
+              {{ service.title }}
+            </h3>
+            <p class="text-base leading-normal text-builder-foreground-secondary mb-6">
               {{ service.summary }}
             </p>
-            <div class="flex items-center text-white/80 text-sm">
+            <div class="flex items-center text-builder-foreground-primary text-sm font-medium">
               <span>Learn more</span>
-              <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-150" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
               </svg>
             </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <!-- Modal -->
+    <!-- Modal -->
+    <div
+      v-if="selectedService"
+      class="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50"
+      @click="closeModal"
+    >
       <div
-        v-if="selectedService"
-        class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fade-in"
-        @click="closeModal"
+        class="bg-builder-dark-primary rounded-sm max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-lg transform transition-all duration-150 relative"
+        @click.stop
       >
-        <div
-          class="rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-500 ease-out relative shadow-glass-lg"
-          :class="{ 'bg-white': !isDark, 'bg-gray-900': isDark }"
-          @click.stop
-        >
-          <!-- Modal Header with Background -->
-          <div
-            class="relative h-40 rounded-t-3xl overflow-hidden"
-            :style="{ backgroundImage: `url(${selectedService.backgroundImage})` }"
+        <!-- Modal Header -->
+        <div class="bg-gray-50 bg-builder-dark-tertiary border-b border-builder-border-card p-6 flex justify-between items-start">
+          <h2 class="text-h2 text-builder-foreground-primary">{{ selectedService.title }}</h2>
+          <button
+            @click="closeModal"
+            class="text-builder-foreground-secondary hover:text-builder-accent-primaryHover text-2xl transition-colors duration-150"
+            aria-label="Close modal"
           >
-            <div
-              class="absolute inset-0 opacity-70"
-              :class="selectedService.gradient"
-            ></div>
-            <div class="relative p-8 flex justify-between items-start">
-              <h2 class="text-3xl md:text-4xl font-bold text-white">{{ selectedService.title }}</h2>
-              <button
-                @click="closeModal"
-                class="text-white hover:text-gray-200 text-2xl bg-black/30 backdrop-blur-sm rounded-full w-10 h-10 flex items-center justify-center hover:bg-black/40 hover:scale-110 transition-all duration-300"
-                aria-label="Close modal"
+            ✕
+          </button>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="p-8 space-y-8">
+          <div>
+            <h3 class="text-h4 text-builder-foreground-primary mb-4">Service Overview</h3>
+            <p class="text-base leading-normal text-builder-foreground-primary">{{ selectedService.summary }}</p>
+          </div>
+          <div>
+            <h3 class="text-h4 text-builder-foreground-primary mb-4">Detailed Description</h3>
+            <p class="text-base leading-normal text-builder-foreground-primary">{{ selectedService.details }}</p>
+          </div>
+          <div>
+            <h3 class="text-h4 text-builder-foreground-primary mb-4">Key Features</h3>
+            <ul class="list-disc list-inside space-y-2 text-base leading-normal text-builder-foreground-primary">
+              <li v-for="(feature, index) in selectedService.features" :key="index">
+                {{ feature }}
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-h4 text-builder-foreground-primary mb-4">Technologies Used</h3>
+            <div class="flex flex-wrap gap-2">
+              <span
+                v-for="(tech, index) in selectedService.technologies"
+                :key="index"
+                class="tech-tag"
               >
-                ✕
-              </button>
+                {{ tech }}
+              </span>
             </div>
           </div>
-
-          <!-- Modal Content -->
-          <div
-            class="p-8 space-y-8"
-            :class="{ 'bg-white': !isDark, 'bg-gray-900': isDark }"
-          >
-            <div>
-              <h3
-                class="text-2xl font-bold mb-4"
-                :class="{ 'text-gray-900': !isDark, 'text-white': isDark }"
-              >Service Overview</h3>
-              <p
-                class="text-lg leading-relaxed"
-                :class="{ 'text-gray-800': !isDark, 'text-gray-100': isDark }"
-              >{{ selectedService.summary }}</p>
-            </div>
-            <div>
-              <h3
-                class="text-2xl font-bold mb-4"
-                :class="{ 'text-gray-900': !isDark, 'text-white': isDark }"
-              >Detailed Description</h3>
-              <p
-                class="leading-relaxed"
-                :class="{ 'text-gray-800': !isDark, 'text-gray-100': isDark }"
-              >{{ selectedService.details }}</p>
-            </div>
-            <div>
-              <h3
-                class="text-2xl font-bold mb-4"
-                :class="{ 'text-gray-900': !isDark, 'text-white': isDark }"
-              >Key Features</h3>
-              <ul
-                class="list-disc list-inside space-y-3 text-lg"
-                :class="{ 'text-gray-800': !isDark, 'text-gray-100': isDark }"
-              >
-                <li v-for="(feature, index) in selectedService.features" :key="index">
-                  {{ feature }}
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3
-                class="text-2xl font-bold mb-4"
-                :class="{ 'text-gray-900': !isDark, 'text-white': isDark }"
-              >Technologies Used</h3>
-              <div class="flex flex-wrap gap-3">
-                <span
-                  v-for="(tech, index) in selectedService.technologies"
-                  :key="index"
-                  class="px-5 py-2.5 rounded-full text-sm font-semibold border hover:scale-105 transition-transform duration-300"
-                  :class="{
-                    'bg-primary-100 text-primary-800 border-primary-300': !isDark,
-                    'bg-primary-900/50 text-primary-200 border-primary-700': isDark
-                  }"
-                >
-                  {{ tech }}
-                </span>
-              </div>
-            </div>
+          <div class="pt-4 border-t border-builder-border-card">
+            <router-link
+              to="/contact"
+              class="glass-button inline-block"
+            >
+              Get Started
+            </router-link>
           </div>
         </div>
       </div>
@@ -138,28 +111,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
 import techImage1 from '../assets/images/technology-8576308.jpg'
 import techImage2 from '../assets/images/technology-8576321.jpg'
 import keyboardImage from '../assets/images/keyboard.jpg'
 import desktopImage from '../assets/images/desktop.jpg'
 import geometricImage from '../assets/images/geometric-1732847.jpg'
-
-const isDark = ref(false)
-
-const checkDarkMode = () => {
-  isDark.value = document.documentElement.classList.contains('dark')
-}
-
-onMounted(() => {
-  checkDarkMode()
-  const observer = new MutationObserver(checkDarkMode)
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ['class']
-  })
-  onUnmounted(() => observer.disconnect())
-})
 
 interface Service {
   title: string;
@@ -167,7 +124,8 @@ interface Service {
   details: string;
   features: string[];
   technologies: string[];
-  gradient: string;
+  iconBg: string;
+  iconColor: string;
   backgroundImage: string;
 }
 
@@ -184,7 +142,8 @@ const services = ref<Service[]>([
       'Cross-browser compatibility'
     ],
     technologies: ['WordPress', 'Rails', 'Node.JS', 'APIs', 'Cloud', 'Frontend'],
-    gradient: 'bg-gradient-to-br from-blue-600 to-blue-700',
+    iconBg: 'bg-primary-blueberry-4',
+    iconColor: 'text-link',
     backgroundImage: techImage1
   },
   {
@@ -199,7 +158,8 @@ const services = ref<Service[]>([
       'Intelligent workflow optimization'
     ],
     technologies: ['Zapier', 'Make', 'OpenAI API', 'Machine Learning', 'Data Analytics'],
-    gradient: 'bg-gradient-to-br from-emerald-600 to-teal-700',
+    iconBg: 'bg-builder-dark-tertiary',
+    iconColor: 'text-builder-foreground-primary',
     backgroundImage: techImage2
   },
   {
@@ -214,7 +174,8 @@ const services = ref<Service[]>([
       'Risk assessment and mitigation'
     ],
     technologies: ['AI/ML', 'QuickBooks', 'Financial Analytics', 'Reconciliation', 'Compliance Systems', 'Data Visualization'],
-    gradient: 'bg-gradient-to-br from-green-600 to-emerald-700',
+    iconBg: 'bg-builder-dark-tertiary',
+    iconColor: 'text-builder-foreground-primary',
     backgroundImage: geometricImage
   },
   {
@@ -229,7 +190,8 @@ const services = ref<Service[]>([
       'Secure checkout process'
     ],
     technologies: ['WordPress', 'WooCommerce', 'Stripe', 'PayPal', 'PHP', 'Payment APIs'],
-    gradient: 'bg-gradient-to-br from-orange-600 to-red-600',
+    iconBg: 'bg-builder-dark-tertiary',
+    iconColor: 'text-builder-foreground-primary',
     backgroundImage: keyboardImage
   },
   {
@@ -244,7 +206,8 @@ const services = ref<Service[]>([
       'Performance monitoring and analytics'
     ],
     technologies: ['Process Automation', 'Workflow Management', 'Data Analytics', 'Integration Tools', 'RPA', 'API Development'],
-    gradient: 'bg-gradient-to-br from-indigo-600 to-blue-700',
+    iconBg: 'bg-builder-dark-tertiary',
+    iconColor: 'text-builder-foreground-primary',
     backgroundImage: desktopImage
   }
 ])

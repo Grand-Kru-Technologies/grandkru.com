@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,185 +8,151 @@
   }
 
   body {
-    @apply text-dark-gray font-sans antialiased bg-white;
-    min-height: 100vh;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  body.dark {
-    @apply bg-gray-900 text-gray-100;
+    @apply font-sans text-base leading-normal text-builder-foreground-primary bg-builder-dark-primary transition-colors duration-200;
+    text-wrap: pretty;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold;
+    @apply font-heading transition-colors duration-200;
+    text-wrap: balance;
+    /* Gradient text effect - only within letters */
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 20%, #3b82f6 40%, #2563eb 60%, #1e40af 80%, #1e3a8a 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
+  /* Animation speed based on header size - larger = slower, smaller = faster */
   h1 {
-    @apply text-5xl md:text-6xl lg:text-display;
+    @apply text-h1;
+    animation: gradient-shift 12s ease infinite;
   }
 
   h2 {
-    @apply text-4xl md:text-5xl;
+    @apply text-h2;
+    animation: gradient-shift 10s ease infinite;
   }
 
   h3 {
-    @apply text-3xl md:text-4xl;
+    @apply text-h3;
+    animation: gradient-shift 8s ease infinite;
+  }
+
+  h4 {
+    @apply text-h4;
+    animation: gradient-shift 6.5s ease infinite;
+  }
+
+  h5 {
+    @apply text-h5;
+    animation: gradient-shift 5s ease infinite;
+  }
+
+  h6 {
+    @apply text-h6;
+    animation: gradient-shift 4s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  a {
+    @apply text-builder-accent-primary transition-colors duration-200;
+  }
+
+  a:hover {
+    @apply text-builder-accent-primaryHover;
   }
 }
 
 @layer components {
   .container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-wide mx-auto px-6;
   }
 
-  .glass {
-    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-glass;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-  }
-
-  .glass-strong {
-    @apply bg-white/20 backdrop-blur-2xl border border-white/30 shadow-glass-lg;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(30px) saturate(180%);
-    -webkit-backdrop-filter: blur(30px) saturate(180%);
-  }
-
-  .glass-dark {
-    @apply bg-black/20 backdrop-blur-xl border border-white/10 shadow-glass;
-    background: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-  }
-
-  .glass-card {
-    @apply rounded-2xl p-8 transition-all duration-500 hover:shadow-glass-lg hover:scale-[1.02];
-    background: rgba(255, 255, 255, 1);
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-
-  .glass-input {
-    @apply glass rounded-xl px-5 py-3 text-dark-gray placeholder-medium-gray
-           focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500/50
-           transition-all duration-300 hover:bg-white/15;
-    background: rgba(255, 255, 255, 0.15);
-  }
-
+  /* Builder.io primary buttons */
   .glass-button {
-    @apply bg-gradient-to-r from-primary-600 to-accent-600 text-white rounded-xl px-8 py-3.5 font-semibold
-           transition-all duration-300 hover:from-primary-500 hover:to-accent-500
-           hover:scale-[1.05] hover:shadow-glow
-           active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100
-           shadow-lg;
+    @apply bg-builder-accent-primary text-white rounded-lg px-6 py-3 font-medium text-base
+           leading-normal transition-all duration-200 border border-transparent
+           hover:bg-builder-accent-primaryHover hover:shadow-md
+           active:bg-builder-accent-primaryActive
+           focus:outline-none focus:ring-2 focus:ring-builder-accent-primary focus:ring-offset-2 focus:ring-offset-builder-dark-primary
+           disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
-  .glass-button-secondary {
-    @apply glass-strong text-dark-gray rounded-xl px-8 py-3.5 font-semibold
-           transition-all duration-300 hover:bg-white/30 hover:scale-[1.05]
-           active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed;
+  /* Builder.io secondary buttons */
+  .glass-button-outline {
+    @apply bg-transparent text-white rounded-lg px-6 py-3 font-medium text-base
+           leading-normal transition-all duration-200 border border-builder-border-default
+           hover:bg-builder-dark-tertiary hover:shadow-sm
+           active:bg-builder-dark-secondary
+           focus:outline-none focus:ring-2 focus:ring-builder-accent-primary focus:ring-offset-2 focus:ring-offset-builder-dark-primary
+           disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
-  .nav-link {
-    @apply relative text-dark-gray font-medium transition-all duration-300 ease-out
-           px-4 py-2 rounded-lg hover:text-primary-600;
+  /* Builder.io small buttons */
+  .glass-button-small {
+    @apply bg-builder-accent-primary text-white rounded-lg px-4 py-2 font-medium text-sm
+           leading-normal transition-all duration-200 border border-transparent
+           hover:bg-builder-accent-primaryHover hover:shadow-md
+           active:bg-builder-accent-primaryActive
+           focus:outline-none focus:ring-2 focus:ring-builder-accent-primary focus:ring-offset-2 focus:ring-offset-builder-dark-primary
+           disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
-  .nav-link:hover {
-    @apply scale-105 translate-y-[-2px];
+  /* Navigation links */
+  .nav-link-light {
+    @apply relative text-builder-foreground-primary hover:text-builder-accent-primary transition-colors duration-200
+           px-3 py-1 rounded-sm;
   }
 
-  .nav-link::after {
-    content: '';
-    @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 h-0.5 w-0 bg-gradient-to-r from-primary-500 to-accent-500
-           transition-all duration-300 ease-out;
-  }
-
-  .nav-link:hover::after {
-    @apply w-3/4;
+  .nav-link-dark {
+    @apply relative text-builder-foreground-primary hover:text-builder-accent-primary transition-colors duration-200
+           px-3 py-1 rounded-sm;
   }
 
   .nav-link-active {
-    @apply text-primary-600 font-semibold;
+    @apply text-builder-accent-primary;
   }
 
-  .nav-link-active::after {
-    @apply w-3/4;
+  /* Form elements */
+  .form-input {
+    @apply bg-builder-dark-secondary border border-builder-border-default
+           text-builder-foreground-primary placeholder-builder-foreground-tertiary
+           rounded-lg px-4 py-3 text-base leading-normal
+           focus:outline-none focus:ring-2 focus:ring-builder-accent-primary focus:border-builder-border-focus focus:bg-builder-dark-tertiary
+           transition-all duration-200;
   }
 
-  /* Modern navigation bar */
-  nav.glass {
-    @apply bg-white;
-    background: rgba(255, 255, 255, 1);
-    box-shadow: none !important;
-    border-bottom: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+  .form-label {
+    @apply text-builder-foreground-secondary text-sm font-medium leading-normal;
   }
 
-  /* Modern section backgrounds */
-  .section-bg {
-    @apply bg-white/5 backdrop-blur-sm rounded-3xl p-8 md:p-12;
+  /* Technology tags */
+  .tech-tag {
+    @apply bg-builder-dark-tertiary text-builder-foreground-primary rounded px-2 py-1 text-sm;
   }
 
-  /* Gradient text - no animation */
-  .gradient-text {
-    @apply bg-gradient-to-r from-primary-600 via-accent-600 to-primary-600 bg-clip-text text-transparent;
+  /* Category badge */
+  .category-badge {
+    @apply bg-builder-accent-primary text-white rounded-full px-3 py-1 text-sm font-medium;
   }
 
-  /* Dark mode styles */
-  .dark .glass {
-    @apply bg-gray-800/30 backdrop-blur-xl border border-gray-700/30;
-    background: rgba(31, 41, 55, 0.3);
+  /* Portfolio card */
+  .portfolio-card {
+    @apply bg-builder-card border border-builder-border-card;
   }
 
-  .dark .glass-strong {
-    @apply bg-gray-800/40 backdrop-blur-2xl border border-gray-700/40;
-    background: rgba(31, 41, 55, 0.4);
+  /* Modal */
+  .modal-content {
+    @apply bg-builder-card border border-builder-border-card;
   }
 
-  .dark .glass-card {
-    @apply hover:bg-gray-800;
-    background: rgba(31, 41, 55, 1);
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-
-  .dark .glass-input {
-    @apply bg-gray-800/30 text-gray-100 placeholder-gray-400 border-gray-700/30;
-    background: rgba(31, 41, 55, 0.3);
-  }
-
-  .dark .glass-button-secondary {
-    @apply text-gray-100 hover:bg-gray-800/50;
-  }
-
-  .dark .nav-link {
-    @apply text-gray-300 hover:text-primary-400;
-  }
-
-  .dark .nav-link-active {
-    @apply text-primary-400;
-  }
-
-  .dark nav.glass {
-    @apply bg-gray-900/80;
-    background: rgba(17, 24, 39, 0.85);
-    box-shadow: none !important;
-    border-bottom: none !important;
-  }
-
-  .dark .gradient-text {
-    @apply from-primary-400 via-accent-400 to-primary-400;
-  }
-
-  /* Modern card hover effect */
-  .modern-card {
-    @apply glass-card group cursor-pointer;
-  }
-
-  .modern-card:hover {
-    @apply shadow-glow-lg;
-  }
 }
