@@ -1,0 +1,33 @@
+@import "variables";
+
+// Import Bootstrap SCSS before mixins that use Bootstrap functions
+@import "bootstrap/scss/bootstrap";
+
+@import "mixins";
+
+// Import Font Awesome
+@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
+@import "@fortawesome/fontawesome-free/scss/solid.scss";
+@import "@fortawesome/fontawesome-free/scss/regular.scss";
+@import "@fortawesome/fontawesome-free/scss/brands.scss";
+
+// Import Prime Icons
+@import "primeicons/primeicons.css";
+
+// Import layout and typography
+@import "layout";
+@import "typography";
+
+// CSS custom properties for runtime access
+:root {
+  --primary-color: #{$primary};
+  --secondary-color: #{$secondary};
+  --dark-color: #{$dark};
+  --light-color: #{$light};
+  --info-color: #{$info};
+  --blue-dark: #{$blue-dark};
+  --blue-base: #{$blue-base};
+  --blue-light: #{$blue-light};
+  --gray-base: #{$gray-base};
+  --navbar-height: #{$navbar-height};
+}

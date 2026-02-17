@@ -1,0 +1,91 @@
+@each $heading, $size in $headings-base-sizes {
+  #{$heading},
+  .eq-#{$heading} {
+    @include generate-dynamic-styles-with-multipliers(
+      $size,
+      $headings-breakpoint-multipliers
+    );
+  }
+}
+
+/** Custom Headings **/
+$custom-headings-base-sizes: (
+  lead-2: (
+    font-size: 1.4rem
+  ),
+  lead: (
+    font-size: 1.2rem
+  ),
+  display-1: (
+    font-size: 3.25rem
+  )
+);
+
+@each $heading, $size in $custom-headings-base-sizes {
+  .#{$heading} {
+    @include generate-dynamic-styles-with-multipliers(
+      $size,
+      $headings-breakpoint-multipliers
+    );
+  }
+}
+
+/** Texts **/
+$texts-base-sizes: (
+  text-1: (
+    font-size: 0.85rem
+  ),
+  text-2: (
+    font-size: 0.9rem
+  ),
+  text-3: (
+    font-size: 0.95rem
+  ),
+  text-4: (
+    font-size: 1rem
+  ),
+  text-5: (
+    font-size: 1.05rem
+  )
+);
+
+@each $text, $size in $texts-base-sizes {
+  .#{$text} {
+    @include generate-dynamic-styles-with-multipliers(
+      $size,
+      $texts-breakpoint-multipliers
+    );
+  }
+}
+
+.text {
+  &-muted {
+    color: $text-muted !important;
+  }
+
+  &-normal {
+    color: $text-normal !important;
+  }
+
+  @for $i from 1 through length($light-shades-palette) {
+    &-light-#{$i} {
+      color: nth($light-shades-palette, $i) !important;
+    }
+  }
+
+  &-primary-light {
+    color: lighten($primary, 10%);
+  }
+}
+
+a {
+  text-decoration: none;
+  color: lighten($primary, 10%);
+  &:hover {
+    color: lighten($primary, 15%);
+  }
+}
+
+p {
+  color: $text-normal;
+}

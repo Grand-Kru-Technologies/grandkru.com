@@ -1,16 +1,10 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import vuetify from './plugins/vuetify'
-import './assets/main.css'
-import { handleRedirect } from './utils/router'
+import { createApp } from "vue";
+import App from "./App.vue";
+import router from "./router";
+import "./scss/style.scss";
 
-const app = createApp(App)
+const app = createApp(App);
 
-app.use(router)
-app.use(vuetify)
+app.use(router);
 
-// Handle redirects on app initialization
-handleRedirect(router)
-
-app.mount('#app')
+app.mount("#app");

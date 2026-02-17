@@ -1,0 +1,123 @@
+/** Font Awesome webfonts path **/
+$fa-font-path: "@fortawesome/fontawesome-free/webfonts";
+
+/** Overriding Bootstrap's contrast ratio. **/
+$min-contrast-ratio: 1.5 !default;
+
+/** Typography - Modern Elegance: Raleway + Open Sans **/
+$font-family-base: "Open Sans", sans-serif;
+$headings-font-family: "Raleway", sans-serif;
+$font-weight-base: 500; // Heavier body text
+$headings-font-weight: 700; // Bold headings
+
+/** Bootstrap Colors - Grand Kru branding (from logo) **/
+$primary: #2B4A6F; // Steel blue from logo sphere
+$secondary: #5A5A5A; // Gray from logo cube
+$dark: #3A3A3A; // Dark charcoal gray
+$success: #038600;
+$info: #4A7BA7; // Lighter blue accent
+$light: #fcfcfc;
+$white: white;
+
+/** Extended Blue Palette (from logo sphere gradient) **/
+$blue-dark: #1A3A5C; // Darker blue for depth
+$blue-base: #2B4A6F; // Primary blue
+$blue-light: #4A6B8A; // Lighter blue for hover states
+$blue-pale: #6B8BA8; // Pale blue for subtle accents
+
+/** Gray Palette (from logo cube) **/
+$gray-dark: #4A4A4A;
+$gray-base: #5A5A5A;
+$gray-medium: #6B6B6B;
+$gray-light: #8A8A8A;
+
+/** General **/
+$background-color: #fefefe;
+$nav-background-color: $dark;
+$footer-bg-color: $dark;
+$footer-bg-highlight-color: darken($dark, 1%);
+
+/** Dimensions **/
+$navbar-height: 71px;
+
+/** Texts **/
+$headings-color: $dark;
+$text-normal: black;
+$text-normal-contrast: white;
+$text-muted: #757575;
+
+/** Light Shades **/
+$light-1: #f8f9fa;
+$light-2: #e9ecef;
+$light-3: #dee2e6;
+$light-4: #ced4da;
+$light-5: #adb5bd;
+$light-6: #6c757d;
+$light-7: #495057;
+
+$light-shades-palette: (
+  $light-1,
+  $light-2,
+  $light-3,
+  $light-4,
+  $light-5,
+  $light-6,
+  $light-7
+);
+
+/** Typography - Texts Breakpoints **/
+$texts-breakpoint-multipliers: (
+  xxxl: 1,
+  xxl: 0.95,
+  xl: 0.925,
+  lg: 0.9,
+  md: 0.875,
+  sm: 0.85
+);
+
+/** Typography - Headings Breakpoints **/
+$headings-breakpoint-multipliers: (
+  xxxl: 1,
+  xxl: 0.95,
+  xl: 0.925,
+  lg: 0.9,
+  md: 0.85,
+  sm: 0.8
+);
+
+/** Typography - Headings Base Sizes **/
+$headings-base-sizes: (
+  h1: (
+    font-size: 3rem
+  ),
+  h2: (
+    font-size: 2.5rem
+  ),
+  h3: (
+    font-size: 2rem
+  ),
+  h4: (
+    font-size: 1.5rem
+  ),
+  h5: (
+    font-size: 1.3rem
+  ),
+  h6: (
+    font-size: 1.1rem
+  )
+);
+
+/** Animation durations **/
+$transition-base: all 0.3s ease;
+$transition-fast: all 0.15s ease;
+$transition-slow: all 0.5s ease;
+
+/** Box shadows **/
+$box-shadow: 0 0.5rem 1rem rgba($dark, 0.15);
+$box-shadow-sm: 0 0.125rem 0.25rem rgba($dark, 0.075);
+$box-shadow-lg: 0 1rem 3rem rgba($dark, 0.175);
+
+/** Border radius **/
+$border-radius: 0.375rem;
+$border-radius-lg: 0.5rem;
+$border-radius-sm: 0.25rem;

@@ -1,14 +1,16 @@
 <template>
-  <div v-if="isStaging && !isAuthenticated" class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="bg-white p-8 rounded-lg shadow-md w-96">
-      <h2 class="text-2xl font-bold mb-6 text-center">Staging Environment</h2>
-      <p class="text-sm text-gray-600 mb-4 text-center">This is a protected staging environment. Please enter the password to continue.</p>
-      <form @submit.prevent="checkPassword" class="space-y-4">
-        <div>
+  <div v-if="isStaging && !isAuthenticated" class="password-protection-overlay">
+    <div class="password-protection-modal">
+      <h2 class="h4 mb-3 text-center">Staging Environment</h2>
+      <p class="text-muted text-center mb-4">
+        This is a protected staging environment. Please enter the password to continue.
+      </p>
+      <form @submit.prevent="checkPassword">
+        <div class="mb-3">
           <input
             v-model="password"
             type="password"
-            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="form-control form-control-lg"
             placeholder="Enter staging password"
             required
             :disabled="isLocked"
@@ -16,14 +18,14 @@
         </div>
         <button
           type="submit"
-          class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          class="btn btn-primary btn-lg w-100"
           :disabled="isLocked"
         >
-          {{ isLocked ? `Try again in ${lockoutTime} seconds` : 'Submit' }}
+          {{ isLocked ? `Try again in ${lockoutTime} seconds` : "Submit" }}
         </button>
       </form>
-      <p v-if="error" class="mt-4 text-red-500 text-center">{{ error }}</p>
-      <p v-if="attempts > 0" class="mt-2 text-sm text-gray-500 text-center">
+      <p v-if="error" class="mt-3 text-danger text-center">{{ error }}</p>
+      <p v-if="attempts > 0" class="mt-2 text-muted text-center small">
         Attempts remaining: {{ maxAttempts - attempts }}
       </p>
     </div>
@@ -143,3 +145,29 @@ onMounted(() => {
   }
 })
 </script>
+
+<style lang="scss" scoped>
+@use "@/scss/theming" as *;
+
+.password-protection-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: $dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+.password-protection-modal {
+  background-color: $white;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+</style>
