@@ -14,6 +14,14 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@/scss/theming" as *;`,
+        silenceDeprecations: ["color-functions", "global-builtin", "import", "mixed-decls"],
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
