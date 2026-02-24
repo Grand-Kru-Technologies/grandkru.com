@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-	"types": ["./worker-configuration.d.ts"],
 	"target": "ES2020",
 	"useDefineForClassFields": true,
 	"module": "ESNext",
