@@ -35,6 +35,8 @@
 	}
     },
     "include": [
+	"worker-configuration.d.ts",
+	"server/**/*.ts",
 	"src/**/*.ts",
 	"src/**/*.d.ts",
 	"src/**/*.tsx",
