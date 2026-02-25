@@ -8,10 +8,10 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
-    "production": "vite build && vite preview --mode production",
+    "production": "vite preview --mode production",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "deploy": "wrangler deploy"
+    "deploy:prod": "wrangler deploy"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
