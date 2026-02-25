@@ -1,0 +1,10 @@
+{
+  "name": "grandkru",
+  "compatibility_date": "2026-02-24",
+  "main": "server/index.ts",
+  "assets": {
+    "directory": "dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  }
+}
