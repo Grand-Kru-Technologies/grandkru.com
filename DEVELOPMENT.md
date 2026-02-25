@@ -1,97 +1,172 @@
-# Grandkru Technologies Website Development Guide
+# Grand Kru Technologies – Development Guide
 
-## Development & Deployment Workflow
+Based on the [mnyon-grandkru/DEVELOPMENT.md](https://github.com/mnyon-grandkru/DEVELOPMENT.md) template structure.
 
-This project follows a **GitHub Flow with Staging** approach, combining the simplicity of GitHub Flow with the safety of a staging environment.
+## Table of Contents
 
-### Branch Strategy
-
-- **`main`** - Always contains production-ready code, automatically deploys to production
-- **`staging`** - Integration branch for testing, automatically deploys to staging environment
-- **`feature/*`** - Individual feature branches created from `staging`
-
-### Workflow Steps
-
-1. **Feature Development:**
-   ```bash
-   git checkout staging
-   git pull origin staging
-   git checkout -b feature/your-feature-name
-   # Make changes, commit, push
-   git push origin feature/your-feature-name
-   ```
-
-2. **Staging Review:**
-   - Create PR from `feature/*` → `staging`
-   - Code review and testing
-   - Merge to `staging` → auto-deploys to [staging.grandkru.com](https://staging.grandkru.com)
-
-3. **Production Release:**
-   - Create PR from `staging` → `main`
-   - Final review and approval
-   - Merge to `main` → auto-deploys to [grandkru.com](https://grandkru.com)
-
-### Development Process Workflow
-
-**For every change, follow this process:**
-
-1. **Create a new GitHub issue**
-   - Describe the problem or feature request
-   - Include acceptance criteria if applicable
-
-2. **Create a new branch with the issue number**
-   ```bash
-   git checkout -b fix/40-description
-   # or
-   git checkout -b feature/40-description
-   ```
-
-3. **Create a test to verify the change functionality**
-   - Write tests that confirm the change works as expected
-   - For UI changes, test the visual/functional aspects
-   - For bug fixes, test that the issue is resolved
-
-4. **Run `npm run test` to ensure no regression errors**
-   ```bash
-   npm run test
-   ```
-   - All existing tests should pass
-   - New tests should verify the changes
-
-5. **Push to a remote branch**
-   ```bash
-   git add .
-   git commit -m "feat: description (fixes #40)"
-   git push --set-upstream origin fix/40-description
-   ```
-
-6. **Create a PR based off staging with gktreviewer as reviewer**
-   ```bash
-   gh pr create --base staging --head fix/40-description --title "feat: description (fixes #40)" --body "Description of changes\n\nFixes #40\n\nReviewer: @gktreviewer"
-   ```
-
-### Key Principles
-
-- **`main` is always deployable** - Only production-ready code goes here
-- **Staging for integration** - All features are tested together before production
-- **Feature branches are short-lived** - Merge quickly after review
-- **Automated deployments** - No manual deployment steps needed
-
-### Comparison to Standard Workflows
-
-| Aspect | Git Flow | GitHub Flow | Our Workflow |
-|--------|----------|-------------|--------------|
-| Branches | main, develop, feature, release, hotfix | main, feature | main, staging, feature |
-| Staging | develop branch | main (production) | dedicated staging branch |
-| Releases | release branches | direct to main | staging → main |
-| Complexity | High | Low | Medium |
-| Safety | High | Medium | High |
+1. [Development Team Agreement Decisions](#development-team-agreement-decisions)
+2. [Detailed Usage Instructions](#detailed-usage-instructions)
+3. [Testing](#testing)
+4. [Deployment](#deployment)
+5. [Developer Cookbook](#developer-cookbook)
+6. [Lightweight Architectural Decision Records](#lightweight-architectural-decision-records)
 
 ---
 
-For a detailed history of changes, see [CHANGELOG.md](CHANGELOG.md).
+## Development Team Agreement Decisions
 
-## Deployment Architecture
+### Branch Strategy
+
+- **`production`** – Production-ready code; push triggers auto-deploy to grandkru.com (Fly.io)
+- **`staging`** – Integration branch; push triggers auto-deploy to staging.grandkru.com (GitHub Pages)
+- **`<story-type>/*`** – Feature branches created from `staging`
+
+### Workflow Principles
+
+- **`production` is always deployable** – Only production-ready code goes here
+- **Staging for integration** – Features tested together before production
+- **Feature branches are short-lived** – Merge after review
+- **Automated deployments** – Push to `staging` → auto-deploy to staging.grandkru.com; push to `production` → auto-deploy to grandkru.com (via GitHub Actions)
+
+### Development Process (Per Change)
+
+1. Create a GitHub issue with acceptance criteria
+2. Create a branch with the issue number: `fix/40-description` or `feature/40-description`
+3. Add tests that verify the change
+4. Run `npm run test` to ensure no regressions
+5. Push and create a PR to `staging` with `@gktreviewer` as reviewer
+
+### PR Guidelines
+
+- PR body: max 750 characters
+- Include issue reference (e.g. `fixes #42`)
+- Always include `@gktreviewer` as reviewer
+
+---
+
+## Detailed Usage Instructions
+
+### Prerequisites
+
+- Node.js v18.0.0 or higher (v20+ recommended for Wrangler)
+- npm v8.0.0 or higher
+
+### Project Structure
+
+```
+src/
+├── assets/        # Static assets (images, logo)
+├── components/    # Reusable Vue components
+├── views/         # Page components
+├── router/        # Vue Router configuration
+├── plugins/       # Vuetify and other plugins
+├── __tests__/     # Test files
+└── App.vue        # Root component
+```
+
+### Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+### Key Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `npm run dev` | Start Vite dev server with HMR |
+| `npm run build` | Production build to `dist/` |
+| `npm run preview` | Preview production build locally |
+| `npm run test` | Run Vitest in watch mode |
+| `npm run test:run` | Run Vitest once (CI) |
+| `npm run test:ui` | Vitest UI |
+| `npm run type-check` | Vue-tsc type checking |
+| `npm run lint` | ESLint with auto-fix |
+
+### Environment Variables
+
+- `VITE_EMAILJS_SERVICE_ID` – EmailJS service
+- `VITE_EMAILJS_TEMPLATE_ID` – EmailJS template
+- `VITE_EMAILJS_PUBLIC_KEY` – EmailJS public key
+- `VITE_BASE_URL` – Base path (e.g. `/` or `/staging/`)
+- `VITE_ENVIRONMENT` – `staging` or `production`
+
+---
+
+## Testing
+
+### Testing Strategy
+
+Tests are run with **Vitest** and **Vue Test Utils**. All tests use the `.spec.ts` naming convention.
+
+### Test Types
+
+1. **Unit tests** – Components, composables, utilities
+2. **Integration tests** – Router, views, flows
+3. **Configuration tests** – Favicon, cursorrules, build config
+
+### Running Tests
+
+```bash
+# Watch mode (development)
+npm run test
+
+# Single run (CI)
+npm run test:run
+
+# Interactive UI
+npm run test:ui
+```
+
+### Test File Location and Naming
+
+- Place tests in `src/__tests__/` or next to the module as `*.spec.ts`
+- Use `.spec.ts` (not `.test.ts` or `.test.js`)
+
+### Writing Tests
+
+- Use `@vue/test-utils` for component tests
+- Use `@testing-library/vue` for user-centric tests
+- Mock external dependencies (e.g. EmailJS)
+- Follow the pattern: arrange, act, assert
+
+### Pre-Merge Requirements
+
+- All tests must pass before merging
+- New features and bug fixes must include tests
+- Run `npm run test:run` before pushing
+
+### Example Test Structure
+
+```typescript
+// src/components/__tests__/MyComponent.spec.ts
+import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
+import MyComponent from '../MyComponent.vue'
+
+describe('MyComponent', () => {
+  it('renders correctly', () => {
+    const wrapper = mount(MyComponent, { props: { title: 'Test' } })
+    expect(wrapper.text()).toContain('Test')
+  })
+})
+```
+
+---
+
+## Deployment
+
+### Deployment Architecture
 
 ```mermaid
 graph TD
@@ -113,516 +188,192 @@ graph TD
     end
 ```
 
-## Deployment Configuration
-- **Staging (GitHub Pages)**
-  - Branch: `staging`
-  - Domain: `staging.grandkru.com`
-  - Base URL: `/staging/`
-  - Build Command: `npm run build`
-  - Deploy Command: GitHub Pages deployment
+### Environments
 
-- **Production (Fly.io)**
-  - Branch: `production`
-  - Domain: `grandkru.com`
-  - Base URL: `/`
-  - Build Command: `npm run build`
-  - Deploy Command: `flyctl deploy`
+| Environment | Branch | Platform | URL |
+|-------------|--------|----------|-----|
+| Staging | `staging` | GitHub Pages | [staging.grandkru.com](https://staging.grandkru.com) |
+| Production | `production` | Fly.io | [grandkru.com](https://grandkru.com) |
 
-## Required Files
+### Deployment Process
+
+#### Staging
+
+1. Create a feature branch from `staging`
+2. Make changes, add tests, run `npm run test:run`
+3. Push and open a PR to `staging`
+4. After merge, GitHub Actions deploys to staging.grandkru.com
+
+#### Production
+
+1. Create a PR from `staging` → `production`
+2. After merge, GitHub Actions automatically deploys to grandkru.com via Fly.io
+3. No manual deploy step—push to `production` triggers the deployment
+
+### Deployment Configuration
+
+- **Staging:** `VITE_BASE_URL: '/staging/'`
+- **Production:** `VITE_BASE_URL: '/'`
+- **Build:** `npm run build`
+- **Secrets:** `VITE_EMAILJS_*`, `FLY_API_TOKEN` (production)
+
+### Cloudflare Workers (Alternative)
+
+When using Cloudflare Workers (see [CLOUDFLARE_LESSONS_AND_DECISIONS.md](CLOUDFLARE_LESSONS_AND_DECISIONS.md)):
+
+```bash
+npm run build
+npm run deploy   # wrangler deploy
 ```
-├── .github/workflows/deploy.yml  # GitHub Actions workflow
-├── Dockerfile                    # Production container config
-├── nginx.conf                    # Nginx server config
-├── fly.toml                      # Fly.io config
-└── vite.config.js               # Vite build config
-```
-
-## Environment Variables
-- `VITE_EMAILJS_SERVICE_ID`
-- `VITE_EMAILJS_TEMPLATE_ID`
-- `VITE_EMAILJS_PUBLIC_KEY`
-- `VITE_BASE_URL` (automatically set based on environment)
-
-## Deployment Steps
-1. **Staging Deployment**
-   ```bash
-   git checkout staging
-   git push origin staging
-   ```
-
-2. **Production Deployment**
-   ```bash
-   git checkout production
-   git push origin production
-   ```
-
-3. **Manual Deployment (if needed)**
-   ```bash
-   # Staging
-   npm run build
-   # Deploy to GitHub Pages
-
-   # Production
-   flyctl deploy --app grandkru
-   ```
-
-## Troubleshooting
-- Check GitHub Actions workflow logs
-- Verify Fly.io app status: `flyctl status --app grandkru`
-- Check Fly.io logs: `flyctl logs --app grandkru`
-- Verify environment variables in GitHub Secrets
-- Check DNS configuration for both domains
-
-## Deployment Process
-
-### Deployment Flow Diagrams
-
-#### Staging Deployment Flow
-```mermaid
-graph TD
-    A[Create Feature Branch] --> B[Make Changes]
-    B --> C[Commit Changes]
-    C --> D[Push to Feature Branch]
-    D --> E[Create PR to Staging]
-    E --> F{Code Review}
-    F -->|Approved| G[Merge to Staging]
-    F -->|Changes Needed| B
-    G --> H[GitHub Actions Deploy]
-    H --> I[staging.grandkru.com]
-    I --> J[Verify Deployment]
-```
-
-#### Production Deployment Flow
-```mermaid
-graph TD
-    A[Create Release Branch] --> B[Merge Staging]
-    B --> C[Update Version]
-    C --> D[Push to Release Branch]
-    D --> E[Create PR to Main]
-    E --> F{Code Review}
-    F -->|Approved| G[Merge to Main]
-    F -->|Changes Needed| B
-    G --> H[GitHub Actions Deploy]
-    H --> I[grandkru.com]
-    I --> J[Verify Deployment]
-```
-
-#### Environment Configuration Flow
-```mermaid
-graph TD
-    A[Environment Variables] --> B[Local Development]
-    A --> C[Staging]
-    A --> D[Production]
-    B --> E[.env file]
-    C --> F[GitHub Secrets]
-    D --> F
-    E --> G[Vite Config]
-    F --> H[GitHub Actions]
-    G --> I[Build Process]
-    H --> I
-```
-
-### Staging Deployment (staging.grandkru.com)
-1. Create a new branch from staging:
-   ```bash
-   git checkout staging
-   git pull origin staging
-   git checkout -b feature/your-feature-name
-   ```
-
-2. Make your changes and commit them:
-   ```bash
-   git add .
-   git commit -m "feat: your feature description"
-   ```
-
-3. Push to staging:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-
-4. Create a Pull Request to staging branch
-   - Review changes
-   - Ensure all tests pass
-   - Get code review approval
-
-5. Merge to staging branch
-   - GitHub Actions will automatically deploy to staging.grandkru.com
-   - Verify deployment at https://staging.grandkru.com
-
-### Production Deployment (grandkru.com)
-1. Create a new branch from main:
-   ```bash
-   git checkout main
-   git pull origin main
-   git checkout -b release/version-number
-   ```
-
-2. Merge staging changes:
-   ```bash
-   git merge staging
-   ```
-
-3. Update version number in package.json
-   ```bash
-   npm version patch|minor|major
-   ```
-
-4. Push to main:
-   ```bash
-   git push origin release/version-number
-   ```
-
-5. Create a Pull Request to main branch
-   - Review all changes from staging
-   - Ensure all tests pass
-   - Get code review approval
-
-6. Merge to main branch
-   - GitHub Actions will automatically deploy to grandkru.com
-   - Verify deployment at https://grandkru.com
-
-### Environment Variables
-- Staging: Set in GitHub repository secrets
-- Production: Set in GitHub repository secrets
-- Local: Use `.env` file (not committed to repository)
 
 ### Deployment Verification
+
 After each deployment:
-1. Check deployment logs in GitHub Actions
-2. Verify site functionality:
-   - Navigation
-   - Contact form
-   - Portfolio carousel
-   - Responsive design
+
+1. Check GitHub Actions logs
+2. Verify navigation, contact form, portfolio, responsive layout
 3. Test in multiple browsers
-4. Check console for errors
+4. Check browser console for errors
 
-### Rollback Process
+### Rollback
+
 If issues are detected:
-1. Revert the merge commit
-2. Push the revert
-3. GitHub Actions will automatically redeploy the previous version
 
-## Color Palette
-
-- Primary Blue: `#3b5a7b` (from logo center)
-- White: `#fbfdfa`
-- Dark Gray: `#464747`
-- Medium Gray: `#818282`
-- Black: `#060506`
-- Light Gray: `#c3c4c4`
-
-## Development Setup
-
-### Prerequisites
-- Node.js (v18.0.0 or higher recommended)
-- npm (v8.0.0 or higher)
-
-### Project Structure
-```
-src/
-├── assets/        # Static assets (images, logo)
-├── components/    # Reusable Vue components
-├── views/         # Page components
-├── router/        # Vue Router configuration
-├── styles/        # Global styles and variables
-└── App.vue        # Root component
+```bash
+git checkout staging   # or production
+git revert <commit-hash>
+git push origin staging   # or production
 ```
 
-### Getting Started
-1. Install dependencies:
+GitHub Actions will redeploy the previous version. See the [Rollback Strategy](#rollback-strategy) section for details.
+
+---
+
+## Developer Cookbook
+
+### Development Setup
+
+1. **Install dependencies**
    ```bash
    npm install
    ```
 
-2. Run development server:
+2. **Run dev server**
    ```bash
    npm run dev
    ```
 
-3. Build for production:
+3. **Run tests**
    ```bash
-   npm run build
+   npm run test
    ```
 
-### Key Features
-- Vue 3 with Composition API
-- Vue Router for navigation
-- Responsive design
-- Mobile-friendly layout
-- Accessible components
-- Form validation
-- Modal system for portfolio items
-
 ### Component Guidelines
-- Use Composition API with `<script setup>`
-- Follow Vue.js Style Guide
-- Implement responsive design using Tailwind CSS
-- Ensure WCAG 2.1 accessibility compliance
+
+- Use Composition API with `<script setup lang="ts">`
+- Follow the [Vue.js Style Guide](https://vuejs.org/style-guide/)
+- Use Tailwind CSS for styling
+- Aim for WCAG 2.1 accessibility
 
 ### CSS Guidelines
-- Use Tailwind CSS for utility-first styling
-- Custom CSS in component-specific files
-- Follow BEM naming convention for custom classes
+
+- Use Tailwind for utility-first styling
 - Use CSS variables for theme colors
+- Follow BEM for custom classes when needed
 
-## Portfolio Carousel Implementation
+### Color Palette (Foxy Theme)
 
-The portfolio section uses `vue3-carousel` for displaying multiple images in a slideshow format. Here's how it's implemented:
+- Primary: `#2B4A6F` (steel blue)
+- Secondary: `#5A5A5A` (gray)
+- Accent: `#4A6B8A` (lighter blue)
+- Background: `#fefefe`
 
-### Dependencies
-```bash
-npm install vue3-carousel
-```
+### Adding a New Page
 
-### Component Usage
-The carousel is implemented in `src/views/PortfolioView.vue` and includes:
-- Automatic rotation (3-second interval)
-- Navigation arrows
-- Pagination dots
-- Smooth transitions
-- Responsive design
+1. Create the view in `src/views/`
+2. Add the route in `src/router/index.ts`
+3. Add a navigation link in `src/components/Navigation.vue`
+4. Add tests
 
-### Image Structure
-Each portfolio item requires multiple images in the following format:
-```
-src/assets/portfolio/
-├── ecommerce-1.jpg
-├── ecommerce-2.jpg
-├── ecommerce-3.jpg
-├── travel-1.jpg
-├── travel-2.jpg
-├── travel-3.jpg
-└── ...
-```
+### Portfolio Carousel
 
-### Configuration Options
-The carousel is configured with:
-```javascript
-<Carousel
-  :items-to-show="1"      // Number of items to show at once
-  :wrap-around="true"     // Enable infinite scrolling
-  :autoplay="3000"        // Auto-rotate every 3 seconds
-  class="mb-8"
->
-```
+The portfolio uses `vue3-carousel`. Images go in `src/assets/portfolio/` with the pattern `[project]-[number].jpg`. Update the `images` array in the portfolio item data.
 
-### Custom Styling
-The carousel includes custom styling in the component:
-```css
-.carousel__item {
-  min-height: 200px;
-  width: 100%;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+---
 
-.carousel__prev,
-.carousel__next {
-  box-sizing: content-box;
-  border: 5px solid white;
-}
+## Lightweight Architectural Decision Records
 
-.carousel__pagination-button {
-  background-color: var(--primary);
-}
-```
+### ADR: GitHub Flow with Staging
 
-### Adding New Images
-To add new images to a portfolio item:
-1. Add the images to `src/assets/portfolio/` with the naming convention `[project-name]-[number].jpg`
-2. Update the `images` array in the portfolio item data:
-```javascript
-{
-  title: 'Project Name',
-  images: [
-    '../assets/portfolio/project-1.jpg',
-    '../assets/portfolio/project-2.jpg',
-    '../assets/portfolio/project-3.jpg'
-  ],
-  // ... other project data
-}
-```
+**Context:** Need a simple workflow with a staging environment.
 
-### Customization
-The carousel can be customized by:
-- Adjusting the `autoplay` value for different rotation speeds
-- Modifying the `items-to-show` for different layouts
-- Updating the CSS variables for different colors and styles
-- Adding or removing navigation controls
+**Decision:** Use `production`, `staging`, and `feature/*` branches. Push to `staging` auto-deploys to GitHub Pages; push to `production` auto-deploys to Fly.io.
+
+**Consequences:** Clear promotion path; staging validates before production.
+
+### ADR: Vitest for Testing
+
+**Context:** Need a fast, Vue-friendly test runner.
+
+**Decision:** Use Vitest with Vue Test Utils and Testing Library.
+
+**Consequences:** Native ESM, Vite integration, `.spec.ts` convention.
+
+### ADR: Vuetify + Tailwind
+
+**Context:** Need a component library and utility-first CSS.
+
+**Decision:** Use Vuetify for components and Tailwind for layout and utilities.
+
+**Consequences:** Consistent UI; possible class conflicts managed via safelist.
+
+### ADR: Cloudflare Workers (Optional)
+
+**Context:** Alternative deployment to Fly.io.
+
+**Decision:** Support Cloudflare Workers via `@cloudflare/vite-plugin` and Wrangler. Worker serves static assets with SPA fallback.
+
+**Consequences:** Edge deployment; see [CLOUDFLARE_LESSONS_AND_DECISIONS.md](CLOUDFLARE_LESSONS_AND_DECISIONS.md).
+
+---
 
 ## Rollback Strategy
 
-### Overview
-This project implements a multi-layered rollback strategy to ensure quick recovery from deployment issues across both staging and production environments.
-
-### Rollback Scenarios
-
-#### 1. Staging Environment Rollback
-**When:** Issues detected in staging environment
-**Method:** Git revert or branch reset
+### Staging Rollback
 
 ```bash
-# Option A: Revert the problematic commit
 git checkout staging
 git revert <commit-hash>
 git push origin staging
-
-# Option B: Reset to previous working state
-git checkout staging
-git reset --hard <previous-commit-hash>
-git push --force-with-lease origin staging
 ```
 
-**Recovery Time:** 2-5 minutes (GitHub Pages deployment)
+**Recovery time:** 2–5 minutes
 
-#### 2. Production Environment Rollback
-**When:** Issues detected in production after 24-hour promotion
-**Method:** Revert to previous production state
+### Production Rollback
 
 ```bash
-# Revert the production deployment
-git checkout main
-git revert <production-commit-hash>
-git push origin main
-
-# Alternative: Emergency rollback to specific version
-git checkout main
-git reset --hard <known-good-commit>
-git push --force-with-lease origin main
+git checkout production
+git revert <commit-hash>
+git push origin production
 ```
 
-**Recovery Time:** 5-10 minutes (Fly.io deployment)
+**Recovery time:** 5–10 minutes
 
-#### 3. Emergency Hotfix Rollback
-**When:** Critical production issues requiring immediate fix
-**Method:** Direct hotfix branch
+### Emergency Hotfix
 
 ```bash
-# Create emergency hotfix
-git checkout main
+git checkout production
 git checkout -b hotfix/emergency-fix
 # Make minimal fix
 git commit -m "hotfix: emergency production fix"
 git push origin hotfix/emergency-fix
-
-# Create PR directly to main (bypass staging)
-# After approval and merge, auto-deploy to production
+# Create PR to production
 ```
-
-**Recovery Time:** 10-15 minutes (including review)
-
-### Rollback Triggers
-
-#### Automatic Rollback Conditions
-- **Build failures** - Deployment automatically cancelled
-- **Health check failures** - Automatic rollback to previous version
-- **Performance degradation** - Manual trigger based on monitoring
-
-#### Manual Rollback Triggers
-- **User-reported issues** - Customer support escalations
-- **Monitoring alerts** - Error rate spikes, response time increases
-- **Security concerns** - Vulnerability discoveries
-- **Business impact** - Revenue or user experience issues
-
-### Rollback Verification
-
-#### Pre-Rollback Checklist
-- [ ] Identify the problematic commit/feature
-- [ ] Confirm the issue is deployment-related
-- [ ] Check if the issue exists in staging
-- [ ] Verify rollback target (previous working version)
-- [ ] Notify stakeholders of rollback plan
-
-#### Post-Rollback Verification
-- [ ] Verify deployment completed successfully
-- [ ] Check application health and functionality
-- [ ] Monitor error rates and performance metrics
-- [ ] Confirm issue is resolved
-- [ ] Update incident documentation
-
-### Rollback Communication
-
-#### Internal Communication
-```markdown
-**Rollback Alert**
-- Environment: [Staging/Production]
-- Issue: [Brief description]
-- Rollback Target: [Commit hash/version]
-- Expected Recovery Time: [X minutes]
-- Status: [In Progress/Completed]
-```
-
-#### External Communication (if needed)
-- Update status page
-- Notify key stakeholders
-- Prepare customer communication if necessary
-
-### Rollback Prevention
-
-#### Pre-Deployment Safeguards
-- **Automated testing** - All tests must pass before deployment
-- **Staging validation** - 24-hour staging period for testing
-- **Code review** - All changes reviewed before merge
-- **Performance monitoring** - Baseline performance tracking
-
-#### Deployment Safeguards
-- **Health checks** - Automated health verification post-deployment
-- **Gradual rollout** - Feature flags for controlled releases
-- **Monitoring alerts** - Real-time issue detection
-- **Backup strategies** - Database and configuration backups
-
-### Rollback Tools and Commands
-
-#### GitHub Actions Rollback
-```bash
-# Trigger manual rollback workflow
-gh workflow run rollback.yml --field environment=production --field commit=<commit-hash>
-```
-
-#### Fly.io Rollback
-```bash
-# Rollback to previous deployment
-flyctl deploy --image-label <previous-version>
-
-# Check deployment history
-flyctl releases list --app grandkru
-
-# Rollback to specific release
-flyctl deploy --release-id <release-id>
-```
-
-#### Database Rollback (if applicable)
-```bash
-# Restore from backup (if database changes were made)
-# This would depend on your database setup
-```
-
-### Rollback Documentation
-
-#### Incident Report Template
-```markdown
-## Rollback Incident Report
-
-**Date:** [Date/Time]
-**Environment:** [Staging/Production]
-**Issue Description:** [What went wrong]
-**Root Cause:** [Why it happened]
-**Rollback Action:** [What was done]
-**Recovery Time:** [How long it took]
-**Prevention Measures:** [How to prevent recurrence]
-**Lessons Learned:** [Key takeaways]
-```
-
-### Rollback Metrics
-
-Track the following metrics to improve rollback processes:
-- **Mean Time to Detection (MTTD)** - How quickly issues are identified
-- **Mean Time to Recovery (MTTR)** - How quickly rollbacks complete
-- **Rollback Frequency** - How often rollbacks occur
-- **Rollback Success Rate** - Percentage of successful rollbacks
 
 ---
+
+## Related Documentation
+
+- [CLOUDFLARE_LESSONS_AND_DECISIONS.md](CLOUDFLARE_LESSONS_AND_DECISIONS.md) – Cloudflare Workers setup
+- [CHANGES_2026-02-24.md](CHANGES_2026-02-24.md) – Recent changes log
+- [README.md](README.md) – Project overview
